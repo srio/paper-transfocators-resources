@@ -1,11 +1,13 @@
 import numpy
 from srxraylib.plot.gol import plot
 
-use_gaussian_slit = False
-use_real_lens = True
+use_gaussian_slit = True
+use_real_lens = False
+up_to_mode = 10
 
 SIGMAS = ["0.1","0.2","0.5","1.0","1.5","2.0","4.0","6.0"]
 
+SIGMASF = []
 DISTANCE = []
 FWHM = []
 ICENTER = []
@@ -27,24 +29,31 @@ if use_real_lens:
 else:
         real_lens_add = ""
 
+if up_to_mode > 0:
+        up_to_mode_add = "M"
+else:
+        up_to_mode_add = ""
+
 for i in range(len(SIGMAS)):
-        filein = "tmp%s%s%s.dat" % (gauss_add, real_lens_add, SIGMAS[i])
+        filein = "tmp%s%s%s%s.dat" % (up_to_mode_add,gauss_add, real_lens_add, SIGMAS[i])
+        print(">>>>> ", filein)
         a1 = numpy.loadtxt(filein)
         print(a1.shape)
         distance1 = a1[:,0]  ;  fwhm1 = a1[:,1] ; icenter1 = a1[:,3]
         DISTANCE.append(distance1)
         FWHM.append(fwhm1)
         ICENTER.append(icenter1)
-
+        SIGMASF.append(float(SIGMAS[i]))
         slit_size_in_um = 125.0 / 2.35 * float(SIGMAS[i])
         s = slit_size_in_um * 1e-6 / 2
         pp = 35
 
-
-        N2 =  p * s ** 2 / (wavelength * pp ** 2)
+        pa = 65 - pp
+        # N2 =  p * s ** 2 / (wavelength * pp ** 2)
+        N2 = p * s ** 2 / (wavelength * pa ** 2)
         print("Effect for slit aperture less than [um] = ", 2e6 * numpy.sqrt(pp ** 2 * wavelength / p))
 
-        LEGEND.append(r'$a$=%s $\sigma_a$; N=%3.1f' % (SIGMAS[i], N2))
+        LEGEND.append(r'$a$=%s $\sigma_a$; N=%3.2f' % (SIGMAS[i], N2))
 
 plot(   DISTANCE[0], FWHM[0],
         DISTANCE[1], FWHM[1],
@@ -77,5 +86,24 @@ plot(   DISTANCE[0], ICENTER[0],
         legend=LEGEND,
         ylog=1)
 
-# iMin1 = numpy.argmin(fwhm11)
-# print("Minima found for: %g" % (distance1[iMin1]))
+# WAISTPOSITION = []
+#
+# for i in range(len(DISTANCE)):
+#         iMin1 = numpy.argmax(ICENTER[i])
+#         vMin1 = DISTANCE[i][iMin1]
+#         WAISTPOSITION.append(vMin1)
+#         print(WAISTPOSITION)
+#         print("Minima found for: %g" % (WAISTPOSITION[i]))
+#
+# print(SIGMASF)
+# print(WAISTPOSITION)
+
+WAISTPOSITIONG = [431.594, 221.281, 56.875, 49.375, 49.375, 49.375, 49.375, 49.375]
+WAISTPOSITION_ = [462.688, 350.75, 192.656, 70.0, 55.0, 51.25, 49.375, 49.375]
+WAISTPOSITIONMG = [431.594, 221.281, 56.875, 49.375, 49.375, 49.375, 49.375, 49.375]
+
+plot(numpy.array(SIGMASF), numpy.array(WAISTPOSITIONG)/28.2,
+     numpy.array(SIGMASF), numpy.array(WAISTPOSITION_)/28.2,
+     numpy.array(SIGMASF), numpy.array(WAISTPOSITIONMG)/28.2,
+     xlog=1, ylog=1, xtitle="n=a/(125/2.35)",ytitle="waist position over f",
+     legend=["Gaussian slit","Rectangular slit","Gaussian slit Multimode"])

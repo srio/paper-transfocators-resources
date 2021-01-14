@@ -345,11 +345,12 @@ def run_multimode(up_to_mode=0):
 if __name__ == "__main__":
 
 
-    use_gaussian_slits = False
+    use_gaussian_slits = True
     use_real_lens = True
     npoints = 100
     do_plot = False
     save_file = True
+    up_to_mode = 50
 
     NSIGMAS = [0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 4.0, 6.0]
 
@@ -362,7 +363,7 @@ if __name__ == "__main__":
         if nsigmas <= .5:
             magnification_x = 1
         else:
-            magnification_x = 5
+            magnification_x = 4
 
         slit_size_in_um = 125.0 / 2.35 * nsigmas
         Q5 = numpy.concatenate((
@@ -375,13 +376,13 @@ if __name__ == "__main__":
 
         if do_plot:
             q5 = Q5[0] + 0.1
-            WF1 = run_multimode(up_to_mode=0)
+            WF1 = run_multimode(up_to_mode=up_to_mode)
             q5 = 49.8098
-            WF2 = run_multimode(up_to_mode=0)
+            WF2 = run_multimode(up_to_mode=up_to_mode)
             q5 = 470
-            WF3 = run_multimode(up_to_mode=0)
+            WF3 = run_multimode(up_to_mode=up_to_mode)
             q5 = Q5[-1]
-            WF4 = run_multimode(up_to_mode=0)
+            WF4 = run_multimode(up_to_mode=up_to_mode)
 
             plot(WF1.get_abscissas(), WF1.get_intensity(),
                  WF2.get_abscissas(), WF2.get_intensity(),
@@ -394,25 +395,32 @@ if __name__ == "__main__":
             # run_wofry_1d(plot_from=50)
             q5 = Q5[i]
 
-            WF = run_multimode(up_to_mode=0)
+            WF = run_multimode(up_to_mode=up_to_mode)
             sc.append(WF, scan_variable_value=q5)
 
             if numpy.mod(i,10) == 0:
-                print(">>>>>> iteration index %d of %d" % (i,npoints))
+                print(">>>>>> iteration index %d of %d" % (i,npoints+1))
                 # if 0:
                 #     plot(WF.get_abscissas(), WF.get_intensity(),
                 #          title=">>>>>> iteration index %d of %d" % (i,npoints))
 
+        if use_real_lens:
+            use_real_lens_extension = "R"
+        else:
+            use_real_lens_extension = ""
+
+        if use_gaussian_slits:
+            use_gaussian_slits_extension = "G"
+        else:
+            use_gaussian_slits_extension = ""
+
+        if up_to_mode > 0:
+            up_to_mode_extension = "M"
+        else:
+            up_to_mode_extension = ""
+
         if save_file:
-            if use_real_lens:
-                if use_gaussian_slits:
-                    sc.save(filename="tmpGR%2.1f.dat" % nsigmas)
-                else:
-                    sc.save(filename="tmpR%2.1f.dat" % nsigmas)
-            else:
-                if use_gaussian_slits:
-                    sc.save(filename="tmpG%2.1f.dat" % nsigmas)
-                else:
-                    sc.save(filename="tmp%2.1f.dat" % nsigmas)
+            sc.save(filename="tmp%s%s%s%2.1f.dat" % (up_to_mode_extension,use_gaussian_slits_extension,use_real_lens_extension,nsigmas))
+
         # sc.save(filename="tmpG.dat")
         if do_plot: sc.plot()
