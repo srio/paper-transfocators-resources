@@ -3,7 +3,7 @@ from srxraylib.plot.gol import plot
 
 use_gaussian_slit = True
 use_real_lens = False
-up_to_mode = 10
+up_to_mode = 50
 
 SIGMAS = ["0.1","0.2","0.5","1.0","1.5","2.0","4.0","6.0"]
 
@@ -85,25 +85,3 @@ plot(   DISTANCE[0], ICENTER[0],
         show=1,
         legend=LEGEND,
         ylog=1)
-
-# WAISTPOSITION = []
-#
-# for i in range(len(DISTANCE)):
-#         iMin1 = numpy.argmax(ICENTER[i])
-#         vMin1 = DISTANCE[i][iMin1]
-#         WAISTPOSITION.append(vMin1)
-#         print(WAISTPOSITION)
-#         print("Minima found for: %g" % (WAISTPOSITION[i]))
-#
-# print(SIGMASF)
-# print(WAISTPOSITION)
-
-WAISTPOSITIONG = [431.594, 221.281, 56.875, 49.375, 49.375, 49.375, 49.375, 49.375]
-WAISTPOSITION_ = [462.688, 350.75, 192.656, 70.0, 55.0, 51.25, 49.375, 49.375]
-WAISTPOSITIONMG = [431.594, 221.281, 56.875, 49.375, 49.375, 49.375, 49.375, 49.375]
-
-plot(numpy.array(SIGMASF), numpy.array(WAISTPOSITIONG)/28.2,
-     numpy.array(SIGMASF), numpy.array(WAISTPOSITION_)/28.2,
-     numpy.array(SIGMASF), numpy.array(WAISTPOSITIONMG)/28.2,
-     xlog=1, ylog=1, xtitle="n=a/(125/2.35)",ytitle="waist position over f",
-     legend=["Gaussian slit","Rectangular slit","Gaussian slit Multimode"])

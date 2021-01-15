@@ -338,15 +338,15 @@ def run_multimode(up_to_mode=0):
         else:
             intens = WF.get_intensity()
             intens += wf.get_intensity()
-            WF.set_complex_amplitude = numpy.sqrt(intens)
+            WF.set_complex_amplitude(numpy.sqrt(intens))
 
     return WF
 
 if __name__ == "__main__":
 
 
-    use_gaussian_slits = True
-    use_real_lens = True
+    use_gaussian_slits = False
+    use_real_lens = False
     npoints = 100
     do_plot = False
     save_file = True

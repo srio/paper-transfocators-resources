@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<scheme description="" title="ID18 COMSYL" version="2.0" working_directory="/home/srio/Oasys" workspace_units="0">
+<scheme description="" title="ID18 COMSYL" version="2.0" working_directory="/users/srio/Oasys" workspace_units="0">
 	<nodes>
 		<node id="0" name="Undulator Light Source" position="(81.0, 143.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U20" version="" />
 		<node id="1" name="Screen 1D" position="(443.0, 197.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @35m" version="" />
@@ -61,6 +61,7 @@
 		<node id="57" name="Screen 1D" position="(976.0, 151.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D" version="" />
 		<node id="58" name="Screen 1D" position="(975.0, 236.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D" version="" />
 		<node id="59" name="Modes loader" position="(126.0, 1193.0)" project_name="OASYS1-COMSYL" qualified_name="orangecontrib.comsyl.widgets.applications.comsyl_modes_loader.OWModesLoader" title="Modes loader" version="" />
+		<node id="60" name="ModesSelector" position="(281.0, 1253.0)" project_name="OASYS1-COMSYL" qualified_name="orangecontrib.comsyl.widgets.applications.comsyl_modes_selector.OWModesSelector" title="ModesSelector" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="WofryData" sink_node_id="4" source_channel="WofryData" source_node_id="1" />
@@ -115,6 +116,7 @@
 		<link enabled="true" id="49" sink_channel="WofryData" sink_node_id="47" source_channel="WofryData" source_node_id="56" />
 		<link enabled="true" id="50" sink_channel="WofryData" sink_node_id="57" source_channel="WofryData" source_node_id="55" />
 		<link enabled="true" id="51" sink_channel="WofryData" sink_node_id="58" source_channel="WofryData" source_node_id="33" />
+		<link enabled="true" id="52" sink_channel="COMSYL modes" sink_node_id="60" source_channel="COMSYL modes" source_node_id="59" />
 	</links>
 	<annotations>
 		<text font-family="Helvetica" font-size="16" id="0" rect="(254.0, 121.0, 150.0, 35.0)">Horizontal</text>
@@ -1894,12 +1896,20 @@ c2NhbGVkX05xE0tkWAgAAABzY2FsZWRfUnEUR0CPQAAAAAAAWAsAAABzY2FsZWRfUm1heHEVR0BZ
 AAAAAAAAWA4AAABzY2FsZWRfZ3Vlc3NfUnEWiFgFAAAAc2hhcGVxF0sAWA0AAABzdXJmYWNlX3No
 YXBlcRhLAFgJAAAAdmlld190eXBlcRlLAXUu
 </properties>
-		<properties format="pickle" node_id="59">gAN9cQAoWBAAAABJTkRJVklEVUFMX01PREVTcQGJWAoAAABNT0RFX0lOREVYcQJLZFgRAAAAVFlQ
-RV9QUkVTRU5UQVRJT05xA0sAWA4AAABiZWFtX2ZpbGVfbmFtZXEEWC4AAAAvdG1wXzE0X2RheXMv
-c3Jpby9pZDE4X2Vic191MjBfMjAwMG1tX3MxLjAubnB6cQVYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0
+		<properties format="pickle" node_id="59">gAN9cQAoWBAAAABJTkRJVklEVUFMX01PREVTcQGJWAoAAABNT0RFX0lOREVYcQJLDVgRAAAAVFlQ
+RV9QUkVTRU5UQVRJT05xA0sAWA4AAABiZWFtX2ZpbGVfbmFtZXEEWC4AAAAvdXNlcnMvc3Jpby9P
+YXN5cy9pZDE4X2Vic191MjBfMjAwMG1tX3MzLjAubnB6cQVYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0
 cnlxBmNzaXAKX3VucGlja2xlX3R5cGUKcQdYDAAAAFB5UXQ1LlF0Q29yZXEIWAoAAABRQnl0ZUFy
-cmF5cQlDQgHZ0MsAAwAAAAABfQAAAKEAAAakAAADgQAAAX0AAADGAAAGpAAAA4EAAAAAAAAAAAeA
-AAABfQAAAMYAAAakAAADgXEKhXELh3EMUnENdS4=
+cmF5cQlDQgHZ0MsAAwAAAAAAkAAAAKEAAAW3AAADXAAAAJAAAAChAAAFtwAAA1wAAAAAAAAAAAaQ
+AAAAkAAAAKEAAAW3AAADXHEKhXELh3EMUnENdS4=
+</properties>
+		<properties format="pickle" node_id="60">gAN9cQAoWBAAAABJTkRJVklEVUFMX01PREVTcQGJWAoAAABNT0RFX0lOREVYcQJLA1gQAAAAUkVG
+RVJFTkNFX1NPVVJDRXEDSwBYEQAAAFRZUEVfUFJFU0VOVEFUSU9OcQRLAFgOAAAAYmVhbV9maWxl
+X25hbWVxBVhPAAAAL3VzZXJzL3NyaW8vQ09NU1lMRC9jb21zeWwvY29tc3lsL2NhbGN1bGF0aW9u
+cy9zZXB0ZXN0X2NtX25ld191MThfMm1fMWhfczIuNS5oNXEGWBMAAABzYXZlZFdpZGdldEdlb21l
+dHJ5cQdjc2lwCl91bnBpY2tsZV90eXBlCnEIWAwAAABQeVF0NS5RdENvcmVxCVgKAAAAUUJ5dGVB
+cnJheXEKQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAvsAAABQAAAAQAAABXcAAAL7AAAAAAAAAAAG
+kAAAAFAAAABAAAAFdwAAAvtxC4VxDIdxDVJxDnUu
 </properties>
 	</node_properties>
 </scheme>
