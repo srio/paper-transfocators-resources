@@ -12,6 +12,7 @@ TMP_Y1 = []
 TMP_Y2 = []
 TMP_Y3 = []
 TMP_Y4 = []
+TMP_Y5 = []
 
 for ii in range(len(UP_TO_MODE)):
 
@@ -79,6 +80,7 @@ for ii in range(len(UP_TO_MODE)):
         ICENTERATWAIST = []
         ITOTALATWAIST = []
         FWHMATWAIST = []
+        FWHMAT99 = []
 
         for i in range(len(DISTANCE)):
                 iMin1 = numpy.argmax(ICENTER[i])
@@ -86,17 +88,28 @@ for ii in range(len(UP_TO_MODE)):
                 ITOTALATWAIST.append(ITOTAL[i][iMin1])
                 ICENTERATWAIST.append(ICENTER[i][iMin1])
                 FWHMATWAIST.append(FWHM[i][iMin1])
-                # print(WAISTPOSITION, ICENTERPOSITION)
+                FWHMAT99.append(
+                        numpy.interp(
+                        99.0,
+                        numpy.array(DISTANCE[i]),
+                        numpy.array(FWHM[i])))
                 print("Minima found for: %g" % (WAISTPOSITION[i]))
+
 
         print("SIGMASF = ", SIGMASF)
         print("WAISTPOSITION = ", WAISTPOSITION)
         print("ICENTERATWAIST = ", ICENTERATWAIST)
+        print("FWHMAT99 = ", FWHMAT99)
+#
+#         print("DISTANCE = ", DISTANCE[0])
+#
+#
         TMP_X.append(SIGMASF)
         TMP_Y1.append((WAISTPOSITION))
         TMP_Y2.append(ICENTERATWAIST)
         TMP_Y3.append(ITOTALATWAIST)
         TMP_Y4.append(FWHMATWAIST)
+        TMP_Y5.append(FWHMAT99)
 
 
 plot(   numpy.array(TMP_X[0]), numpy.array(TMP_Y1[0])/28.2,
@@ -134,6 +147,16 @@ plot(   numpy.array(TMP_X[0]), numpy.array(TMP_Y4[0]),
         numpy.array(TMP_X[0]), numpy.array(TMP_Y4[2]),
         numpy.array(TMP_X[0]), numpy.array(TMP_Y4[3]),
         xlog=0, ylog=0, xtitle="n=a/(125/2.35)",ytitle="FWHM at waist position [um]",
+        legend=["Gaussian slit","Rectangular slit","Gaussian slit Multimode","Rectangular slit Multimode",],
+        linestyle=["--",None,'--',None],
+        color=['red','red','blue','blue'],
+        show=0)
+
+plot(   (125/2.35) * numpy.array(TMP_X[0]), numpy.array(TMP_Y5[0]),
+        (125/2.35) * numpy.array(TMP_X[0]), numpy.array(TMP_Y5[1]),
+        (125/2.35) * numpy.array(TMP_X[0]), numpy.array(TMP_Y5[2]),
+        (125/2.35) * numpy.array(TMP_X[0]), numpy.array(TMP_Y5[3]),
+        xlog=0, ylog=0, xtitle="a [um]",ytitle="FWHM 99 m from lens [um]",
         legend=["Gaussian slit","Rectangular slit","Gaussian slit Multimode","Rectangular slit Multimode",],
         linestyle=["--",None,'--',None],
         color=['red','red','blue','blue'],
