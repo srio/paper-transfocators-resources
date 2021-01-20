@@ -1,0 +1,108 @@
+import numpy
+from oasys.util.oasys_util import get_fwhm
+
+# def get_fwhm(histogram, bins):
+#     quote = numpy.max(histogram)*0.5
+#     cursor = numpy.where(histogram >= quote)
+#
+#     if histogram[cursor].size > 1:
+#         bin_size    = bins[1]-bins[0]
+#         fwhm        = bin_size*(cursor[0][-1]-cursor[0][0])
+#         coordinates = (bins[cursor[0][0]], bins[cursor[0][-1]])
+#     else:
+#         fwhm = 0.0
+#         coordinates = None
+#
+#     return fwhm, quote, coordinates
+
+#
+#
+#
+class Score():
+    def __init__(self, scan_variable_name='x'):
+        self.reset()
+        self.scan_variable_name = scan_variable_name
+
+    def reset(self):
+        self.scan_variable_index = 0
+        self.scan_variable_value = []
+        self.fwhm = []
+        self.intensity_at_center = []
+        self.intensity_total = []
+        self.intensity_peak = []
+
+    def append(self, wf, scan_variable_value=None):
+        fwhm, intensity_total, intensity_at_center, intensity_peak = self.process_wavefront(wf)
+        self.fwhm.append(fwhm)
+        self.intensity_at_center.append(intensity_at_center)
+        self.intensity_total.append(intensity_total)
+        self.intensity_peak.append(intensity_peak)
+        self.scan_variable_index += 1
+        if scan_variable_value is None:
+            self.scan_variable_value.append(self.scan_variable_index)
+        else:
+            self.scan_variable_value.append(scan_variable_value)
+
+    def save(self, filename="tmp.dat"):
+        f = open(filename, 'w')
+        for i in range(len(self.fwhm)):
+            f.write("%g %g %g %g %g\n" % (self.scan_variable_value[i],
+                                    1e6*self.fwhm[i],
+                                    self.intensity_total[i],
+                                    self.intensity_at_center[i],
+                                    self.intensity_peak[i]))
+        f.close()
+        print("File written to disk: %s" % filename)
+
+    def plot(self, title=""):
+        from srxraylib.plot.gol import plot
+        x = numpy.array(self.scan_variable_value)
+
+
+        y = numpy.array(self.intensity_at_center)
+        plot(x, y, yrange=[0,1.1*y.max()],
+             title=title, ytitle="Intensity at center[a.u.]", xtitle=self.scan_variable_name,
+             figsize=(15, 4), show=0)
+
+        # y = numpy.array(self.intensity_total)
+        # plot(x, y, yrange=[0,1.1*y.max()],
+        #      title=title, ytitle="Beam intensity [a.u.]", xtitle=self.scan_variable_name,
+        #      figsize=(15, 4), show=0)
+
+        y = numpy.array(self.fwhm)
+        plot(x, y, yrange=[0,1.1*y.max()],
+             title=title, ytitle="FWHM [um]", xtitle=self.scan_variable_name,
+             figsize=(15, 4), show=1)
+
+
+
+    @classmethod
+    def process_wavefront(cls, wf):
+        I = wf.get_intensity()
+        x = wf.get_abscissas()
+
+        fwhm, quote, coordinates = get_fwhm(I, x)
+        intensity_at_center = I[I.size // 2]
+        intensity_total = I.sum() * (x[1] - x[0])
+        intensity_peak = I.max()
+
+        return fwhm, intensity_total, intensity_at_center, intensity_peak
+
+
+
+
+if __name__ == "__main__":
+    from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
+
+    sc = Score(scan_variable_name='mode index')
+
+
+    for xmode in range(10):
+        output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.00012, x_max=0.00012,
+                                                                              number_of_points=1000)
+        output_wavefront.set_photon_energy(10000)
+        output_wavefront.set_gaussian_hermite_mode(sigma_x=3.03783e-05, amplitude=1, mode_x=xmode, shift=0, beta=0.0922395)
+
+        sc.append(output_wavefront, scan_variable_value=xmode)
+
+    sc.plot()

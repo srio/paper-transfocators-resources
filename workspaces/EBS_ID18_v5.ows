@@ -37,25 +37,25 @@
 		<node id="33" name="Undulator Gaussian Shell-model 2D" position="(128.0, 1390.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.wavefront_propagation.ow_undulator_gaussian_shell_model_2D.OWUndulatorGaussianShellModel2D" title="Undulator Gaussian Shell-model 2D" version="" />
 		<node id="34" name="Screen 1D" position="(692.0, 263.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D@65m" version="" />
 		<node id="35" name="Ideal Lens 1D" position="(835.0, 294.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=28.2m" version="" />
-		<node id="36" name="Ideal Lens 1D" position="(1068.0, 346.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=39.7" version="" />
+		<node id="36" name="Ideal Lens 1D" position="(1078.0, 315.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=39.7" version="" />
 		<node id="37" name="Slit 1D" position="(950.0, 348.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits_1d.OWWOSlit1D" title="Slit 1D 1mm@164m (Lens aperture)" version="" />
-		<node id="38" name="Screen 1D" position="(1211.0, 425.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
+		<node id="38" name="Screen 1D" position="(1207.0, 322.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
 		<node id="39" name="Screen 1D" position="(443.0, 362.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @35m" version="" />
 		<node id="40" name="Slit 1D" position="(551.0, 358.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits_1d.OWWOSlit1D" title="Slit 1D 127um" version="" />
 		<node id="41" name="Screen 1D" position="(690.0, 426.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D@65m" version="" />
 		<node id="42" name="Ideal Lens 1D" position="(798.0, 424.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=48.9m" version="" />
-		<node id="43" name="Ideal Lens 1D" position="(1069.0, 510.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=38.3" version="" />
-		<node id="44" name="Slit 1D" position="(956.0, 511.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits_1d.OWWOSlit1D" title="Slit 1D 1mm@164m (Lens aperture)" version="" />
-		<node id="45" name="Screen 1D" position="(1213.0, 587.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
+		<node id="43" name="Ideal Lens 1D" position="(1083.0, 582.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_ideal_lens_1d.OWWOIdealLens1D" title="Ideal Lens 1D f=38.3" version="" />
+		<node id="44" name="Slit 1D" position="(970.0, 583.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits_1d.OWWOSlit1D" title="Slit 1D 1mm@164m (Lens aperture)" version="" />
+		<node id="45" name="Screen 1D" position="(1227.0, 659.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
 		<node id="46" name="Info" position="(1294.0, 1644.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.plots.ow_info.Info" title="Info" version="" />
 		<node id="47" name="FocNew" position="(792.0, 1560.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.plots.ow_focnew.FocNew" title="FocNew" version="" />
 		<node id="48" name="Python Script" position="(109.0, 441.0)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="Python Script Lens parms" version="" />
 		<node id="49" name="Screen 1D" position="(972.0, 67.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D" version="" />
 		<node id="50" name="FocNew" position="(1299.0, 1554.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.plots.ow_focnew.FocNew" title="FocNew" version="" />
-		<node id="51" name="Loop stepper 1D" position="(1344.0, 243.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_stepper_1D.OWstepper1D" title=" Generic Wavefront Viewer 1D" version="" />
-		<node id="52" name="Screen 1D" position="(1226.0, 251.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @best focus" version="" />
-		<node id="53" name="Info" position="(1325.0, 426.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_info.OWWOInfo" title="Info" version="" />
-		<node id="54" name="Info" position="(1325.0, 585.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_info.OWWOInfo" title="Info" version="" />
+		<node id="51" name="Loop stepper 1D" position="(1333.0, 203.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_stepper_1D.OWstepper1D" title=" Generic Wavefront Viewer 1D" version="" />
+		<node id="52" name="Screen 1D" position="(1227.0, 203.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @best focus" version="" />
+		<node id="53" name="Info" position="(1343.0, 320.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_info.OWWOInfo" title="Info" version="" />
+		<node id="54" name="Info" position="(1339.0, 657.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_info.OWWOInfo" title="Info" version="" />
 		<node id="55" name="Screen" position="(1207.0, 1789.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
 		<node id="56" name="Slit 1D" position="(585.0, 815.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits_1d.OWWOSlit1D" title="Slit 1D open slit" version="" />
 		<node id="57" name="Screen 1D" position="(700.0, 818.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D@65m" version="" />
@@ -85,6 +85,10 @@
 		<node id="81" name="Python Script" position="(631.0, 41.0)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="Python Script" version="" />
 		<node id="82" name="To Wofry Wavefront 2D" position="(366.0, 1895.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_wavefront_to_wofry.OWToWofryWavefront2d" title="To Wofry Wavefront 2D" version="" />
 		<node id="83" name="Slit" position="(495.0, 1901.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_slits.OWWOSlit" title="Slit" version="" />
+		<node id="84" name="ThinObjectCorrector1D" position="(1083.0, 413.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_thin_object_corrector_1d.OWWOThinObjectCorrector1D" title="ThinObjectCorrector1D" version="" />
+		<node id="85" name="Screen 1D" position="(1210.0, 415.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
+		<node id="86" name="Real Lens 1D" position="(1090.0, 498.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_real_lens_1D.OWWORealLens1D" title="Real Lens 1D" version="" />
+		<node id="87" name="Screen 1D" position="(1224.0, 514.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="WofryData" sink_node_id="4" source_channel="WofryData" source_node_id="1" />
@@ -148,17 +152,21 @@
 		<link enabled="true" id="58" sink_channel="WofryData" sink_node_id="71" source_channel="WofryData" source_node_id="70" />
 		<link enabled="true" id="59" sink_channel="Trigger" sink_node_id="70" source_channel="Trigger" source_node_id="71" />
 		<link enabled="true" id="60" sink_channel="WofryData" sink_node_id="72" source_channel="WofryData" source_node_id="1" />
-		<link enabled="true" id="61" sink_channel="WofryData" sink_node_id="34" source_channel="WofryData" source_node_id="4" />
-		<link enabled="true" id="62" sink_channel="WofryData" sink_node_id="73" source_channel="WofryData" source_node_id="34" />
-		<link enabled="false" id="63" sink_channel="WofryData" sink_node_id="74" source_channel="WofryData" source_node_id="34" />
-		<link enabled="true" id="64" sink_channel="WofryData" sink_node_id="49" source_channel="WofryData" source_node_id="74" />
-		<link enabled="true" id="65" sink_channel="WofryData" sink_node_id="75" source_channel="WofryData" source_node_id="73" />
-		<link enabled="true" id="66" sink_channel="WofryData" sink_node_id="76" source_channel="WofryData" source_node_id="35" />
-		<link enabled="true" id="67" sink_channel="COMSYL modes" sink_node_id="78" source_channel="COMSYL modes" source_node_id="77" />
-		<link enabled="true" id="68" sink_channel="WofryData" sink_node_id="79" source_channel="WofryData" source_node_id="78" />
-		<link enabled="true" id="69" sink_channel="WofryData" sink_node_id="1" source_channel="WofryData" source_node_id="79" />
-		<link enabled="true" id="70" sink_channel="WofryData" sink_node_id="6" source_channel="WofryData" source_node_id="78" />
-		<link enabled="true" id="71" sink_channel="SRWData" sink_node_id="82" source_channel="SRWData" source_node_id="21" />
+		<link enabled="true" id="61" sink_channel="WofryData" sink_node_id="73" source_channel="WofryData" source_node_id="34" />
+		<link enabled="false" id="62" sink_channel="WofryData" sink_node_id="74" source_channel="WofryData" source_node_id="34" />
+		<link enabled="true" id="63" sink_channel="WofryData" sink_node_id="49" source_channel="WofryData" source_node_id="74" />
+		<link enabled="true" id="64" sink_channel="WofryData" sink_node_id="75" source_channel="WofryData" source_node_id="73" />
+		<link enabled="true" id="65" sink_channel="WofryData" sink_node_id="76" source_channel="WofryData" source_node_id="35" />
+		<link enabled="true" id="66" sink_channel="COMSYL modes" sink_node_id="78" source_channel="COMSYL modes" source_node_id="77" />
+		<link enabled="true" id="67" sink_channel="WofryData" sink_node_id="79" source_channel="WofryData" source_node_id="78" />
+		<link enabled="true" id="68" sink_channel="WofryData" sink_node_id="6" source_channel="WofryData" source_node_id="78" />
+		<link enabled="true" id="69" sink_channel="SRWData" sink_node_id="82" source_channel="SRWData" source_node_id="21" />
+		<link enabled="true" id="70" sink_channel="WofryData" sink_node_id="1" source_channel="WofryData" source_node_id="30" />
+		<link enabled="true" id="71" sink_channel="WofryData" sink_node_id="34" source_channel="WofryData" source_node_id="72" />
+		<link enabled="true" id="72" sink_channel="WofryData" sink_node_id="84" source_channel="WofryData" source_node_id="37" />
+		<link enabled="true" id="73" sink_channel="WofryData" sink_node_id="85" source_channel="WofryData" source_node_id="84" />
+		<link enabled="true" id="74" sink_channel="WofryData" sink_node_id="86" source_channel="WofryData" source_node_id="37" />
+		<link enabled="true" id="75" sink_channel="WofryData" sink_node_id="87" source_channel="WofryData" source_node_id="86" />
 	</links>
 	<annotations>
 		<text font-family="Helvetica" font-size="16" id="0" rect="(254.0, 121.0, 150.0, 35.0)">Horizontal</text>
@@ -1543,7 +1551,7 @@ b21xAksAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0aW9ucQOJWAoAAABtb2RlX2luZGV4cQRLAFgQ
 AAAAbnVtYmVyX29mX3BvaW50c3EFTegDWA0AAABwaG90b25fZW5lcmd5cQZHQMOH/752yLRYCgAA
 AHJhbmdlX2Zyb21xB0e/H3UQTVUdaVgIAAAAcmFuZ2VfdG9xCEc/H3UQTVUdaVgTAAAAc2F2ZWRX
 aWRnZXRHZW9tZXRyeXEJY3NpcApfdW5waWNrbGVfdHlwZQpxClgMAAAAUHlRdDUuUXRDb3JlcQtY
-CgAAAFFCeXRlQXJyYXlxDENCAdnQywADAAAAAABQAAAAQAAABXcAAAMAAAAAUAAAAEAAAAV3AAAD
+CgAAAFFCeXRlQXJyYXlxDENCAdnQywADAAAAAABQAAAAGwAABXcAAAMAAAAAUAAAAEAAAAV3AAAD
 AAAAAAAAAAAABpAAAABQAAAAQAAABXcAAAMAcQ2FcQ6HcQ9ScRBYEgAAAHNpZ21hX2RpdmVyZ2Vu
 Y2VfaHERRz7SUlRsARqzWBIAAABzaWdtYV9kaXZlcmdlbmNlX3ZxEkc+txF+f3pFKVgHAAAAc2ln
 bWFfaHETRz7/plkysLM6WAcAAABzaWdtYV92cRRHPs6BIYoHuxNYGgAAAHNwZWN0cmFsX2RlbnNp
@@ -1624,8 +1632,8 @@ bnEEiFgPAAAAbWFnbmlmaWNhdGlvbl9OcQVHP/AAAAAAAABYDwAAAG1hZ25pZmljYXRpb25feHEG
 Rz/wAAAAAAAAWAcAAABvZV9uYW1lcQdYDwAAAElkZWFsTGVuc0Y9MzkuN3EIWAEAAABwcQlHAAAA
 AAAAAABYCgAAAHByb3BhZ2F0b3JxCksEWAEAAABxcQtHAAAAAAAAAABYEwAAAHNhdmVkV2lkZ2V0
 R2VvbWV0cnlxDGNzaXAKX3VucGlja2xlX3R5cGUKcQ1YDAAAAFB5UXQ1LlF0Q29yZXEOWAoAAABR
-Qnl0ZUFycmF5cQ9DQgHZ0MsAAwAAAAAASAAAAg0AAAVvAAAE8gAAAEgAAAIyAAAFbwAABPIAAAAA
-AAAAAAeAAAAASAAAAjIAAAVvAAAE8nEQhXERh3ESUnETWAgAAABzY2FsZWRfTnEUS2RYCAAAAHNj
+Qnl0ZUFycmF5cQ9DQgHZ0MsAAwAAAAAAkAAAAHoAAAW3AAADXwAAAJAAAACfAAAFtwAAA18AAAAA
+AAAAAAaQAAAAkAAAAJ8AAAW3AAADX3EQhXERh3ESUnETWAgAAABzY2FsZWRfTnEUS2RYCAAAAHNj
 YWxlZF9ScRVHQI9AAAAAAABYCwAAAHNjYWxlZF9SbWF4cRZHQFkAAAAAAABYDgAAAHNjYWxlZF9n
 dWVzc19ScReIWAUAAABzaGFwZXEYSwBYDQAAAHN1cmZhY2Vfc2hhcGVxGUsAWAkAAAB2aWV3X3R5
 cGVxGksBdS4=
@@ -2109,7 +2117,7 @@ b2Zmc2V0X2Zmc3EURwAAAAAAAAAAWAEAAABwcRVHAAAAAAAAAABYCgAAAHByb3BhZ2F0b3JxFksE
 WAEAAABxcRdHAAAAAAAAAABYBgAAAHJhZGl1c3EYRz8pOQijcYZmWBYAAAByZWZyYWN0aW9uX2lu
 ZGV4X2RlbHRhcRlHPqHIqlNQNCBYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxGmNzaXAKX3VucGlj
 a2xlX3R5cGUKcRtYDAAAAFB5UXQ1LlF0Q29yZXEcWAoAAABRQnl0ZUFycmF5cR1DQgHZ0MsAAwAA
-AAAAfgAAAEYAAAWlAAADKwAAAH4AAABrAAAFpQAAAysAAAAAAAAAAAaQAAAAfgAAAGsAAAWlAAAD
+AAAAfgAAAGsAAAWlAAADKwAAAH4AAABrAAAFpQAAAysAAAAAAAAAAAaQAAAAfgAAAGsAAAWlAAAD
 K3EehXEfh3EgUnEhWAgAAABzY2FsZWRfTnEiS2RYCAAAAHNjYWxlZF9ScSNHQI9AAAAAAABYCwAA
 AHNjYWxlZF9SbWF4cSRHQFkAAAAAAABYDgAAAHNjYWxlZF9ndWVzc19ScSWIWAUAAABzaGFwZXEm
 SwFYDQAAAHN1cmZhY2Vfc2hhcGVxJ0sAWAgAAAB0aWx0X2Jmc3EoRwAAAAAAAAAAWAgAAAB0aWx0
@@ -2224,6 +2232,68 @@ BpAAAACQAAAAnwAABbcAAANfcRWFcRaHcRdScRhYBQAAAHNoYXBlcRlLAFgQAAAAc2hpZnRfaGFs
 Zl9waXhlbHEaSwFYEAAAAHNodWZmbGVfaW50ZXJ2YWxxG0sAWA0AAABzdXJmYWNlX3NoYXBlcRxL
 AFgOAAAAdmVydGljYWxfc2hpZnRxHUcAAAAAAAAAAFgJAAAAdmlld190eXBlcR5LAVgFAAAAd2lk
 dGhxH0c++jbi6xxDLXUu
+</properties>
+		<properties format="pickle" node_id="84">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYFAAAAGFwZXJ0dXJlX2RpbWVuc2lvbl9ocQNHPyo24uscQy1YFAAAAGFwZXJ0dXJl
+X2RpbWVuc2lvbl92cQRHPxo24uscQy1YDgAAAGFwZXJ0dXJlX3NoYXBlcQVLAFgdAAAAYXBwbHlf
+Y29ycmVjdGlvbl90b193YXZlZnJvbnRxBksBWA8AAABhdHRfY29lZmZpY2llbnRxB0c/bUbYALKC
+dFgRAAAAY29ycmVjdGlvbl9tZXRob2RxCEsBWBgAAABmaWxlX3dpdGhfdGhpY2tuZXNzX21lc2hx
+CVgNAAAAcHJvZmlsZTFELmRhdHEKWB0AAABmaWxlX3dpdGhfdGhpY2tuZXNzX21lc2hfZmxhZ3EL
+SwBYCAAAAGZvY3VzX2F0cQxHQEKAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xDYhY
+DwAAAG1hZ25pZmljYXRpb25fTnEORz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxD0c/8AAA
+AAAAAFgIAAAAbWF0ZXJpYWxxEEsBWAcAAABvZV9uYW1lcRFYAAAAAHESWAEAAABwcRNHAAAAAAAA
+AABYCgAAAHByb3BhZ2F0b3JxFEsEWAEAAABxcRVHAAAAAAAAAABYFgAAAHJlZnJhY3Rpb25faW5k
+ZXhfZGVsdGFxFkc+ociqU1A0IFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEXY3NpcApfdW5waWNr
+bGVfdHlwZQpxGFgMAAAAUHlRdDUuUXRDb3JlcRlYCgAAAFFCeXRlQXJyYXlxGkNCAdnQywADAAAA
+AABQAAAAGwAABXcAAAMAAAAAUAAAAEAAAAV3AAADAAAAAAAAAAAABpAAAABQAAAAQAAABXcAAAMA
+cRuFcRyHcR1ScR5YCAAAAHNjYWxlZF9OcR9LZFgIAAAAc2NhbGVkX1JxIEdAj0AAAAAAAFgLAAAA
+c2NhbGVkX1JtYXhxIUdAWQAAAAAAAFgOAAAAc2NhbGVkX2d1ZXNzX1JxIohYBQAAAHNoYXBlcSNL
+AFgNAAAAc3VyZmFjZV9zaGFwZXEkSwBYCQAAAHZpZXdfdHlwZXElSwFYDgAAAHdhbGxfdGhpY2tu
+ZXNzcSZHAAAAAAAAAABYDQAAAHdyaXRlX3Byb2ZpbGVxJ1gaAAAAdGhpbl9vYmplY3RfcHJvZmls
+ZV8xRC5kYXRxKFgSAAAAd3JpdGVfcHJvZmlsZV9mbGFncSlLAHUu
+</properties>
+		<properties format="pickle" node_id="85">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
+TnEERz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxBUc/0AAAAAAAAFgHAAAAb2VfbmFtZXEG
+WAoAAABTY3JlZW5AMjAwcQdYAQAAAHBxCEdAQgAAAAAAAFgKAAAAcHJvcGFnYXRvcnEJSwRYAQAA
+AHFxCkcAAAAAAAAAAFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXELY3NpcApfdW5waWNrbGVfdHlw
+ZQpxDFgMAAAAUHlRdDUuUXRDb3JlcQ1YCgAAAFFCeXRlQXJyYXlxDkNCAdnQywADAAAAAAEIAAAA
+xQAABi8AAAOqAAABCAAAAOoAAAYvAAADqgAAAAAAAAAABpAAAAEIAAAA6gAABi8AAAOqcQ+FcRCH
+cRFScRJYCAAAAHNjYWxlZF9OcRNLZFgIAAAAc2NhbGVkX1JxFEdAj0AAAAAAAFgLAAAAc2NhbGVk
+X1JtYXhxFUdAWQAAAAAAAFgOAAAAc2NhbGVkX2d1ZXNzX1JxFohYBQAAAHNoYXBlcRdLAFgNAAAA
+c3VyZmFjZV9zaGFwZXEYSwBYCQAAAHZpZXdfdHlwZXEZSwF1Lg==
+</properties>
+		<properties format="pickle" node_id="86">gAN9cQAoWAcAAABhbmdfcm90cQFHAAAAAAAAAABYDwAAAGFuZ2xlX2F6aW11dGhhbHECRwAAAAAA
+AAAAWAwAAABhbmdsZV9yYWRpYWxxA0cAAAAAAAAAAFgPAAAAYXR0X2NvZWZmaWNpZW50cQRHP21G
+2ACygnRYFQAAAGVycm9yX2VkZ2VfbWFuYWdlbWVudHEFSwBYCgAAAGVycm9yX2ZpbGVxBlgGAAAA
+PG5vbmU+cQdYCgAAAGVycm9yX2ZsYWdxCEsAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0aW9ucQmI
+WA0AAABsZW5zX2FwZXJ0dXJlcQpHP1BiTdLxqfxYDwAAAG1hZ25pZmljYXRpb25fTnELRz/wAAAA
+AAAAWA8AAABtYWduaWZpY2F0aW9uX3hxDEc/8AAAAAAAAFgIAAAAbWF0ZXJpYWxxDUsBWAgAAABt
+aXNfZmxhZ3EOSwBYCAAAAG5fbGVuc2VzcQ9LAVgZAAAAbnVtYmVyX29mX2N1cnZlZF9zdXJmYWNl
+c3EQSwJYBwAAAG9lX25hbWVxEVgAAAAAcRJYCgAAAG9mZnNldF9iZnNxE0cAAAAAAAAAAFgKAAAA
+b2Zmc2V0X2Zmc3EURwAAAAAAAAAAWAEAAABwcRVHAAAAAAAAAABYCgAAAHByb3BhZ2F0b3JxFksE
+WAEAAABxcRdHAAAAAAAAAABYBgAAAHJhZGl1c3EYRz8qNuLrHEMtWBYAAAByZWZyYWN0aW9uX2lu
+ZGV4X2RlbHRhcRlHPqHIqlNQNCBYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxGmNzaXAKX3VucGlj
+a2xlX3R5cGUKcRtYDAAAAFB5UXQ1LlF0Q29yZXEcWAoAAABRQnl0ZUFycmF5cR1DQgHZ0MsAAwAA
+AAAAfgAAAEYAAAWlAAADKwAAAH4AAABrAAAFpQAAAysAAAAAAAAAAAaQAAAAfgAAAGsAAAWlAAAD
+K3EehXEfh3EgUnEhWAgAAABzY2FsZWRfTnEiS2RYCAAAAHNjYWxlZF9ScSNHQI9AAAAAAABYCwAA
+AHNjYWxlZF9SbWF4cSRHQFkAAAAAAABYDgAAAHNjYWxlZF9ndWVzc19ScSWIWAUAAABzaGFwZXEm
+SwFYDQAAAHN1cmZhY2Vfc2hhcGVxJ0sAWAgAAAB0aWx0X2Jmc3EoRwAAAAAAAAAAWAgAAAB0aWx0
+X2Zmc3EpRwAAAAAAAAAAWAkAAAB2aWV3X3R5cGVxKksBWA4AAAB3YWxsX3RoaWNrbmVzc3ErRz8K
+NuLrHEMtWA0AAAB3cml0ZV9wcm9maWxlcSxYDQAAAHByb2ZpbGUxRC5kYXRxLVgSAAAAd3JpdGVf
+cHJvZmlsZV9mbGFncS5LAFgNAAAAd3Rfb2Zmc2V0X2Jmc3EvRwAAAAAAAAAAWA0AAAB3dF9vZmZz
+ZXRfZmZzcTBHAAAAAAAAAABYAgAAAHhjcTFHAAAAAAAAAAB1Lg==
+</properties>
+		<properties format="pickle" node_id="87">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
+TnEERz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxBUc/0AAAAAAAAFgHAAAAb2VfbmFtZXEG
+WAoAAABTY3JlZW5AMjAwcQdYAQAAAHBxCEdAQgAAAAAAAFgKAAAAcHJvcGFnYXRvcnEJSwRYAQAA
+AHFxCkcAAAAAAAAAAFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXELY3NpcApfdW5waWNrbGVfdHlw
+ZQpxDFgMAAAAUHlRdDUuUXRDb3JlcQ1YCgAAAFFCeXRlQXJyYXlxDkNCAdnQywADAAAAAAEIAAAA
+xQAABi8AAAOqAAABCAAAAOoAAAYvAAADqgAAAAAAAAAABpAAAAEIAAAA6gAABi8AAAOqcQ+FcRCH
+cRFScRJYCAAAAHNjYWxlZF9OcRNLZFgIAAAAc2NhbGVkX1JxFEdAj0AAAAAAAFgLAAAAc2NhbGVk
+X1JtYXhxFUdAWQAAAAAAAFgOAAAAc2NhbGVkX2d1ZXNzX1JxFohYBQAAAHNoYXBlcRdLAFgNAAAA
+c3VyZmFjZV9zaGFwZXEYSwBYCQAAAHZpZXdfdHlwZXEZSwF1Lg==
 </properties>
 	</node_properties>
 </scheme>

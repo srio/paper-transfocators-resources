@@ -19,115 +19,11 @@ from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import Fres
 
 from srxraylib.plot.gol import plot, plot_image
 
+from wofry_tools import Score
 #
 #
 #
 from syned.beamline.shape import *
-from oasys.util.oasys_util import get_fwhm
-
-def get_fwhm(histogram, bins):
-    quote = numpy.max(histogram)*0.5
-    cursor = numpy.where(histogram >= quote)
-
-    if histogram[cursor].size > 1:
-        bin_size    = bins[1]-bins[0]
-        fwhm        = bin_size*(cursor[0][-1]-cursor[0][0])
-        coordinates = (bins[cursor[0][0]], bins[cursor[0][-1]])
-    else:
-        fwhm = 0.0
-        coordinates = None
-
-    return fwhm, quote, coordinates
-
-#
-#
-#
-class Score():
-    def __init__(self, scan_variable_name='x'):
-        self.reset()
-        self.scan_variable_name = scan_variable_name
-
-    def reset(self):
-        self.scan_variable_index = 0
-        self.scan_variable_value = []
-        self.fwhm = []
-        self.intensity_at_center = []
-        self.intensity_total = []
-        self.intensity_peak = []
-
-    def append(self, wf, scan_variable_value=None):
-        fwhm, intensity_total, intensity_at_center, intensity_peak = self.process_wavefront(wf)
-        self.fwhm.append(fwhm)
-        self.intensity_at_center.append(intensity_at_center)
-        self.intensity_total.append(intensity_total)
-        self.intensity_peak.append(intensity_peak)
-        self.scan_variable_index += 1
-        if scan_variable_value is None:
-            self.scan_variable_value.append(self.scan_variable_index)
-        else:
-            self.scan_variable_value.append(scan_variable_value)
-
-    def save(self, filename="tmp.dat"):
-        f = open(filename, 'w')
-        for i in range(len(self.fwhm)):
-            f.write("%g %g %g %g %g\n" % (self.scan_variable_value[i],
-                                    1e6*self.fwhm[i],
-                                    self.intensity_total[i],
-                                    self.intensity_at_center[i],
-                                    self.intensity_peak[i]))
-        f.close()
-        print("File written to disk: %s" % filename)
-
-    def plot(self, title=""):
-
-        x = numpy.array(self.scan_variable_value)
-
-
-        y = numpy.array(self.intensity_at_center)
-        plot(x, y, yrange=[0,1.1*y.max()],
-             title=title, ytitle="Intensity at center[a.u.]", xtitle=self.scan_variable_name,
-             figsize=(15, 4), show=0)
-
-        # y = numpy.array(self.intensity_total)
-        # plot(x, y, yrange=[0,1.1*y.max()],
-        #      title=title, ytitle="Beam intensity [a.u.]", xtitle=self.scan_variable_name,
-        #      figsize=(15, 4), show=0)
-
-        y = numpy.array(self.fwhm)
-        plot(x, y, yrange=[0,1.1*y.max()],
-             title=title, ytitle="FWHM [um]", xtitle=self.scan_variable_name,
-             figsize=(15, 4), show=1)
-
-
-
-    @classmethod
-    def process_wavefront(cls, wf):
-        I = wf.get_intensity()
-        x = wf.get_abscissas()
-
-        fwhm, quote, coordinates = get_fwhm(I, x)
-        intensity_at_center = I[I.size // 2]
-        intensity_total = I.sum() * (x[1] - x[0])
-        intensity_peak = I.max()
-
-        return fwhm, intensity_total, intensity_at_center, intensity_peak
-
-
-
-
-def get_wavefront_intensity_fwhm(wf):
-    fwhm, quote, coordinates = get_fwhm(wf.get_intensity(), wf.get_abscissas())
-    return fwhm
-
-def get_wavefront_intensity_I0(wf):
-    I = wf.get_intensity()
-    return I[I.size // 2]
-
-def get_wavefront_intensity_ITOTAL(wf):
-    I = wf.get_intensity()
-    x = wf.get_abscissas()
-    return I.sum() * (x[1] - x[0])
-
 
 def run_wofry_1d(plot_from=0, mode_x=0):
     ##########  SOURCE ##########
@@ -330,7 +226,6 @@ def run_wofry_1d(plot_from=0, mode_x=0):
     return output_wavefront
 
 def run_multimode(up_to_mode=0):
-
     for i in range(up_to_mode+1):
         wf = run_wofry_1d(plot_from=1000, mode_x=i)
         if i == 0:
@@ -339,7 +234,6 @@ def run_multimode(up_to_mode=0):
             intens = WF.get_intensity()
             intens += wf.get_intensity()
             WF.set_complex_amplitude(numpy.sqrt(intens))
-
     return WF
 
 if __name__ == "__main__":
@@ -348,9 +242,9 @@ if __name__ == "__main__":
     use_gaussian_slits = False
     use_real_lens = False
     npoints = 100
-    do_plot = False
-    save_file = True
-    up_to_mode = 50
+    do_plot = True
+    save_file = False
+    up_to_mode = 0
 
     NSIGMAS = [0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 4.0, 6.0]
 
@@ -422,5 +316,4 @@ if __name__ == "__main__":
         if save_file:
             sc.save(filename="tmp%s%s%s%2.1f.dat" % (up_to_mode_extension,use_gaussian_slits_extension,use_real_lens_extension,nsigmas))
 
-        # sc.save(filename="tmpG.dat")
         if do_plot: sc.plot()
