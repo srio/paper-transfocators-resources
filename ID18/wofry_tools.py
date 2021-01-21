@@ -19,9 +19,10 @@ from oasys.util.oasys_util import get_fwhm
 #
 #
 class Score():
-    def __init__(self, scan_variable_name='x'):
+    def __init__(self, scan_variable_name='x', additional_stored_variable_names=None):
         self.reset()
         self.scan_variable_name = scan_variable_name
+        self.additional_stored_variable_names = additional_stored_variable_names
 
     def reset(self):
         self.scan_variable_index = 0
@@ -30,8 +31,9 @@ class Score():
         self.intensity_at_center = []
         self.intensity_total = []
         self.intensity_peak = []
+        self.additional_stored_values = []
 
-    def append(self, wf, scan_variable_value=None):
+    def append(self, wf, scan_variable_value=None, additional_stored_values=None):
         fwhm, intensity_total, intensity_at_center, intensity_peak = self.process_wavefront(wf)
         self.fwhm.append(fwhm)
         self.intensity_at_center.append(intensity_at_center)
@@ -43,14 +45,32 @@ class Score():
         else:
             self.scan_variable_value.append(scan_variable_value)
 
-    def save(self, filename="tmp.dat"):
+        self.additional_stored_values.append(additional_stored_values)
+
+    def save(self, filename="tmp.dat", add_header=True):
         f = open(filename, 'w')
+        if add_header:
+            if self.additional_stored_variable_names is None:
+                number_of_additional_parameters = 0
+            else:
+                number_of_additional_parameters = len(self.additional_stored_variable_names)
+            header = "#S 1 scored data\n"
+            header += "#N %d\n" % (number_of_additional_parameters + 5)
+            header_titles = "#L  %s  %s  %s  %s  %s" % (self.scan_variable_name, "fwhm", "total_intensity", "on_axis_intensity", "peak_intensity")
+            for i in range(number_of_additional_parameters):
+                header_titles += "  %s" % self.additional_stored_variable_names[i]
+            header_titles += "\n"
+            header += header_titles
+            f.write(header)
         for i in range(len(self.fwhm)):
-            f.write("%g %g %g %g %g\n" % (self.scan_variable_value[i],
+            f.write("%g %g %g %g %g" % (self.scan_variable_value[i],
                                     1e6*self.fwhm[i],
                                     self.intensity_total[i],
                                     self.intensity_at_center[i],
                                     self.intensity_peak[i]))
+            for j in range(number_of_additional_parameters):
+                f.write(" %g" % self.additional_stored_values[i][j])
+            f.write("\n")
         f.close()
         print("File written to disk: %s" % filename)
 
@@ -94,7 +114,7 @@ class Score():
 if __name__ == "__main__":
     from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
 
-    sc = Score(scan_variable_name='mode index')
+    sc = Score(scan_variable_name='mode index',additional_stored_variable_names=['a','b'])
 
 
     for xmode in range(10):
@@ -103,6 +123,7 @@ if __name__ == "__main__":
         output_wavefront.set_photon_energy(10000)
         output_wavefront.set_gaussian_hermite_mode(sigma_x=3.03783e-05, amplitude=1, mode_x=xmode, shift=0, beta=0.0922395)
 
-        sc.append(output_wavefront, scan_variable_value=xmode)
+        sc.append(output_wavefront, scan_variable_value=xmode, additional_stored_values=[1,2.1])
 
     sc.plot()
+    sc.save("tmp.dat")

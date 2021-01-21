@@ -204,7 +204,7 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
 
 
     ##########  OPTICAL ELEMENT NUMBER 6 ##########
-    if f2 is None:
+    if f2 is None: #
 
         input_wavefront = output_wavefront.duplicate()
         from orangecontrib.esrf.wofry.util.thin_object_corrector import WOThinObjectCorrector1D  # TODO update
@@ -220,7 +220,8 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
 
         # no drift in this element
         output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-        F2.append("?")
+        # F2.append("?")
+        f22 = 0
 
     elif f2 == 0:
 
@@ -241,7 +242,7 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
 
         f22 = fit_profile(output_wavefront)
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> f22: ", f22)
-        F2.append(f22)
+        # F2.append(f22)
 
 
         #  now apply the ideal lens with the calculated f2
@@ -261,8 +262,8 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
 
         # no drift in this element
         output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-        F2.append(f2)
-
+        # F2.append(f2)
+        f22 = f2
     #
     #---- plots -----
     #
@@ -304,19 +305,29 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
     #
     if plot_from_oe <= 7: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 7')
 
-    return output_wavefront
+    return output_wavefront, f22
 
 
 def run_multimode(up_to_mode=0, f1=28.2, f2=None):
     for i in range(up_to_mode+1):
-        wf = run_wofry_1d(plot_from_oe=1000, mode_x=i, f1=f1, f2=f2)
+
         if i == 0:
+            wf, tmp_f2 = run_wofry_1d(plot_from_oe=1000, mode_x=i, f1=f1, f2=f2)
             WF = wf.duplicate()
+            F2 = tmp_f2
         else:
+            if f2 is None:
+                wf, tmp_f2 = run_wofry_1d(plot_from_oe=1000, mode_x=i, f1=f1, f2=F2)
+            else:
+                if f2 == 0:
+                    wf, tmp_f2 = run_wofry_1d(plot_from_oe=1000, mode_x=i, f1=f1, f2=F2)
+                else:
+                    wf, tmp_f2 = run_wofry_1d(plot_from_oe=1000, mode_x=i, f1=f1, f2=f2)
+
             intens = WF.get_intensity()
             intens += wf.get_intensity()
             WF.set_complex_amplitude(numpy.sqrt(intens))
-    return WF
+    return WF, F2
 
 
 def get_f2(f1=28.2, verbose=False):
@@ -395,43 +406,51 @@ if __name__ == "__main__":
 
     do_plot = False
     save_file = True
-    up_to_mode = 0
+    up_to_mode = 50
 
 
 
-    sc = Score(scan_variable_name='f1 [m]')
+    sc = Score(scan_variable_name='f1 [m]',additional_stored_variable_names=['f2 [m]'])
 
 
     # F1 = numpy.linspace(18.2, 38.2, 5)
     F1 = numpy.linspace(10, 40, 100)
-    F2 = []
+    # F2 = []
 
-    f2 = 0 # 39.7 #0 means in flight optimization
+    f2 = 0    # this means guess it and use the ideal lens.
+    # f2 = 39.7 # this is fixed
+    # f2 = None # this means use the corrector and do not compute ideal lens
 
 
     if do_plot:
-            WF1 = run_multimode(up_to_mode=up_to_mode, f1=F1[0], f2=f2)
-            WF2 = run_multimode(up_to_mode=up_to_mode, f1=F1[F1.size // 2], f2=f2)
-            WF3 = run_multimode(up_to_mode=up_to_mode, f1=F1[-1], f2=f2)
+            WF1, F2_1 = run_multimode(up_to_mode=up_to_mode, f1=F1[0], f2=f2)
+            WF2, F2_2 = run_multimode(up_to_mode=up_to_mode, f1=F1[F1.size // 2], f2=f2)
+            WF3, F2_3 = run_multimode(up_to_mode=up_to_mode, f1=F1[-1], f2=f2)
 
             if f2 is None:
-                ff2 = "f2=?"
+                ff2_1 = "f2=?"
+                ff2_2 = "f2=?"
+                ff2_3 = "f2=?"
             else:
-                ff2 = "f2=%g"%f2
+                ff2_1 = "f2=%g" % F2_1
+                ff2_2 = "f2=%g" % F2_2
+                ff2_3 = "f2=%g" % F2_3
             plot(WF1.get_abscissas(), WF1.get_intensity(),
                  WF2.get_abscissas(), WF2.get_intensity(),
                  WF3.get_abscissas(), WF3.get_intensity(),
-                 legend=["f1=%g %s"%(F1[0],ff2), "f1=%g %s"%(F1[F1.size//2],ff2), "f1=%g %s"%(F1[-1],ff2)],
+                 legend=["f1=%g %s"%(F1[0],F2_1), "f1=%g %s"%(F1[F1.size//2],F2_2), "f1=%g %s"%(F1[-1],F2_3)],
                  title="")
 
 
     for i, f1 in enumerate(F1):
-        WF1 = run_multimode(up_to_mode=up_to_mode, f1=f1, f2=f2)
-        sc.append(WF1, scan_variable_value=f1)
+        WF, F2 = run_multimode(up_to_mode=up_to_mode, f1=f1, f2=f2)
+
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> F2, f2", F2, f2)
+        sc.append(WF, scan_variable_value=f1, additional_stored_values=[F2])
 
 
 
-    sc.save("tmp.dat")
+    sc.save("tmp_uptomode50.dat")
 
 
     sc.plot()
@@ -441,11 +460,11 @@ if __name__ == "__main__":
          numpy.array(sc.fwhm) / source_fwhm,
          title="Magnification")
 
-    plot(numpy.array(sc.scan_variable_value),
-         numpy.array(F2),
-         title="F1 F2 map")
+    # plot(numpy.array(sc.scan_variable_value),
+    #      numpy.array(F2),
+    #      title="F1 F2 map")
 
-    f = open("tmp_f1f2.dat",'w')
-    for i in range(len(F2)):
-        f.write("%g %g\n" % (sc.scan_variable_value[i], F2[i]))
-    f.close()
+    # f = open("tmp_f1f2.dat",'w')
+    # for i in range(len(F2)):
+    #     f.write("%g %g\n" % (sc.scan_variable_value[i], F2[i]))
+    # f.close()

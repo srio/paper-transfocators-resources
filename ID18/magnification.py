@@ -159,13 +159,15 @@ if __name__ == "__main__":
 
 
 
-    a = numpy.loadtxt("tmp.dat")
-    b = numpy.loadtxt("tmp_f1f2.dat")
+    #
+    # plot with numerical results
+    #
+    a = numpy.loadtxt("tmp_uptomode50.dat", skiprows=3)
 
     plot(f1, f2a,
          f1, f2aa,
-         b[:,0], b[:,1],
-         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,3*b[:,1].max()],
+         a[:,0], a[:,-1],
+         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,3*a[:,-1].max()],
          legend=["D = 99 m", "D = 99 m SOURCE AT SLIT", "D = 99 m NUMERIC"],
          color=['red','red','green'], linestyle=[None,'--','-.'])
 
