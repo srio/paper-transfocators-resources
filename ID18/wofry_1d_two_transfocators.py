@@ -96,7 +96,10 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
 
     input_wavefront = output_wavefront.duplicate()
     from syned.beamline.shape import Rectangle
-    boundary_shape=Rectangle(-1.25e-05, 1.25e-05, -1.25e-05, 1.25e-05)
+    if open_slit:
+        boundary_shape = Rectangle(-1.25e0, 1.25e0, -1.25e0, 1.25e0)
+    else:
+        boundary_shape=Rectangle(-1.25e-05, 1.25e-05, -1.25e-05, 1.25e-05)
     from wofryimpl.beamline.optical_elements.absorbers.slit import WOGaussianSlit1D
     optical_element = WOGaussianSlit1D(boundary_shape=boundary_shape)
 
@@ -407,14 +410,15 @@ if __name__ == "__main__":
     do_plot = False
     save_file = True
     up_to_mode = 50
+    open_slit = 1
 
 
 
     sc = Score(scan_variable_name='f1 [m]',additional_stored_variable_names=['f2 [m]'])
 
 
-    # F1 = numpy.linspace(18.2, 38.2, 5)
-    F1 = numpy.linspace(10, 40, 100)
+    F1 = numpy.linspace(18.2, 38.2, 5)
+    # F1 = numpy.linspace(10, 40, 100)
     # F2 = []
 
     f2 = 0    # this means guess it and use the ideal lens.
@@ -449,8 +453,12 @@ if __name__ == "__main__":
         sc.append(WF, scan_variable_value=f1, additional_stored_values=[F2])
 
 
+    if open_slit:
+        filename = "tmp_openslit_uptomode%d.dat"% up_to_mode
+    else:
+        filename = "tmp_uptomode%d.dat" % up_to_mode
 
-    sc.save("tmp_uptomode50.dat")
+    sc.save(filename )
 
 
     sc.plot()

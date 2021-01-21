@@ -117,7 +117,7 @@ if __name__ == "__main__":
     sc = Score(scan_variable_name='mode index',additional_stored_variable_names=['a','b'])
 
 
-    for xmode in range(10):
+    for xmode in range(51):
         output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.00012, x_max=0.00012,
                                                                               number_of_points=1000)
         output_wavefront.set_photon_energy(10000)

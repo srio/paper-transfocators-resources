@@ -162,21 +162,31 @@ if __name__ == "__main__":
     #
     # plot with numerical results
     #
-    a = numpy.loadtxt("tmp_uptomode50.dat", skiprows=3)
+    a0 = numpy.loadtxt("tmp_uptomode0.dat", skiprows=3)
+    a1 = numpy.loadtxt("tmp_uptomode50.dat", skiprows=3)
+    ao0 = numpy.loadtxt("tmp_openslit_uptomode0.dat", skiprows=3)
+    ao1 = numpy.loadtxt("tmp_openslit_uptomode50.dat", skiprows=3)
 
     plot(f1, f2a,
          f1, f2aa,
-         a[:,0], a[:,-1],
-         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,3*a[:,-1].max()],
+         a0[:,0], a0[:,-1],
+         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,3*a0[:,-1].max()],
          legend=["D = 99 m", "D = 99 m SOURCE AT SLIT", "D = 99 m NUMERIC"],
          color=['red','red','green'], linestyle=[None,'--','-.'])
 
     plot(f1, Ma,
          f1, Maa,
-         a[:,0], a[:,1] / 15.14,
+         a0[:, 0], a0[:, 1] / 15.14,
+         a1[:, 0], a1[:, 1] / 184.264,
+         ao0[:, 0], ao0[:, 1] / 15.14,
+         ao1[:, 0], ao1[:, 1] / 184.264,
          xtitle="f1 [m]", ytitle="magnification", ylog=1, xrange=[f1.min(), 38],
-         legend=["D = 99 m", "D = 99 m SOURCE AT SLIT", "D 99 m NUMERIC"],
-         color=['red','red','green'], linestyle=[None,'--','-.'])
+         legend=["D = 99 m", "D = 99 m SOURCE AT SLIT",
+                 "D 99 m NUMERIC up to mode 0", "D 99 m NUMERIC up to mode 50",
+                 "D 99 m OPEN SLIT NUMERIC up to mode 0",
+                 "D 99 m OPEN SLIT NUMERIC up to mode 50"],
+         color=['red','red','green','orange','green','orange'],
+         linestyle=[None,'--','-.','-.',None,None])
 
 
     # #
