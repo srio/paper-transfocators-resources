@@ -185,7 +185,7 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
     #
     #
     propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=99.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=99.0+move_f2_lense,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
@@ -217,7 +217,7 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
             file_with_thickness_mesh_flag=1,
             file_with_thickness_mesh='profile1D.dat',
             material='Be',
-            focus_at=37,
+            focus_at=36-move_f2_lense,
             wall_thickness=0,
             apply_correction_to_wavefront=1)
 
@@ -236,7 +236,7 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
             file_with_thickness_mesh_flag=1,
             file_with_thickness_mesh='profile1D.dat',
             material='Be',
-            focus_at=37,
+            focus_at=36-move_f2_lense,
             wall_thickness=0,
             apply_correction_to_wavefront=0)
 
@@ -288,13 +288,16 @@ def run_wofry_1d(plot_from_oe=1000, mode_x=0, f1=28.2, f2=39.7):
     #
     #
     propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=36.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=36.000000 - move_f2_lense,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.25)
-    #
+    if move_f2_lense > 0:
+        propagation_parameters.set_additional_parameters('magnification_x', 0.05)
+    else:
+        propagation_parameters.set_additional_parameters('magnification_x', 0.25)
+
     propagator = PropagationManager.Instance()
     try:
         propagator.add_propagator(FresnelZoom1D())
@@ -407,23 +410,30 @@ def fit_profile(wf):
 
 if __name__ == "__main__":
 
-    do_plot = False
+    do_plot = True
     save_file = True
-    up_to_mode = 50
+    up_to_mode = 0
     open_slit = 1
 
+    move_f2_lense = 24.0
+    f2 = 0    # this means guess it and use the ideal lens.
+    # f2 = 39.7 # this is fixed   29.38 #
+    # f2 = None # this means use the corrector and do not compute ideal lens
 
+
+    #
+    #
+    #
 
     sc = Score(scan_variable_name='f1 [m]',additional_stored_variable_names=['f2 [m]'])
 
 
     F1 = numpy.linspace(18.2, 38.2, 5)
-    # F1 = numpy.linspace(10, 40, 100)
+    # F1 = numpy.linspace(28.2,28.3,5)
+    F1 = numpy.linspace(10, 40, 100)
     # F2 = []
 
-    f2 = 0    # this means guess it and use the ideal lens.
-    # f2 = 39.7 # this is fixed
-    # f2 = None # this means use the corrector and do not compute ideal lens
+
 
 
     if do_plot:
@@ -458,7 +468,7 @@ if __name__ == "__main__":
     else:
         filename = "tmp_uptomode%d.dat" % up_to_mode
 
-    sc.save(filename )
+    sc.save(filename)
 
 
     sc.plot()

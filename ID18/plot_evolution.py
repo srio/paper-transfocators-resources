@@ -35,7 +35,7 @@ else:
         up_to_mode_add = ""
 
 for i in range(len(SIGMAS)):
-        filein = "tmp%s%s%s%s.dat" % (up_to_mode_add,gauss_add, real_lens_add, SIGMAS[i])
+        filein = "data_evolution/tmp%s%s%s%s.dat" % (up_to_mode_add,gauss_add, real_lens_add, SIGMAS[i])
         print(">>>>> ", filein)
         a1 = numpy.loadtxt(filein)
         print(a1.shape)

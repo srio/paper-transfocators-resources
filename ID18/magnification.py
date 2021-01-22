@@ -143,51 +143,118 @@ if __name__ == "__main__":
     Lbb, Mbb = getLandM(f1=f1, f2=f2bb, verbose=False)
 
 
-    plot(f1, f2a,
-         f1, f2b,
-         f1, f2aa,
-         f1, f2bb,
-         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,f2a.max()],
-         legend=["D = 99 m", "D = 123 m", "D = 99 m SOURCE AT SLIT", "D = 123 m SOURCE AT SLIT"],
-         color=['red','blue','red','blue'], linestyle=[None,None,'--','--'])
-
-    plot(f1, Ma, f1, Mb,
-         f1, Maa, f1, Mbb,
-         xtitle="f1 [m]", ytitle="magnification", ylog=1, xrange=[f1.min(), 38],
-         legend=["D = 99 m", "D = 123 m", "D = 99 m SOURCE AT SLIT", "D = 123 m SOURCE AT SLIT"],
-         color=['red','blue','red','blue'], linestyle=[None,None,'--','--'])
+    # plot(f1, f2a,
+    #      f1, f2b,
+    #      f1, f2aa,
+    #      f1, f2bb,
+    #      xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,2 * f2a.max()],
+    #      legend=["D = 99 m", "D = 123 m", "D = 99 m SOURCE AT SLIT", "D = 123 m SOURCE AT SLIT"],
+    #      color=['red','blue','red','blue'], linestyle=[None,None,'--','--'])
+    #
+    # plot(f1, Ma, f1, Mb,
+    #      f1, Maa, f1, Mbb,
+    #      xtitle="f1 [m]", ytitle="magnification", ylog=1, xrange=[f1.min(), 40],
+    #      legend=["D = 99 m", "D = 123 m", "D = 99 m SOURCE AT SLIT", "D = 123 m SOURCE AT SLIT"],
+    #      color=['red','blue','red','blue'], linestyle=[None,None,'--','--'])
 
 
 
     #
     # plot with numerical results
     #
-    a0 = numpy.loadtxt("tmp_uptomode0.dat", skiprows=3)
-    a1 = numpy.loadtxt("tmp_uptomode50.dat", skiprows=3)
-    ao0 = numpy.loadtxt("tmp_openslit_uptomode0.dat", skiprows=3)
-    ao1 = numpy.loadtxt("tmp_openslit_uptomode50.dat", skiprows=3)
+    a0 =  numpy.loadtxt("data_magnification/tmp_uptomode0.dat", skiprows=3)
+    a1 =  numpy.loadtxt("data_magnification/tmp_uptomode50.dat", skiprows=3)
+    ao0 = numpy.loadtxt("data_magnification/tmp_openslit_uptomode0.dat", skiprows=3)
+    ao1 = numpy.loadtxt("data_magnification/tmp_openslit_uptomode50.dat", skiprows=3)
 
+    b0 =  numpy.loadtxt("data_magnification_FO2/tmp_uptomode0.dat", skiprows=3)
+    b1 =  numpy.loadtxt("data_magnification_FO2/tmp_uptomode50.dat", skiprows=3)
+    bo0 = numpy.loadtxt("data_magnification_FO2/tmp_openslit_uptomode0.dat", skiprows=3)
+    bo1 = numpy.loadtxt("data_magnification_FO2/tmp_openslit_uptomode50.dat", skiprows=3)
+
+    #
+    # trajectories
+    #
     plot(f1, f2a,
          f1, f2aa,
          a0[:,0], a0[:,-1],
-         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[0,3*a0[:,-1].max()],
+         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[5,45],
          legend=["D = 99 m", "D = 99 m SOURCE AT SLIT", "D = 99 m NUMERIC"],
          color=['red','red','green'], linestyle=[None,'--','-.'])
 
+    print(">>> optimum f2 for f1=28.2: %g" % numpy.interp(28.2, a0[:,0], a0[:,-1],))
+
+    plot(f1, f2b,
+         f1, f2bb,
+         b0[:,0], b0[:,-1],
+         xtitle="f1 [m]", ytitle="f2 [m]", yrange=[5,15],
+         legend=["D = 123 m", "D = 123 m SOURCE AT SLIT", "D = 123 m NUMERIC"],
+         color=['blue','blue','green'], linestyle=[None,'--','-.'])
+
+    print(">>> optimum f2 for f1=28.2: %g" % numpy.interp(28.2, b0[:,0], b0[:,-1],))
+
+    #
+    # magnification
+    #
     plot(f1, Ma,
          f1, Maa,
          a0[:, 0], a0[:, 1] / 15.14,
-         a1[:, 0], a1[:, 1] / 184.264,
          ao0[:, 0], ao0[:, 1] / 15.14,
-         ao1[:, 0], ao1[:, 1] / 184.264,
          xtitle="f1 [m]", ytitle="magnification", ylog=1, xrange=[f1.min(), 38],
-         legend=["D = 99 m", "D = 99 m SOURCE AT SLIT",
-                 "D 99 m NUMERIC up to mode 0", "D 99 m NUMERIC up to mode 50",
-                 "D 99 m OPEN SLIT NUMERIC up to mode 0",
-                 "D 99 m OPEN SLIT NUMERIC up to mode 50"],
+         legend=["D 99 m",
+                 "D 99 m SOURCE AT SLIT",
+                 "D 99 m NUMERIC 25 um SLIT",
+                 "D 99 m NUMERIC OPEN SLIT ",
+                 ],
+         color=['red','red','green','green'],
+         linestyle=[None,'--','-.',':'])
+
+    plot(f1, Mb,
+         f1, Mbb,
+         b0[:, 0], b0[:, 1] / 15.14,
+         bo0[:, 0], bo0[:, 1] / 15.14,
+         xtitle="f1 [m]", ytitle="magnification", ylog=1, xrange=[f1.min(), 20], yrange=[1e-2,1e0],
+         legend=["D 123 m", "D = 123 m SOURCE AT SLIT",
+                 "D 123 m NUMERIC 25 um SLIT",
+                 "D 123 m NUMERIC OPEN SLIT ",
+                 ],
+         color=['blue','blue','green','green'],
+         linestyle=[None,'--','-.',':'])
+
+    #
+    # sizes
+    #
+    plot(f1, 15.14 * Ma,
+         f1, 71.35 * Maa,
+         a0[:, 0], a0[:, 1]  ,
+         a1[:, 0], a1[:, 1]  ,
+         ao0[:, 0], ao0[:, 1],
+         ao1[:, 0], ao1[:, 1],
+         xtitle="f1 [m]", ytitle="FWHM [um]", ylog=0, xrange=[f1.min(), 38], yrange=[0,60],
+         legend=["D 99 m ANALYTICAL OBJECT AT SOURCE",
+                 "D 99 m ANALYTICAL OBJECT AT SLIT",
+                 "D 99 m NUMERIC 25 um SLIT, one mode",
+                 "D 99 m NUMERIC 25 um SLIT, 50 modes",
+                 "D 99 m NUMERIC OPEN SLIT, one mode",
+                 "D 99 m NUMERIC OPEN SLIT, 50 modes"],
          color=['red','red','green','orange','green','orange'],
          linestyle=[None,'--','-.','-.',None,None])
 
+    plot(f1, 15.14 * Mb,
+         f1, 71.35 * Mbb,
+         b0[:, 0],  b0[:, 1]  ,
+         b1[:, 0],  b1[:, 1]  ,
+         bo0[:, 0], bo0[:, 1],
+         bo1[:, 0], bo1[:, 1],
+         xtitle="f1 [m]", ytitle="FWHM [um]", ylog=0, xrange=[f1.min(), 38], yrange=[0,20],
+         legend=["D 123 m ANALYTICAL OBJECT AT SOURCE",
+                 "D 123 m ANALYTICAL OBJECT AT SLIT",
+                 "D 123 m NUMERIC 25 um SLIT, one mode",
+                 "D 123 m NUMERIC 25 um SLIT, 50 modes",
+                 "D 123 m NUMERIC OPEN SLIT, one mode",
+                 "D 123 m NUMERIC OPEN SLIT, 50 modes"],
+         color=['blue','blue','green','orange','green','orange'],
+         linestyle=[None,'--','-.','-.',None,None])
 
     # #
     # # 2D plot

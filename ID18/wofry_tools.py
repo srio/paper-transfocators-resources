@@ -110,7 +110,6 @@ class Score():
 
 
 
-
 if __name__ == "__main__":
     from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
 
@@ -123,7 +122,14 @@ if __name__ == "__main__":
         output_wavefront.set_photon_energy(10000)
         output_wavefront.set_gaussian_hermite_mode(sigma_x=3.03783e-05, amplitude=1, mode_x=xmode, shift=0, beta=0.0922395)
 
-        sc.append(output_wavefront, scan_variable_value=xmode, additional_stored_values=[1,2.1])
+        if xmode == 0:
+            WF = output_wavefront.duplicate()
+        else:
+            intens = WF.get_intensity()
+            intens += output_wavefront.get_intensity()
+            WF.set_complex_amplitude(numpy.sqrt(intens))
+
+        sc.append(WF, scan_variable_value=xmode, additional_stored_values=[1,2.1])
 
     sc.plot()
     sc.save("tmp.dat")
