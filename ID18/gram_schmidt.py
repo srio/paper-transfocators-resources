@@ -124,100 +124,135 @@ if __name__ == "__main__":
 
     for xmode in range(51):
 
-        output_wavefront = run_wofry_source(xmode=xmode)
-        # output_wavefront = run_wofry_to_screen(xmode=xmode, slit_size=1.0)
+        # output_wavefront = run_wofry_source(xmode=xmode)
+        output_wavefront = run_wofry_to_screen(xmode=xmode, slit_size=25e-6)
+
+
+        complex_amplitude_i = output_wavefront.get_complex_amplitude()
 
         if xmode == 0:
             WF = output_wavefront.duplicate()
+            intens = output_wavefront.get_intensity()
+            WF.set_complex_amplitude(numpy.sqrt(intens))
         else:
             intens = WF.get_intensity()
             intens += output_wavefront.get_intensity()
             WF.set_complex_amplitude(numpy.sqrt(intens))
 
-        complex_amplitude_i = output_wavefront.get_complex_amplitude()
         sc.append(WF, scan_variable_value=xmode, additional_stored_values=[complex_amplitude_i])
 
-    #  nagisha shirai
+
     # retrieve arrays
     abscissas = WF.get_abscissas()
     tmp = sc.additional_stored_values
-    input_array = numpy.array(tmp)
-    input_array=input_array.reshape((input_array.shape[0],input_array.shape[2]))
+    input_array = numpy.zeros((len(tmp), abscissas.size), dtype=complex)
+    for i in range(len(tmp)):
+        input_array[i,:] = tmp[i][0]
+    nmodes = input_array.shape[0]
 
-    eigenvalues_old = numpy.zeros(input_array.shape[0])
-    eigenvectors_old  = numpy.zeros_like(input_array, dtype=float)
-    for i in range(eigenvalues_old.size):
-        eigenvalues_old[i] = ((input_array[i, :]) ** 2).sum()
-        eigenvectors_old[i, :] = numpy.real(input_array[i, :] / numpy.sqrt(eigenvalues_old[i]))
+    if False:
+        eigenvalues_old = numpy.zeros(input_array.shape[0], dtype=float)
+        eigenvectors_old  = numpy.zeros_like(input_array, dtype=complex)
+        for i in range(eigenvalues_old.size):
+            eigenvalues_old[i] = numpy.real(((input_array[i, :]) ** 2).sum())
+            print(">>>>>>>>>>>>>>>>>>>>>", i, numpy.abs(eigenvalues_old[i]))
+            if numpy.abs(eigenvalues_old[i]) > 1e-10:
+                eigenvectors_old[i, :] = input_array[i, :] / numpy.sqrt(eigenvalues_old[i])
+            else:
+                eigenvectors_old[i, :] = 0.0
 
-    # check orthonormality, CF
-    for i in range(eigenvalues_old.size - 1):
-        print(i,
-              (eigenvectors_old[i, :] * eigenvectors_old[i, :]).sum(),
-              (eigenvectors_old[i, :] * eigenvectors_old[i + 1, :]).sum(),
-              (eigenvectors_old[i, :] * eigenvectors_old[i, :] * eigenvectors_old[i + 1, :] * eigenvectors_old[i + 1, :]).sum(),
-              )
-    print("Exact CF: ", get_coherent_fraction_exact(beta))
-    print("From modes, CF: ", eigenvalues_old[0] / eigenvalues_old.sum())
+        # check orthonormality, CF
+        for i in range(eigenvalues_old.size - 1):
+            print(i,
+                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i, :]).sum(),
+                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i + 1, :]).sum(),
+                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i, :] * eigenvectors_old[i + 1, :] * eigenvectors_old[i + 1, :]).sum(),
+                  )
+        print("Exact CF: ", get_coherent_fraction_exact(beta))
+        print("From modes, CF: ", eigenvalues_old[0] / eigenvalues_old.sum())
 
 
-    # prepare a Gaussian (data to fit)
-    sigma = 0.1 * (abscissas[-1] - abscissas[0])
-    # u = 0.4 * numpy.exp( - abscissas**2 / 2 / sigma**2)
-    u = WF.get_intensity()
-    mask = None # u
 
-    # # some tests
-    # ufit1 = numpy.zeros_like(abscissas)
-    # projections = numpy.zeros(input_array.shape[0])
-    # I = numpy.zeros(input_array.shape[0])
+    if False:
+
+        # prepare a Gaussian (data to fit)
+        sigma = 0.1 * (abscissas[-1] - abscissas[0])
+        # u = 0.4 * numpy.exp( - abscissas**2 / 2 / sigma**2)
+        u = WF.get_intensity()
+        mask = None # u
+
+        # some tests
+        ufit1 = numpy.zeros_like(abscissas)
+        projections = numpy.zeros(input_array.shape[0])
+        I = numpy.zeros(input_array.shape[0])
+
+        for i in range(eigenvalues_old.size):
+            # projections[i] = ((eigenvectors[i,:])**2 * (u) ).sum()
+            projections[i] = ((eigenvectors_old[i, :]) * (u)).sum()
+            I[i] = (eigenvectors_old[i, :]).sum()
+            ufit1 += eigenvalues_old[i] * (numpy.real(eigenvectors_old[i, :])) ** 2
+            # print(i, eigenvalues[i], projections[i])
+
+        plot(abscissas, u,
+             abscissas, ufit1,
+             title="test decomposition",
+             legend=["data","decomposition"])
+
+        try1 = projections * I
+        for i in range(eigenvalues_old.size):
+            print(">>", i, eigenvalues_old[i], projections[i], try1[i])
+
+        plot(numpy.arange(eigenvalues_old.size), eigenvalues_old,
+             # numpy.arange(eigenvalues.size), projections ** 2 / projections[0] ** 2,
+             numpy.arange(eigenvalues_old.size), try1,
+             legend=["eigenvalues","try1"])
+
+        print(">>>>", u.sum(), eigenvalues_old.sum(), try1.sum())
+
+
     #
-    # for i in range(eigenvalues_old.size):
-    #     # projections[i] = ((eigenvectors[i,:])**2 * (u) ).sum()
-    #     projections[i] = ((eigenvectors_old[i, :]) * (u)).sum()
-    #     I[i] = (eigenvectors_old[i, :]).sum()
-    #     ufit1 += eigenvalues_old[i] * (numpy.real(eigenvectors_old[i, :])) ** 2
-    #     # print(i, eigenvalues[i], projections[i])
+    # calculate and diagonalize the CSD
     #
-    # plot(abscissas, u,
-    #      abscissas, ufit1,
-    #      title="test decomposition",
-    #      legend=["data","decomposition"])
+    cross_spectral_density = numpy.zeros((abscissas.size, abscissas.size), dtype=complex)
     #
-    # try1 = projections * I
-    # for i in range(eigenvalues_old.size):
-    #     print(">>", i, eigenvalues_old[i], projections[i], try1[i])
     #
-    # plot(numpy.arange(eigenvalues_old.size), eigenvalues_old,
-    #      # numpy.arange(eigenvalues.size), projections ** 2 / projections[0] ** 2,
-    #      numpy.arange(eigenvalues_old.size), try1,
-    #      legend=["eigenvalues","try1"])
-    #
-    # print(">>>>", u.sum(), eigenvalues_old.sum(), try1.sum())
 
-    cross_spectral_density = numpy.zeros((abscissas.size, abscissas.size))
+    for i in range(nmodes):
+        cross_spectral_density += numpy.outer(numpy.conjugate(input_array[i, :]), input_array[i, :])
 
-
-    for i in range(eigenvalues_old.size):
-        cross_spectral_density += eigenvalues_old[i] * numpy.outer(eigenvectors_old[i, :], eigenvectors_old[i, :])
-
-    plot_image(cross_spectral_density)
-    print("matrix shape: ", cross_spectral_density.shape)
+    plot_image(numpy.abs(cross_spectral_density))
+    print("matrix cross_spectral_density: ", cross_spectral_density.shape)
     w, v = numpy.linalg.eig(cross_spectral_density)
     print(w.shape, v.shape)
     idx = w.argsort()[::-1]  # large to small
     eigenvalues  = numpy.real(w[idx])
-    eigenvectors = numpy.real(v[:, idx].T)
-    for i in range(10):
-        print(eigenvalues_old[i], eigenvalues[i])
-    plot(abscissas, eigenvectors_old[0, :],
-         abscissas, eigenvectors[0, :], )
+    eigenvectors = v[:, idx].T
+    # for i in range(10):
+    #     print(eigenvalues_old[i], eigenvalues[i])
+    # plot(abscissas, eigenvectors_old[0, :],
+    #      abscissas, eigenvectors[0, :], )
 
     print("Exact CF: ", get_coherent_fraction_exact(beta))
-    print("From modes, CF_old: ", eigenvalues_old[0] / eigenvalues_old.sum())
+    # print("From modes, CF_old: ", eigenvalues_old[0] / eigenvalues_old.sum())
     print("From modes, CF    : ", eigenvalues[0] / eigenvalues.sum())
 
-    # abscissas_step = (abscissas[1] - abscissas[0])
+    abscissas_step = (abscissas[1] - abscissas[0])
+
+    y = numpy.zeros_like(abscissas)
+
+    print(y.shape, eigenvectors.shape, eigenvalues.shape)
+    for i in range(nmodes):
+        y += eigenvalues[i] * numpy.real(numpy.conjugate(eigenvectors[i,:]) * eigenvectors[i,:])
+
+
+    plot(abscissas, WF.get_intensity(),
+         abscissas, y, legend=["Data", "From modes"])
+
+    plot(numpy.arange(nmodes), eigenvalues[0:nmodes]/(eigenvalues[0:nmodes].sum()))
+    # plot(abscissas, u, abscissas, y, abscissas, yinfl, legend=["Data","Fit (orthonormal)","Fit (sorted influence)"])
+
+
+
     # for i in range(input_array_normalized.shape[0]-1):
     #     print("%d %g %g" % (
     #         i,
