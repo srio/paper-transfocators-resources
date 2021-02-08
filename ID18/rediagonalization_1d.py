@@ -150,72 +150,11 @@ if __name__ == "__main__":
         input_array[i,:] = tmp[i][0]
     nmodes = input_array.shape[0]
 
-    if False:
-        eigenvalues_old = numpy.zeros(input_array.shape[0], dtype=float)
-        eigenvectors_old  = numpy.zeros_like(input_array, dtype=complex)
-        for i in range(eigenvalues_old.size):
-            eigenvalues_old[i] = numpy.real(((input_array[i, :]) ** 2).sum())
-            print(">>>>>>>>>>>>>>>>>>>>>", i, numpy.abs(eigenvalues_old[i]))
-            if numpy.abs(eigenvalues_old[i]) > 1e-10:
-                eigenvectors_old[i, :] = input_array[i, :] / numpy.sqrt(eigenvalues_old[i])
-            else:
-                eigenvectors_old[i, :] = 0.0
-
-        # check orthonormality, CF
-        for i in range(eigenvalues_old.size - 1):
-            print(i,
-                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i, :]).sum(),
-                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i + 1, :]).sum(),
-                  (numpy.conjugate(eigenvectors_old[i, :]) * eigenvectors_old[i, :] * eigenvectors_old[i + 1, :] * eigenvectors_old[i + 1, :]).sum(),
-                  )
-        print("Exact CF: ", get_coherent_fraction_exact(beta))
-        print("From modes, CF: ", eigenvalues_old[0] / eigenvalues_old.sum())
-
-
-
-    if False:
-
-        # prepare a Gaussian (data to fit)
-        sigma = 0.1 * (abscissas[-1] - abscissas[0])
-        # u = 0.4 * numpy.exp( - abscissas**2 / 2 / sigma**2)
-        u = WF.get_intensity()
-        mask = None # u
-
-        # some tests
-        ufit1 = numpy.zeros_like(abscissas)
-        projections = numpy.zeros(input_array.shape[0])
-        I = numpy.zeros(input_array.shape[0])
-
-        for i in range(eigenvalues_old.size):
-            # projections[i] = ((eigenvectors[i,:])**2 * (u) ).sum()
-            projections[i] = ((eigenvectors_old[i, :]) * (u)).sum()
-            I[i] = (eigenvectors_old[i, :]).sum()
-            ufit1 += eigenvalues_old[i] * (numpy.real(eigenvectors_old[i, :])) ** 2
-            # print(i, eigenvalues[i], projections[i])
-
-        plot(abscissas, u,
-             abscissas, ufit1,
-             title="test decomposition",
-             legend=["data","decomposition"])
-
-        try1 = projections * I
-        for i in range(eigenvalues_old.size):
-            print(">>", i, eigenvalues_old[i], projections[i], try1[i])
-
-        plot(numpy.arange(eigenvalues_old.size), eigenvalues_old,
-             # numpy.arange(eigenvalues.size), projections ** 2 / projections[0] ** 2,
-             numpy.arange(eigenvalues_old.size), try1,
-             legend=["eigenvalues","try1"])
-
-        print(">>>>", u.sum(), eigenvalues_old.sum(), try1.sum())
-
-
     #
     # calculate and diagonalize the CSD
     #
     cross_spectral_density = numpy.zeros((abscissas.size, abscissas.size), dtype=complex)
-    #
-    #
+
 
     for i in range(nmodes):
         cross_spectral_density += numpy.outer(numpy.conjugate(input_array[i, :]), input_array[i, :])
@@ -227,20 +166,17 @@ if __name__ == "__main__":
     idx = w.argsort()[::-1]  # large to small
     eigenvalues  = numpy.real(w[idx])
     eigenvectors = v[:, idx].T
-    # for i in range(10):
-    #     print(eigenvalues_old[i], eigenvalues[i])
-    # plot(abscissas, eigenvectors_old[0, :],
-    #      abscissas, eigenvectors[0, :], )
 
-    print("Exact CF: ", get_coherent_fraction_exact(beta))
-    # print("From modes, CF_old: ", eigenvalues_old[0] / eigenvalues_old.sum())
+
+    print("Exact CF at the source: ", get_coherent_fraction_exact(beta))
     print("From modes, CF    : ", eigenvalues[0] / eigenvalues.sum())
 
+    #
+    # plot intensity
+    #
     abscissas_step = (abscissas[1] - abscissas[0])
-
     y = numpy.zeros_like(abscissas)
 
-    print(y.shape, eigenvectors.shape, eigenvalues.shape)
     for i in range(nmodes):
         y += eigenvalues[i] * numpy.real(numpy.conjugate(eigenvectors[i,:]) * eigenvectors[i,:])
 
@@ -248,80 +184,4 @@ if __name__ == "__main__":
     plot(abscissas, WF.get_intensity(),
          abscissas, y, legend=["Data", "From modes"])
 
-    plot(numpy.arange(nmodes), eigenvalues[0:nmodes]/(eigenvalues[0:nmodes].sum()))
-    # plot(abscissas, u, abscissas, y, abscissas, yinfl, legend=["Data","Fit (orthonormal)","Fit (sorted influence)"])
-
-
-
-    # for i in range(input_array_normalized.shape[0]-1):
-    #     print("%d %g %g" % (
-    #         i,
-    #         input_array[i,:].sum() / input_array.sum(),
-    #         (input_array_normalized[i,:] * input_array_normalized[i+1,:]).sum(),
-    #     ))
-
-
-    # #
-    # # gram-schmidt
-    # #
-    # from orangecontrib.wofry.als.util.axo import orthonormalize_a, linear_2dgsfit1, linear_basis
-    # # from orangecontrib.wofry.als.util.axo_fit_profile import axo_fit_profile, calculate_orthonormal_basis
-    #
-    # plot_table(abscissas, numpy.sqrt(input_array_normalized), title="influence functions")
-    #
-    #
-    # a = []
-    # for i in range(input_array.shape[0]):
-    #     # a.append({'a': input_array[i,:]/input_array[i,:].sum(), 'total_squared':0})
-    #     # a.append({'a': input_array_normalized[i, :], 'total_squared': 0})
-    #     a.append({'a': numpy.sqrt(input_array_normalized[i, :]), 'total_squared': 0})
-    #
-    #
-    #
-    #
-    #
-    # # compute the basis
-    # b, matrix = orthonormalize_a(a, mask=mask)
-    #
-    # # # normalize ????
-    # # for i in range(input_array.shape[1]):
-    # #     b[i]["a"] = b[i]["a"] / (b[i]["a"]).sum()
-    #
-    #
-    # # plot basis
-    # b_array = numpy.zeros((input_array.shape[0],input_array.shape[1]))
-    #
-    # for i in range(input_array.shape[0]):
-    #     b_array[i,:] = b[i]["a"]
-    # plot_table(abscissas, b_array, title="basis functions")
-    # print(">>>> basis shape: ",b_array.shape)
-    # # for i in range(b_array.shape[1]-1):
-    # #     print(i,b_array[:,i].sum(), (b_array[:,i] * b_array[:,i+1]).sum() )
-    #
-    #
-    # # perform the fit
-    # v = linear_2dgsfit1(u, b, mask=mask)
-    # print("coefficients for orthonormal basis: ",v)
-    #
-    # vinfl = numpy.dot(matrix,v)
-    #
-    # print(matrix)
-    # print("coefficients for influence functions basis: ", vinfl.shape,vinfl)
-    #
-    #
-    #
-    # # evaluate the fitted data form coefficients and basis
-    # y = linear_basis(v, b)
-    #
-    # # evaluate the fitted data form coefficients and basis
-    # yinfl = linear_basis(vinfl, a)
-    #
-    # plot(abscissas, u, abscissas, y, legend=["Data", "Fit (orthonormal)"])
-    # plot(abscissas, u, abscissas, y, abscissas, yinfl, legend=["Data","Fit (orthonormal)","Fit (sorted influence)"])
-    #
-    # print(v.shape, v.max(), v.max() / v.sum())
-    #
-    # print(vinfl.shape, vinfl.max(), vinfl.max() / vinfl.sum())
-    # plot(numpy.arange(input_array.shape[0]), normalization_factors / normalization_factors.sum(),
-    #      numpy.arange(input_array.shape[0]), v  / v.sum(),
-    #      legend=["normalization","v"])
+    plot(numpy.arange(nmodes), eigenvalues[0:nmodes]/(eigenvalues[0:nmodes].sum()),title="mode occupation")
