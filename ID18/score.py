@@ -19,19 +19,25 @@ from oasys.util.oasys_util import get_fwhm
 #
 #
 class Score():
-    def __init__(self, scan_variable_name='x', additional_stored_variable_names=None):
+    def __init__(self,
+                 scan_variable_name='x',
+                 additional_stored_variable_names=None,
+                 do_store_wavefronts=False):
         self.reset()
         self.scan_variable_name = scan_variable_name
         self.additional_stored_variable_names = additional_stored_variable_names
+        self.do_store_wavefronts = do_store_wavefronts
 
     def reset(self):
-        self.scan_variable_index = 0
+        self.scan_variable_index = -1
         self.scan_variable_value = []
         self.fwhm = []
         self.intensity_at_center = []
         self.intensity_total = []
         self.intensity_peak = []
         self.additional_stored_values = []
+        self.stored_wavefronts = []
+
 
     def append(self, wf, scan_variable_value=None, additional_stored_values=None):
         fwhm, intensity_total, intensity_at_center, intensity_peak = self.process_wavefront(wf)
@@ -46,6 +52,18 @@ class Score():
             self.scan_variable_value.append(scan_variable_value)
 
         self.additional_stored_values.append(additional_stored_values)
+
+        if self.do_store_wavefronts:
+            self.stored_wavefronts.append(wf.duplicate())
+
+    def get_wavefronts(self):
+        return self.stored_wavefronts
+
+    def get_number_of_calls(self):
+        return self.scan_variable_index + 1
+
+    def get_additional_stored_values(self):
+        return self.additional_stored_values
 
     def save(self, filename="tmp.dat", add_header=True):
         f = open(filename, 'w')
