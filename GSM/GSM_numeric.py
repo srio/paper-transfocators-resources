@@ -1,5 +1,6 @@
 import numpy
-from srxraylib.plot.gol import plot, plot_image
+from srxraylib.plot.gol import plot, plot_image, set_qt
+set_qt()
 
 def W(x1,x2):
     delta_x = x2 - x1
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     print(w.shape, v.shape)
     idx = w.argsort()[::-1]  # large to small
     eigenvalues  = numpy.real(w[idx])
-    eigenvectors = v[:, idx].T
+    eigenvectors = -v[:, idx].T  # minus sogn???
 
     print(eigenvalues[0:10])
     plot(numpy.arange(eigenvalues.size), eigenvalues)
@@ -50,10 +51,11 @@ if __name__ == "__main__":
     from wofry.propagator.util.gaussian_schell_model import GaussianSchellModel1D, GaussianSchellModel2D
 
 
+    mode = 5
     gsm = GaussianSchellModel1D(1.0, sigma_x, sigma_xi)
-    y1 = numpy.abs(eigenvectors[0, :]) # why abs?? is negative??
+    y1 = eigenvectors[mode, :]
     y1 = y1 / numpy.sqrt((y1**2).sum() * (x1[1]-x1[0]))
-    y2 = gsm.phi(0, x1)
+    y2 = gsm.phi(mode, x1)
     print("modulus: ", (y2**2).sum() * (x1[1]-x1[0]))
     plot(x1, y1 ,
         x1, y2, legend=["numeric","theoretical"] )
