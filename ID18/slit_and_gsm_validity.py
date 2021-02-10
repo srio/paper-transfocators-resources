@@ -129,11 +129,14 @@ def get_CF_after_rediagonalization(sc, do_plot=False):
 
     return eigenvalues[0] / eigenvalues.sum()
 
-def get_gsm_cf(factor=1.0):
+def get_gsm_cf(factor=1.0, change_sigma_xi=False):
     gsm_slit = slit_size / factor
     gsm_sigma_x = numpy.sqrt(1.0 / (1.0 / sigma_x ** 2 + 1.0 / gsm_slit ** 2))
     gsm_xi_initial = sigma_x * beta
-    gsm_xi = numpy.sqrt(1.0 / (1.0 / gsm_xi_initial ** 2 + 1.0 / gsm_slit ** 2))
+    if change_sigma_xi:
+        gsm_xi = numpy.sqrt(1.0 / (1.0 / gsm_xi_initial ** 2 + 1.0 / gsm_slit ** 2))
+    else:
+        gsm_xi = gsm_xi_initial
     return get_coherent_fraction_exact(gsm_xi / gsm_sigma_x)
 
 if __name__ == "__main__":
@@ -141,7 +144,7 @@ if __name__ == "__main__":
     #
     # inputs
     #
-    beta = 1.151 #0.0922395 #0.02 #
+    beta = 0.02 #0.0922395 #1.151 #
     sigma_x = 3.03783e-05
     slit_size_over_sigma_x = 10.0
 
@@ -162,7 +165,7 @@ if __name__ == "__main__":
                    additional_stored_variable_names=['cumulated_intensity'],
                    do_store_wavefronts=True)
 
-        for xmode in range(51):
+        for xmode in range(151):
 
             # output_wavefront = run_wofry_source(xmode=xmode)
             output_wavefront = run_wofry_to_screen(xmode=xmode, slit_size=slit_size)
