@@ -149,13 +149,23 @@ def backpropagate(input_wavefront,distance=-100.0,magnification_x=1.0):
 
     return output_wavefront
 
-if __name__ == "__main__":
-    from srxraylib.plot.gol import plot, plot_image
+def h_x1(x1, x):
+    return np.exp(-mxx * x**2 / 2) * output_wavefront.get_interpolated_complex_amplitudes( x1 - x )
 
+def W(x1,x2):
+    k = output_wavefront.get_wavenumber()
+    Dx = x2-x1
+    x = output_wavefront.get_abscissas()
+    c = np.convolve(h_x1(x1, x), output_wavefront.get_interpolated_complex_amplitudes( x ), mode='same')
+    return np.exp(-k**2 * Dx**2 / 2 / mxpxp) *  np.interp(x2, x, c)
+
+
+if __name__ == "__main__":
+    from srxraylib.plot.gol import plot, plot_image, set_qt
     from syned.storage_ring.electron_beam import ElectronBeam
     from syned.storage_ring.magnetic_structures.undulator import Undulator
 
-
+    set_qt()
     # definitions with syned compatibility
     ebeam = ElectronBeam(energy_in_GeV=6.0, current = 0.2)
     su = Undulator.initialize_as_vertical_undulator(K=1.191085, period_length=0.02, periods_number=100)
@@ -210,12 +220,20 @@ if __name__ == "__main__":
 
 
 
-    xx = np.linspace(output_wavefront.get_abscissas().min(), output_wavefront.get_abscissas().max(), 200)
-    cc1 = output_wavefront.get_interpolated_complex_amplitudes( xx )
+    mxx = np.sqrt(2e-6)
+    mxpxp = np.sqrt(2e-6)
 
-    CC1 = np.outer(np.conjugate(cc1), cc1)
-    YY = np.outer(np.ones_like(xx), xx)
-    print(CC1.shape)
-
-    # yy = output_wavefront.get_interpolated_complex_amplitudes( xx )
-    plot_image(np.abs(CC1), title="interpolated")
+    abscissas = output_wavefront.get_abscissas()
+    y1 = np.zeros_like(abscissas)
+    for i in range(abscissas.size):
+        y1[i] = W(abscissas[i], abscissas[i])
+    plot(abscissas, y1, title="SPECTRAL DENSITY")
+    print(">>>>", W(0,0))
+    # xx = np.linspace(output_wavefront.get_abscissas().min(), output_wavefront.get_abscissas().max(), 200)
+    # cc1 = output_wavefront.get_interpolated_complex_amplitudes( xx )
+    #
+    # CC1 = np.outer(np.conjugate(cc1), cc1)
+    #
+    # print(CC1.shape)
+    #
+    # plot_image(np.abs(CC1), title="interpolated")
