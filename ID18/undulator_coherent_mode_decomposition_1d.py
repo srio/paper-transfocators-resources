@@ -151,13 +151,26 @@ def backpropagate(input_wavefront,distance=-100.0,magnification_x=1.0):
 
 def h_x1(x1, x):
     # TODO try to accelerate with shift array
-    return np.exp(-mxx * x**2 / 2) * output_wavefront.get_interpolated_complex_amplitudes( x1 - x )
+    Dx = x1 - x
+    return np.exp(-mxx * x**2 / 2) * output_wavefront.get_interpolated_complex_amplitudes( Dx )
+
+def H_x1(x1):
+    # accelerated with shift array
+    return np.exp(-mxx * abscissas**2 / 2) * np.roll(output_wavefront.get_complex_amplitude(), int(x1 // abscissas_step))
+
 
 def W(x1,x2):
     k = output_wavefront.get_wavenumber()
     Dx = x2-x1
     # x = output_wavefront.get_abscissas()
     c = np.convolve(h_x1(x1, abscissas), output_wavefront.get_complex_amplitude(), mode='same')
+    return np.exp(-k**2 * Dx**2 / 2 / mxpxp) *  np.interp(x2, abscissas, c)
+
+def WW(x1,x2):
+    k = output_wavefront.get_wavenumber()
+    Dx = x2-x1
+    # x = output_wavefront.get_abscissas()
+    c = np.convolve(H_x1(x1), output_wavefront.get_complex_amplitude(), mode='same')
     return np.exp(-k**2 * Dx**2 / 2 / mxpxp) *  np.interp(x2, abscissas, c)
 
 
@@ -212,33 +225,37 @@ if __name__ == "__main__":
                                                                           out["electric_field"][:, 0])
     input_wavefront.set_photon_energy(photon_energy=photon_energy)
 
-    plot(input_wavefront.get_abscissas() * 1e6, input_wavefront.get_intensity(),
-         title='FAR FIELD', xtitle="x [um]", show=0)
+    # plot(input_wavefront.get_abscissas() * 1e6, input_wavefront.get_intensity(),
+    #      title='FAR FIELD', xtitle="x [um]", show=0)
 
     output_wavefront = backpropagate(input_wavefront=input_wavefront,
                                      distance=-distance_to_screen,
                                      magnification_x=1.0/distance_to_screen)
 
 
-    plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
-         title='BACKPROPAGATED', xtitle="x [um]", show=0)
+    # plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
+    #      title='BACKPROPAGATED', xtitle="x [um]", show=0)
 
-    sigmaxx = 5e-6
-    sigmaxpxp = 5e-6
+    sigmaxx = 10e-6
+    sigmaxpxp = 1e-6
 
-    mxx = 1.0 / sigmaxx**2
+    mxx   = 1.0 / sigmaxx**2
     mxpxp = 1.0 / sigmaxpxp**2
 
+    abscissas = output_wavefront.get_abscissas()
+    abscissas[-1] -= 1e-10  # TODO check why interpolation fails in the last number
+    abscissas_step = abscissas[1] - abscissas[0]
 
     # test h1
-    if False:
-        abscissas = output_wavefront.get_abscissas()
+    if 0:
+
         # y1 = np.zeros_like(abscissas)
         # for i in range(abscissas.size):
         #     # y1[i] = W(abscissas[i], abscissas[i])
         #     y1[i] = np.abs(h_x1(1e-5, abscissas[i]))
 
-        y1 = np.abs(h_x1(10e-5, abscissas))
+        # y1 = np.abs(h_x1(10e-6, abscissas))
+        y1 = np.abs(H_x1(10e-6))
 
         plot(abscissas, y1,
              abscissas, np.abs(output_wavefront.get_interpolated_complex_amplitudes(abscissas)),
@@ -247,8 +264,6 @@ if __name__ == "__main__":
 
 
     # test convolve
-
-    # test h1
     if 0:
         abscissas = output_wavefront.get_abscissas()
         y1 = np.zeros_like(abscissas)
@@ -270,24 +285,24 @@ if __name__ == "__main__":
         abscissas[-1] -= 1e-10  # TODO chech why interpolation fails in the last number
 
         # spectral density
-        y1 = np.zeros_like(abscissas)
-        for i in range(abscissas.size):
-            try:
-                y1[i] = W(abscissas[i], abscissas[i])
-            except:
-                y1[i] = 0
-
-        plot(
-             abscissas, output_wavefront.get_intensity() / output_wavefront.get_intensity().max(),
-             abscissas, np.abs(y1) / np.abs(y1).max(),
-             legend=["intensity","Spectral density"], show=0)
+        # y1 = np.zeros_like(abscissas)
+        # for i in range(abscissas.size):
+        #     try:
+        #         y1[i] = W(abscissas[i], abscissas[i])
+        #     except:
+        #         y1[i] = 0
+        #
+        # plot(
+        #      abscissas, output_wavefront.get_intensity() / output_wavefront.get_intensity().max(),
+        #      abscissas, np.abs(y1) / np.abs(y1).max(),
+        #      legend=["intensity","Spectral density"], show=0)
 
         # W
         y1 = np.zeros((abscissas.size, abscissas.size))
         for i in range(abscissas.size):
             for j in range(abscissas.size):
                 try:
-                    y1[i,j] = W(abscissas[i], abscissas[j])
+                    y1[i,j] = WW(abscissas[i], abscissas[j])
                 except:
                     y1[i,j] = 0
 
