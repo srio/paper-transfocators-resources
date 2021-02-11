@@ -145,19 +145,20 @@ def backpropagate(input_wavefront,distance=-100.0,magnification_x=1.0):
     # ---- plots -----
     #
     if plot_from_oe <= 1: plot(output_wavefront.get_abscissas()*1e6, output_wavefront.get_intensity(),
-                               title='OPTICAL ELEMENT NR 1',xtitle="x [um]")
+                               title='OPTICAL ELEMENT NR 1',xtitle="x [um]", show=0)
 
     return output_wavefront
 
 def h_x1(x1, x):
+    # TODO try to accelerate with shift array
     return np.exp(-mxx * x**2 / 2) * output_wavefront.get_interpolated_complex_amplitudes( x1 - x )
 
 def W(x1,x2):
     k = output_wavefront.get_wavenumber()
     Dx = x2-x1
-    x = output_wavefront.get_abscissas()
-    c = np.convolve(h_x1(x1, x), output_wavefront.get_interpolated_complex_amplitudes( x ), mode='same')
-    return np.exp(-k**2 * Dx**2 / 2 / mxpxp) *  np.interp(x2, x, c)
+    # x = output_wavefront.get_abscissas()
+    c = np.convolve(h_x1(x1, abscissas), output_wavefront.get_complex_amplitude(), mode='same')
+    return np.exp(-k**2 * Dx**2 / 2 / mxpxp) *  np.interp(x2, abscissas, c)
 
 
 if __name__ == "__main__":
@@ -173,7 +174,7 @@ if __name__ == "__main__":
     print("Resonance energy: ", photon_energy)
     # other inputs
     distance_to_screen = 100.0
-    number_of_points = 1000
+    number_of_points = 200
 
     # calculate
     out = calculate_undulator_emission(electron_energy=ebeam.energy(),
@@ -212,23 +213,89 @@ if __name__ == "__main__":
     input_wavefront.set_photon_energy(photon_energy=photon_energy)
 
     plot(input_wavefront.get_abscissas() * 1e6, input_wavefront.get_intensity(),
-         title='SOURCE', xtitle="x [um]")
+         title='FAR FIELD', xtitle="x [um]", show=0)
 
     output_wavefront = backpropagate(input_wavefront=input_wavefront,
                                      distance=-distance_to_screen,
                                      magnification_x=1.0/distance_to_screen)
 
 
+    plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
+         title='BACKPROPAGATED', xtitle="x [um]", show=0)
 
-    mxx = np.sqrt(2e-6)
-    mxpxp = np.sqrt(2e-6)
+    sigmaxx = 5e-6
+    sigmaxpxp = 5e-6
 
-    abscissas = output_wavefront.get_abscissas()
-    y1 = np.zeros_like(abscissas)
-    for i in range(abscissas.size):
-        y1[i] = W(abscissas[i], abscissas[i])
-    plot(abscissas, y1, title="SPECTRAL DENSITY")
-    print(">>>>", W(0,0))
+    mxx = 1.0 / sigmaxx**2
+    mxpxp = 1.0 / sigmaxpxp**2
+
+
+    # test h1
+    if False:
+        abscissas = output_wavefront.get_abscissas()
+        # y1 = np.zeros_like(abscissas)
+        # for i in range(abscissas.size):
+        #     # y1[i] = W(abscissas[i], abscissas[i])
+        #     y1[i] = np.abs(h_x1(1e-5, abscissas[i]))
+
+        y1 = np.abs(h_x1(10e-5, abscissas))
+
+        plot(abscissas, y1,
+             abscissas, np.abs(output_wavefront.get_interpolated_complex_amplitudes(abscissas)),
+             legend=["h","amplitude"], title = "h")
+
+
+
+    # test convolve
+
+    # test h1
+    if 0:
+        abscissas = output_wavefront.get_abscissas()
+        y1 = np.zeros_like(abscissas)
+
+        print(">>>>", abscissas.shape, abscissas[0:-1].shape)
+        c = np.convolve(h_x1(10e-5, abscissas), output_wavefront.get_complex_amplitude(), mode='same')
+
+        abscissas[-1] -= 1e-10 # TODO chech why interpolation fails in the last number
+
+        y1 = np.abs(output_wavefront.get_complex_amplitude())
+        plot(abscissas, c / c.max(),
+             abscissas, y1 / y1.max(),
+             legend=["convolution","amplitude"], title = "h")
+
+
+    # test spectral density
+    if 1:
+        abscissas = output_wavefront.get_abscissas()
+        abscissas[-1] -= 1e-10  # TODO chech why interpolation fails in the last number
+
+        # spectral density
+        y1 = np.zeros_like(abscissas)
+        for i in range(abscissas.size):
+            try:
+                y1[i] = W(abscissas[i], abscissas[i])
+            except:
+                y1[i] = 0
+
+        plot(
+             abscissas, output_wavefront.get_intensity() / output_wavefront.get_intensity().max(),
+             abscissas, np.abs(y1) / np.abs(y1).max(),
+             legend=["intensity","Spectral density"], show=0)
+
+        # W
+        y1 = np.zeros((abscissas.size, abscissas.size))
+        for i in range(abscissas.size):
+            for j in range(abscissas.size):
+                try:
+                    y1[i,j] = W(abscissas[i], abscissas[j])
+                except:
+                    y1[i,j] = 0
+
+        plot_image(np.abs(y1), abscissas*1e6, abscissas*1e6, title="Cross spectral density", xtitle="x1 [um]", ytitle="x2 [um]")
+
+
+
+    # print(">>>>", W(0,0))
     # xx = np.linspace(output_wavefront.get_abscissas().min(), output_wavefront.get_abscissas().max(), 200)
     # cc1 = output_wavefront.get_interpolated_complex_amplitudes( xx )
     #
