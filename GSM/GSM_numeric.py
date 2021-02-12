@@ -17,7 +17,7 @@ def get_coherent_fraction_exact(beta):
     return CF
 
 if __name__ == "__main__":
-    beta = 1.151 #0.0922395 #0.02 #
+    beta = 0.0922395 #1.151 #0.02 #
     sigma_x = 3.03783e-05
 
     sigma_xi = beta * sigma_x
@@ -30,8 +30,12 @@ if __name__ == "__main__":
     X2 = numpy.outer(numpy.ones_like(x1), x1 )
 
     cross_spectral_density = W(X1,X2)
-    plot(x1, W(x1,x1), title="Spectral density")
-    # plot_image(cross_spectral_density, x1, x1)
+    indices = numpy.arange(x1.size)
+    plot(x1, W(x1,x1),
+         x1, cross_spectral_density[indices, indices],
+         x1, numpy.exp(-x1**2/2/sigma_x**2),
+         title="Spectral density", legend=["SD function", "SD array", "Gaussian with sigma_x"])
+    plot_image(cross_spectral_density, x1, x1)
 
     #
     # diagonalize the CSD
@@ -59,3 +63,18 @@ if __name__ == "__main__":
     print("modulus: ", (y2**2).sum() * (x1[1]-x1[0]))
     plot(x1, y1 ,
         x1, y2, legend=["numeric","theoretical"] )
+
+    #
+    # spectral density
+    #
+    sd = numpy.zeros_like(x1)
+    for i in range(sd.size):
+        sd[i] = cross_spectral_density[i,i]
+
+    sdmodes = numpy.zeros_like(x1, dtype=complex)
+    for i in range(sdmodes.size):
+        sdmodes += eigenvalues[i] * eigenvectors[i, :]**2
+    plot(x1, sd,
+         x1, sdmodes,
+         legend=["SD","SD from modes"],
+         title="Spectral density")
