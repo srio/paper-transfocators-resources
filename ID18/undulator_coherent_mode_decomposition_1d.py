@@ -134,14 +134,14 @@ class UndulatorCoherentModeDecomposition1D():
 
         input_wavefront = GenericWavefront1D.initialize_wavefront_from_arrays(out["abscissas"],
                                                                               out["electric_field"][:, 0])
-        input_wavefront.set_photon_energy(photon_energy=photon_energy)
+        input_wavefront.set_photon_energy(photon_energy=self.photon_energy)
 
         self.far_field_wavefront = input_wavefront
 
     def _calculate_backpropagation(self):
         self.output_wavefront = self.backpropagate(input_wavefront=self.far_field_wavefront,
                                          distance=-self.distance_to_screen,
-                                         magnification_x=1.0 / distance_to_screen)
+                                         magnification_x=1.0 / self.distance_to_screen)
 
     def _calculate_CSD(self):
 
@@ -198,7 +198,15 @@ class UndulatorCoherentModeDecomposition1D():
         myelectronbeam = PysruElectronBeam(Electron_energy=electron_energy, I_current=electron_current)
         myundulator = PysruUndulator(K=K, period_length=undulator_period, length=undulator_period * undulator_nperiods)
 
+        # TODO: clean this
+        from syned.storage_ring.electron_beam import ElectronBeam
+        from syned.storage_ring.magnetic_structures.undulator import Undulator
+        ebeam = ElectronBeam(energy_in_GeV=electron_energy, current=electron_current)
+        su = Undulator.initialize_as_vertical_undulator(K=K, period_length=undulator_period,
+                                                        periods_number=undulator_nperiods)
         theta_central_cone = su.gaussian_central_cone_aperture(ebeam.gamma())
+        #####
+
         abscissas = np.linspace(-nsigma * theta_central_cone * distance_to_screen, nsigma * theta_central_cone * distance_to_screen, number_of_points)
         if scan_direction == "H":
             X = abscissas
@@ -321,114 +329,114 @@ class UndulatorCoherentModeDecomposition1D():
         return output_wavefront
 
 
+# #
+# #
+# #
+#
+# def calculate_undulator_emission(
+#                                  electron_energy=6.04,
+#                                  electron_current=0.2,
+#                                  undulator_period=0.032,
+#                                  undulator_nperiods=50,
+#                                  K=0.25,
+#                                  photon_energy=10490.0,
+#                                  nsigma=6,
+#                                  number_of_points=100,
+#                                  distance_to_screen=100,
+#                                  scan_direction="V"):
+#
+#     myelectronbeam = PysruElectronBeam(Electron_energy=electron_energy, I_current=electron_current)
+#     myundulator = PysruUndulator(K=K, period_length=undulator_period, length=undulator_period * undulator_nperiods)
+#
+#     theta_central_cone = su.gaussian_central_cone_aperture(ebeam.gamma())
+#     abscissas = np.linspace(-nsigma * theta_central_cone * distance_to_screen,
+#                             nsigma * theta_central_cone * distance_to_screen, number_of_points)
+#     if scan_direction == "H":
+#         X = abscissas
+#         Y = np.zeros_like(abscissas)
+#     elif scan_direction == "V":
+#         X = np.zeros_like(abscissas)
+#         Y = abscissas
+#
+#     print("Calculating energy %g eV" % photon_energy)
+#     simulation_test = create_simulation(magnetic_structure=myundulator, electron_beam=myelectronbeam,
+#                                         magnetic_field=None, photon_energy=photon_energy,
+#                                         traj_method=TRAJECTORY_METHOD_ANALYTIC, Nb_pts_trajectory=None,
+#                                         rad_method=RADIATION_METHOD_APPROX_FARFIELD, initial_condition=None,
+#                                         distance=distance_to_screen,
+#                                         X=X, Y=Y, XY_are_list=True)
+#
+#     # TODO: this is not nice: I redo the calculations because I need the electric vectors to get polarization
+#     #       this should be avoided after refactoring pySRU to include electric field in simulations!!
+#     electric_field = simulation_test.radiation_fact.calculate_electrical_field(
+#         simulation_test.trajectory, simulation_test.source, X, Y, distance_to_screen)
+#
+#     E = electric_field._electrical_field
+#     pol_deg1 = (np.abs(E[:, 0]) / (np.abs(E[:, 0]) + np.abs(E[:, 1]))).flatten()  # SHADOW definition!!
+#
+#     intens1 = simulation_test.radiation.intensity.copy()
+#
+#     #  Conversion from pySRU units (photons/mm^2/0.1%bw) to SHADOW units (photons/rad^2/eV)
+#     intens1 *= (distance_to_screen * 1e3) ** 2  # photons/mm^2 -> photons/rad^2
+#     intens1 /= 1e-3 * photon_energy  # photons/o.1%bw -> photons/eV
+#
+#     # unpack trajectory
+#     T0 = simulation_test.trajectory
+#     T = np.vstack((T0.t, T0.x, T0.y, T0.z, T0.v_x, T0.v_y, T0.v_z, T0.a_x, T0.a_y, T0.a_z))
+#
+#     return {'intensity': intens1,
+#             'polarization': pol_deg1,
+#             'electric_field': E,
+#             'trajectory': T,
+#             'photon_energy': photon_energy,
+#             "abscissas": abscissas,
+#             "D": distance_to_screen,
+#             "theta": abscissas / distance_to_screen,
+#             }
 #
 #
+# def backpropagate(input_wavefront, distance=-100.0, magnification_x=1.0):
 #
-
-def calculate_undulator_emission(
-                                 electron_energy=6.04,
-                                 electron_current=0.2,
-                                 undulator_period=0.032,
-                                 undulator_nperiods=50,
-                                 K=0.25,
-                                 photon_energy=10490.0,
-                                 nsigma=6,
-                                 number_of_points=100,
-                                 distance_to_screen=100,
-                                 scan_direction="V"):
-
-    myelectronbeam = PysruElectronBeam(Electron_energy=electron_energy, I_current=electron_current)
-    myundulator = PysruUndulator(K=K, period_length=undulator_period, length=undulator_period * undulator_nperiods)
-
-    theta_central_cone = su.gaussian_central_cone_aperture(ebeam.gamma())
-    abscissas = np.linspace(-nsigma * theta_central_cone * distance_to_screen,
-                            nsigma * theta_central_cone * distance_to_screen, number_of_points)
-    if scan_direction == "H":
-        X = abscissas
-        Y = np.zeros_like(abscissas)
-    elif scan_direction == "V":
-        X = np.zeros_like(abscissas)
-        Y = abscissas
-
-    print("Calculating energy %g eV" % photon_energy)
-    simulation_test = create_simulation(magnetic_structure=myundulator, electron_beam=myelectronbeam,
-                                        magnetic_field=None, photon_energy=photon_energy,
-                                        traj_method=TRAJECTORY_METHOD_ANALYTIC, Nb_pts_trajectory=None,
-                                        rad_method=RADIATION_METHOD_APPROX_FARFIELD, initial_condition=None,
-                                        distance=distance_to_screen,
-                                        X=X, Y=Y, XY_are_list=True)
-
-    # TODO: this is not nice: I redo the calculations because I need the electric vectors to get polarization
-    #       this should be avoided after refactoring pySRU to include electric field in simulations!!
-    electric_field = simulation_test.radiation_fact.calculate_electrical_field(
-        simulation_test.trajectory, simulation_test.source, X, Y, distance_to_screen)
-
-    E = electric_field._electrical_field
-    pol_deg1 = (np.abs(E[:, 0]) / (np.abs(E[:, 0]) + np.abs(E[:, 1]))).flatten()  # SHADOW definition!!
-
-    intens1 = simulation_test.radiation.intensity.copy()
-
-    #  Conversion from pySRU units (photons/mm^2/0.1%bw) to SHADOW units (photons/rad^2/eV)
-    intens1 *= (distance_to_screen * 1e3) ** 2  # photons/mm^2 -> photons/rad^2
-    intens1 /= 1e-3 * photon_energy  # photons/o.1%bw -> photons/eV
-
-    # unpack trajectory
-    T0 = simulation_test.trajectory
-    T = np.vstack((T0.t, T0.x, T0.y, T0.z, T0.v_x, T0.v_y, T0.v_z, T0.a_x, T0.a_y, T0.a_z))
-
-    return {'intensity': intens1,
-            'polarization': pol_deg1,
-            'electric_field': E,
-            'trajectory': T,
-            'photon_energy': photon_energy,
-            "abscissas": abscissas,
-            "D": distance_to_screen,
-            "theta": abscissas / distance_to_screen,
-            }
-
-
-def backpropagate(input_wavefront, distance=-100.0, magnification_x=1.0):
-
-    plot_from_oe = 100  # set to a large number to avoid plots
-
-    ##########  OPTICAL ELEMENT NUMBER 1 ##########
-
-    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
-
-    optical_element = WOScreen1D()
-
-    # drift_before "distance" m
-    #
-    # propagating
-    #
-    #
-    propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=distance, q=0.000000,
-                                                                      angle_radial=numpy.radians(0.000000),
-                                                                      angle_azimuthal=numpy.radians(0.000000)))
-    propagation_elements.add_beamline_element(beamline_element)
-    propagation_parameters = PropagationParameters(wavefront=input_wavefront,
-                                                   propagation_elements=propagation_elements)
-    # self.set_additional_parameters(propagation_parameters)
-    #
-    propagation_parameters.set_additional_parameters('magnification_x', magnification_x)
-    #
-    propagator = PropagationManager.Instance()
-    try:
-        propagator.add_propagator(FresnelZoom1D())
-    except:
-        pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                 handler_name='FRESNEL_ZOOM_1D')
-
-    #
-    # ---- plots -----
-    #
-    if plot_from_oe <= 1: plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
-                               title='OPTICAL ELEMENT NR 1', xtitle="x [um]", show=0)
-
-    return output_wavefront
+#     plot_from_oe = 100  # set to a large number to avoid plots
+#
+#     ##########  OPTICAL ELEMENT NUMBER 1 ##########
+#
+#     from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
+#
+#     optical_element = WOScreen1D()
+#
+#     # drift_before "distance" m
+#     #
+#     # propagating
+#     #
+#     #
+#     propagation_elements = PropagationElements()
+#     beamline_element = BeamlineElement(optical_element=optical_element,
+#                                        coordinates=ElementCoordinates(p=distance, q=0.000000,
+#                                                                       angle_radial=numpy.radians(0.000000),
+#                                                                       angle_azimuthal=numpy.radians(0.000000)))
+#     propagation_elements.add_beamline_element(beamline_element)
+#     propagation_parameters = PropagationParameters(wavefront=input_wavefront,
+#                                                    propagation_elements=propagation_elements)
+#     # self.set_additional_parameters(propagation_parameters)
+#     #
+#     propagation_parameters.set_additional_parameters('magnification_x', magnification_x)
+#     #
+#     propagator = PropagationManager.Instance()
+#     try:
+#         propagator.add_propagator(FresnelZoom1D())
+#     except:
+#         pass
+#     output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
+#                                                  handler_name='FRESNEL_ZOOM_1D')
+#
+#     #
+#     # ---- plots -----
+#     #
+#     if plot_from_oe <= 1: plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
+#                                title='OPTICAL ELEMENT NR 1', xtitle="x [um]", show=0)
+#
+#     return output_wavefront
 
 if __name__ == "__main__":
     from srxraylib.plot.gol import plot, plot_image, plot_table, set_qt

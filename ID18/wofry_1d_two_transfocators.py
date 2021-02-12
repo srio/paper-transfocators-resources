@@ -4,7 +4,7 @@
 #
 import numpy
 from srxraylib.plot.gol import plot, plot_image
-from wofry_tools import Score
+from score import Score
 
 
 

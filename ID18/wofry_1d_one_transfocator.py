@@ -19,7 +19,7 @@ from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import Fres
 
 from srxraylib.plot.gol import plot, plot_image
 
-from wofry_tools import Score
+from score import Score
 #
 #
 #
