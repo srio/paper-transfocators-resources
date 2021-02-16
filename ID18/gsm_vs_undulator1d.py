@@ -27,7 +27,7 @@ if __name__ == "__main__":
     from srxraylib.plot.gol import plot, plot_image, plot_table
 
     do_plot = False
-    scan_direction = "H"
+    scan_direction = "V"
 
     if scan_direction == "H":
         # HORIZONTAL ----------------------
@@ -37,9 +37,8 @@ if __name__ == "__main__":
         # GSM
         beta = 0.0922395 #0.02 #
         sigma_x = 3.03783e-05
-        x1 = numpy.linspace(-0.00012, 0.00012, 400)
+        abscissas_interval = 250e-6
         nmodes = 100
-        nsigma = 16
     else:
         # VERTICAL ----------------------
         # electrons
@@ -48,14 +47,13 @@ if __name__ == "__main__":
         # GSM
         beta = 1.151 #0.02 #
         sigma_x = 5.001e-6
-        x1 = numpy.linspace(-0.000050, 0.000050, 400)
+        abscissas_interval = 100e-6
         nmodes = 10
-        nsigma = 6
 
     #
     #
     #
-
+    x1 = numpy.linspace(-0.5*abscissas_interval, 0.5*abscissas_interval, 400)
     sigma_xi = beta * sigma_x
 
     X1 = numpy.outer(x1, numpy.ones_like(x1))
@@ -93,14 +91,11 @@ if __name__ == "__main__":
     spectral_density_GSM = CSD_GSM[indices,indices]
 
     print("CF: ", occupation_GSM[0])
-    print(">>>>", eigenvectors_GSM.shape)
 
     if do_plot:
         plot(numpy.arange(nmodes), cumulated_occupation_GSM, title="Cumulated occupation GSM")
         plot(x1, spectral_density_GSM, title="Spectral density GSM")
         plot_table(x1, eigenvectors_GSM, title="Eigenvectors GSM")
-
-
 
     #
     # undulator
@@ -114,7 +109,7 @@ if __name__ == "__main__":
                                     undulator_nperiods=100,
                                     K=1.191085,
                                     photon_energy=10000.,
-                                    nsigma=nsigma,
+                                    abscissas_interval=abscissas_interval,
                                     number_of_points=200,
                                     distance_to_screen=100.0,
                                     scan_direction=scan_direction,

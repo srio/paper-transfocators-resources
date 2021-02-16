@@ -20,6 +20,9 @@ from wofryimpl.propagator.propagators1D.integral import Integral1D
 from wofryimpl.propagator.propagators1D.fresnel_zoom import FresnelZoom1D
 from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import FresnelZoomScaling1D
 
+# needed for GSM approx
+from syned.storage_ring.electron_beam import ElectronBeam
+from syned.storage_ring.magnetic_structures.undulator import Undulator
 
 class UndulatorCoherentModeDecomposition1D():
     def __init__(self,
@@ -29,41 +32,48 @@ class UndulatorCoherentModeDecomposition1D():
                  undulator_nperiods=50,
                  K=0.25,
                  photon_energy=10490.0,
-                 nsigma=6,
+                 abscissas_interval=250e-6,
                  number_of_points=100,
                  distance_to_screen=100,
                  scan_direction="V",
+                 magnification_x=None,
                  sigmaxx = 5e-6,
                  sigmaxpxp = 5e-6,
                  useGSMapproximation=False):
 
+        # inputs
         self.electron_energy    = electron_energy
         self.electron_current   = electron_current
         self.undulator_period   = undulator_period
         self.undulator_nperiods = undulator_nperiods
         self.K                  = K
         self.photon_energy      = photon_energy
-        self.nsigma             = nsigma
+        self.abscissas_interval = abscissas_interval
         self.number_of_points   = number_of_points
         self.distance_to_screen = distance_to_screen
+        if magnification_x is None:
+            self.magnification_x = 1.0 / self.distance_to_screen
+        else:
+            self.magnification_x = magnification_x
         self.scan_direction     = scan_direction
         self.mxx                = 1.0 / sigmaxx**2
         self.mxpxp              = 1.0 / sigmaxpxp**2
+        self.useGSMapproximation = useGSMapproximation
 
-        #
-        # self.far_field_wavefront = None
-        # self.output_wavefront = None
-        # self.CSD = None
-        # self.eigenvalues = None
-        # self.eigenvectors = None
-        # self.abscissas = None
+        # calculated
+        self._abscissas_interval_in_far_field = self.abscissas_interval / self.magnification_x
 
         # development flags, use with care
-        self._useGSMapproximation = useGSMapproximation
         self._use_dirac_deltas = False
         self._use_vectorization = True
 
-        self.reset()
+        # to store results
+        self.far_field_wavefront = None
+        self.output_wavefront = None
+        self.CSD = None
+        self.eigenvalues = None
+        self.eigenvectors = None
+        self.abscissas = None
 
     def reset(self):
         self.far_field_wavefront = None
@@ -112,7 +122,7 @@ class UndulatorCoherentModeDecomposition1D():
             return np.exp(-self.mxx * abscissas**2 / 2) * np.roll(np.conjugate(self.output_wavefront.get_complex_amplitude()), int(x1 // abscissas_step))
 
     def calculate(self):
-        if not self._useGSMapproximation:
+        if not self.useGSMapproximation:
             self._calculate_far_field()
             self._calculate_backpropagation()
             self._calculate_CSD()
@@ -142,7 +152,7 @@ class UndulatorCoherentModeDecomposition1D():
             undulator_nperiods = self.undulator_nperiods,
             K                  = self.K,
             photon_energy      = self.photon_energy,
-            nsigma             = self.nsigma,
+            abscissas_interval_in_far_field = self._abscissas_interval_in_far_field,
             number_of_points   = self.number_of_points,
             distance_to_screen = self.distance_to_screen,
             scan_direction     = self.scan_direction,
@@ -162,7 +172,7 @@ class UndulatorCoherentModeDecomposition1D():
     def _calculate_backpropagation(self):
         self.output_wavefront = self.backpropagate(input_wavefront=self.far_field_wavefront,
                                          distance=-self.distance_to_screen,
-                                         magnification_x=1.0 / self.distance_to_screen)
+                                         magnification_x=self.magnification_x)
 
     def _calculate_CSD(self):
 
@@ -183,17 +193,15 @@ class UndulatorCoherentModeDecomposition1D():
 
     def _calculate_CSD_GSM(self):
 
-        # TODO: clean this
-        from syned.storage_ring.electron_beam import ElectronBeam
-        from syned.storage_ring.magnetic_structures.undulator import Undulator
+
         ebeam = ElectronBeam(energy_in_GeV=self.electron_energy, current=self.electron_current)
         su = Undulator.initialize_as_vertical_undulator(K=self.K, period_length=self.undulator_period,
                                                         periods_number=self.undulator_nperiods)
 
         sigma_u, sigma_up = su.get_sigmas_radiation(ebeam.gamma(), harmonic=1.0)
 
-        self.abscissas = numpy.linspace(-2 * self.nsigma * sigma_u,
-                                   2 * self.nsigma * sigma_u,
+        self.abscissas = numpy.linspace(-0.5 * self.abscissas_interval,
+                                   0.5 * self.abscissas_interval,
                                    self.number_of_points)
 
         X1 = numpy.outer(self.abscissas, numpy.ones_like(self.abscissas))
@@ -237,7 +245,7 @@ class UndulatorCoherentModeDecomposition1D():
             undulator_nperiods=50,
             K=0.25,
             photon_energy=10490.0,
-            nsigma=6,
+            abscissas_interval_in_far_field=250e-6,
             number_of_points=100,
             distance_to_screen=100,
             scan_direction="V"):
@@ -246,16 +254,10 @@ class UndulatorCoherentModeDecomposition1D():
         myelectronbeam = PysruElectronBeam(Electron_energy=electron_energy, I_current=electron_current)
         myundulator = PysruUndulator(K=K, period_length=undulator_period, length=undulator_period * undulator_nperiods)
 
-        # TODO: clean this
-        from syned.storage_ring.electron_beam import ElectronBeam
-        from syned.storage_ring.magnetic_structures.undulator import Undulator
-        ebeam = ElectronBeam(energy_in_GeV=electron_energy, current=electron_current)
-        su = Undulator.initialize_as_vertical_undulator(K=K, period_length=undulator_period,
-                                                        periods_number=undulator_nperiods)
-        theta_central_cone = su.gaussian_central_cone_aperture(ebeam.gamma())
-        #####
+        abscissas = np.linspace(-0.5 * abscissas_interval_in_far_field,
+                                0.5 * abscissas_interval_in_far_field,
+                                number_of_points)
 
-        abscissas = np.linspace(-nsigma * theta_central_cone * distance_to_screen, nsigma * theta_central_cone * distance_to_screen, number_of_points)
         if scan_direction == "H":
             X = abscissas
             Y = np.zeros_like(abscissas)
@@ -394,12 +396,13 @@ if __name__ == "__main__":
                                     undulator_nperiods=su.number_of_periods(),
                                     K=su.K(),
                                     photon_energy=photon_energy,
-                                    nsigma=16,
+                                    abscissas_interval=250e-6,
                                     number_of_points=number_of_points,
                                     distance_to_screen=distance_to_screen,
                                     scan_direction="V",
                                     sigmaxx=sigmaxx,
-                                    sigmaxpxp=sigmaxpxp)
+                                    sigmaxpxp=sigmaxpxp,
+                                    useGSMapproximation=False)
     # make calculation
     out = co.calculate()
 
