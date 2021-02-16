@@ -34,7 +34,8 @@ class UndulatorCoherentModeDecomposition1D():
                  distance_to_screen=100,
                  scan_direction="V",
                  sigmaxx = 5e-6,
-                 sigmaxpxp = 5e-6):
+                 sigmaxpxp = 5e-6,
+                 useGSMapproximation=False):
 
         self.electron_energy    = electron_energy
         self.electron_current   = electron_current
@@ -49,16 +50,28 @@ class UndulatorCoherentModeDecomposition1D():
         self.mxx                = 1.0 / sigmaxx**2
         self.mxpxp              = 1.0 / sigmaxpxp**2
 
+        #
+        # self.far_field_wavefront = None
+        # self.output_wavefront = None
+        # self.CSD = None
+        # self.eigenvalues = None
+        # self.eigenvectors = None
+        # self.abscissas = None
 
+        # development flags, use with care
+        self._useGSMapproximation = useGSMapproximation
+        self._use_dirac_deltas = False
+        self._use_vectorization = True
+
+        self.reset()
+
+    def reset(self):
         self.far_field_wavefront = None
         self.output_wavefront = None
         self.CSD = None
         self.eigenvalues = None
         self.eigenvectors = None
-
-        self.use_dirac_deltas = False
-        self.use_vectorization = True
-
+        self.abscissas = None
 
     def _WWW(self, x1, x2):
         # see Eq. 3.51 in Mark's thesis https://tel.archives-ouvertes.fr/tel-01664052/document
@@ -81,7 +94,7 @@ class UndulatorCoherentModeDecomposition1D():
         k = self.output_wavefront.get_wavenumber()
         abscissas = self.output_wavefront.get_abscissas()
         Dx = abscissas-x1
-        if self.use_dirac_deltas:
+        if self._use_dirac_deltas:
             c = self._H_x1(x1) * self.output_wavefront.get_complex_amplitude()
             return c
         else:
@@ -93,20 +106,28 @@ class UndulatorCoherentModeDecomposition1D():
         # see Eq. 3.52 in Mark's thesis https://tel.archives-ouvertes.fr/tel-01664052/document
         abscissas = self.output_wavefront.get_abscissas()
         abscissas_step = abscissas[1] - abscissas[0]
-        if self.use_dirac_deltas:
+        if self._use_dirac_deltas:
             return np.roll(np.conjugate(self.output_wavefront.get_complex_amplitude()), int(x1 // abscissas_step))
         else:
             return np.exp(-self.mxx * abscissas**2 / 2) * np.roll(np.conjugate(self.output_wavefront.get_complex_amplitude()), int(x1 // abscissas_step))
 
     def calculate(self):
-        self._calculate_far_field()
-        self._calculate_backpropagation()
-        self._calculate_CSD()
-        self._diagonalize()
-        return {"CSD":self.CSD,
-                "abscissas":self.output_wavefront.get_abscissas(),
-                "eigenvalues": self.eigenvalues,
-                "eigenvectors": self.eigenvectors}
+        if not self._useGSMapproximation:
+            self._calculate_far_field()
+            self._calculate_backpropagation()
+            self._calculate_CSD()
+            self._diagonalize()
+            return {"CSD":self.CSD,
+                    "abscissas":self.output_wavefront.get_abscissas(),
+                    "eigenvalues": self.eigenvalues,
+                    "eigenvectors": self.eigenvectors}
+        else:
+            self._calculate_CSD_GSM()
+            self._diagonalize()
+            return {"CSD":self.CSD,
+                    "abscissas":self.abscissas,
+                    "eigenvalues": self.eigenvalues,
+                    "eigenvectors": self.eigenvectors}
 
 
 
@@ -149,7 +170,7 @@ class UndulatorCoherentModeDecomposition1D():
 
         CSD = np.zeros((abscissas.size, abscissas.size), dtype=complex)
 
-        if self.use_vectorization:
+        if self._use_vectorization:
             for i in range(abscissas.size):
                 CSD[i, :] = self._WWW_vector(abscissas[i])
         else:
@@ -158,6 +179,33 @@ class UndulatorCoherentModeDecomposition1D():
                     tmp = self._WWW(abscissas[i], abscissas[j])
                     CSD[i, j] = tmp
 
+        self.CSD = CSD
+
+    def _calculate_CSD_GSM(self):
+
+        # TODO: clean this
+        from syned.storage_ring.electron_beam import ElectronBeam
+        from syned.storage_ring.magnetic_structures.undulator import Undulator
+        ebeam = ElectronBeam(energy_in_GeV=self.electron_energy, current=self.electron_current)
+        su = Undulator.initialize_as_vertical_undulator(K=self.K, period_length=self.undulator_period,
+                                                        periods_number=self.undulator_nperiods)
+
+        sigma_u, sigma_up = su.get_sigmas_radiation(ebeam.gamma(), harmonic=1.0)
+
+        self.abscissas = numpy.linspace(-2 * self.nsigma * sigma_u,
+                                   2 * self.nsigma * sigma_u,
+                                   self.number_of_points)
+
+        X1 = numpy.outer(self.abscissas, numpy.ones_like(self.abscissas))
+        X2 = numpy.outer(numpy.ones_like(self.abscissas), self.abscissas)
+
+        CF = sigma_u * sigma_up / \
+            numpy.sqrt(sigma_up ** 2 + 1 / self.mxpxp) / \
+            numpy.sqrt(sigma_u ** 2 + 1 / self.mxx)
+        sigmaI = numpy.sqrt(sigma_u**2 + 1/self.mxx)
+        beta = CF / numpy.sqrt(1.0-CF)
+        sigmaMu = beta * sigmaI
+        CSD = numpy.exp(-(X1**2+X2**2)/4/sigmaI**2) * numpy.exp(-(X2-X1)**2/2/sigmaMu**2)
         self.CSD = CSD
 
     def _diagonalize(self, normalize_eigenvectors=False):
@@ -252,42 +300,15 @@ class UndulatorCoherentModeDecomposition1D():
                 }
 
     @classmethod
-    def backpropagate(cls, input_wavefront,distance=-100.0, magnification_x=1.0):
+    def backpropagate(cls,
+                      input_wavefront,
+                      distance=-100.0,
+                      handler_name='FRESNEL_ZOOM_1D', # 'INTEGRAL_1D', #
+                      magnification_x=1.0,  # used for handler_name='FRESNEL_ZOOM_1D' or 'INTEGRAL_1D',
+                      magnification_N=10.0, # only used if handler_name='INTEGRAL_1D',
+                      ):
         #
-        # Import section
-        #
-        # import numpy
-        #
-        # from syned.beamline.beamline_element import BeamlineElement
-        # from syned.beamline.element_coordinates import ElementCoordinates
-        # from wofry.propagator.propagator import PropagationManager, PropagationElements, PropagationParameters
-        #
-        # from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
-        #
-        # from wofryimpl.propagator.propagators1D.fresnel import Fresnel1D
-        # from wofryimpl.propagator.propagators1D.fresnel_convolution import FresnelConvolution1D
-        # from wofryimpl.propagator.propagators1D.fraunhofer import Fraunhofer1D
-        # from wofryimpl.propagator.propagators1D.integral import Integral1D
-        # from wofryimpl.propagator.propagators1D.fresnel_zoom import FresnelZoom1D
-        # from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import FresnelZoomScaling1D
-        #
-        # from srxraylib.plot.gol import plot, plot_image
         plot_from_oe = 100  # set to a large number to avoid plots
-
-        # ##########  SOURCE ##########
-        #
-        # #
-        # # create output_wavefront
-        # #
-        # #
-        # output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.00012, x_max=0.00012,
-        #                                                                       number_of_points=1000)
-        # output_wavefront.set_photon_energy(10000)
-        # output_wavefront.set_gaussian_hermite_mode(sigma_x=3.03783e-05, amplitude=1, mode_x=0, shift=0, beta=0.0922395)
-        #
-        # if plot_from_oe <= 0: plot(output_wavefront.get_abscissas(), output_wavefront.get_intensity(), title='SOURCE')
-
-        ##########  OPTICAL SYSTEM ##########
 
         ##########  OPTICAL ELEMENT NUMBER 1 ##########
 
@@ -310,15 +331,30 @@ class UndulatorCoherentModeDecomposition1D():
         propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
         # self.set_additional_parameters(propagation_parameters)
         #
-        propagation_parameters.set_additional_parameters('magnification_x',magnification_x)
-        #
-        propagator = PropagationManager.Instance()
-        try:
-            propagator.add_propagator(FresnelZoom1D())
-        except:
-            pass
-        output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                     handler_name='FRESNEL_ZOOM_1D')
+
+        if handler_name == 'FRESNEL_ZOOM_1D':
+            propagation_parameters.set_additional_parameters('magnification_x', magnification_x)
+            #
+            propagator = PropagationManager.Instance()
+            try:
+                propagator.add_propagator(FresnelZoom1D())
+            except:
+                pass
+            output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
+                                                         handler_name='FRESNEL_ZOOM_1D')
+        elif handler_name == 'INTEGRAL_1D':
+            propagation_parameters.set_additional_parameters('magnification_x', magnification_x)
+            propagation_parameters.set_additional_parameters('magnification_N', magnification_N)
+            #
+            propagator = PropagationManager.Instance()
+            try:
+                propagator.add_propagator(Integral1D())
+            except:
+                pass
+            output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
+                                                         handler_name='INTEGRAL_1D')
+        else:
+            raise Exception("Unknown propagator % s" % handler_name)
 
         #
         # ---- plots -----
@@ -329,114 +365,6 @@ class UndulatorCoherentModeDecomposition1D():
         return output_wavefront
 
 
-# #
-# #
-# #
-#
-# def calculate_undulator_emission(
-#                                  electron_energy=6.04,
-#                                  electron_current=0.2,
-#                                  undulator_period=0.032,
-#                                  undulator_nperiods=50,
-#                                  K=0.25,
-#                                  photon_energy=10490.0,
-#                                  nsigma=6,
-#                                  number_of_points=100,
-#                                  distance_to_screen=100,
-#                                  scan_direction="V"):
-#
-#     myelectronbeam = PysruElectronBeam(Electron_energy=electron_energy, I_current=electron_current)
-#     myundulator = PysruUndulator(K=K, period_length=undulator_period, length=undulator_period * undulator_nperiods)
-#
-#     theta_central_cone = su.gaussian_central_cone_aperture(ebeam.gamma())
-#     abscissas = np.linspace(-nsigma * theta_central_cone * distance_to_screen,
-#                             nsigma * theta_central_cone * distance_to_screen, number_of_points)
-#     if scan_direction == "H":
-#         X = abscissas
-#         Y = np.zeros_like(abscissas)
-#     elif scan_direction == "V":
-#         X = np.zeros_like(abscissas)
-#         Y = abscissas
-#
-#     print("Calculating energy %g eV" % photon_energy)
-#     simulation_test = create_simulation(magnetic_structure=myundulator, electron_beam=myelectronbeam,
-#                                         magnetic_field=None, photon_energy=photon_energy,
-#                                         traj_method=TRAJECTORY_METHOD_ANALYTIC, Nb_pts_trajectory=None,
-#                                         rad_method=RADIATION_METHOD_APPROX_FARFIELD, initial_condition=None,
-#                                         distance=distance_to_screen,
-#                                         X=X, Y=Y, XY_are_list=True)
-#
-#     # TODO: this is not nice: I redo the calculations because I need the electric vectors to get polarization
-#     #       this should be avoided after refactoring pySRU to include electric field in simulations!!
-#     electric_field = simulation_test.radiation_fact.calculate_electrical_field(
-#         simulation_test.trajectory, simulation_test.source, X, Y, distance_to_screen)
-#
-#     E = electric_field._electrical_field
-#     pol_deg1 = (np.abs(E[:, 0]) / (np.abs(E[:, 0]) + np.abs(E[:, 1]))).flatten()  # SHADOW definition!!
-#
-#     intens1 = simulation_test.radiation.intensity.copy()
-#
-#     #  Conversion from pySRU units (photons/mm^2/0.1%bw) to SHADOW units (photons/rad^2/eV)
-#     intens1 *= (distance_to_screen * 1e3) ** 2  # photons/mm^2 -> photons/rad^2
-#     intens1 /= 1e-3 * photon_energy  # photons/o.1%bw -> photons/eV
-#
-#     # unpack trajectory
-#     T0 = simulation_test.trajectory
-#     T = np.vstack((T0.t, T0.x, T0.y, T0.z, T0.v_x, T0.v_y, T0.v_z, T0.a_x, T0.a_y, T0.a_z))
-#
-#     return {'intensity': intens1,
-#             'polarization': pol_deg1,
-#             'electric_field': E,
-#             'trajectory': T,
-#             'photon_energy': photon_energy,
-#             "abscissas": abscissas,
-#             "D": distance_to_screen,
-#             "theta": abscissas / distance_to_screen,
-#             }
-#
-#
-# def backpropagate(input_wavefront, distance=-100.0, magnification_x=1.0):
-#
-#     plot_from_oe = 100  # set to a large number to avoid plots
-#
-#     ##########  OPTICAL ELEMENT NUMBER 1 ##########
-#
-#     from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
-#
-#     optical_element = WOScreen1D()
-#
-#     # drift_before "distance" m
-#     #
-#     # propagating
-#     #
-#     #
-#     propagation_elements = PropagationElements()
-#     beamline_element = BeamlineElement(optical_element=optical_element,
-#                                        coordinates=ElementCoordinates(p=distance, q=0.000000,
-#                                                                       angle_radial=numpy.radians(0.000000),
-#                                                                       angle_azimuthal=numpy.radians(0.000000)))
-#     propagation_elements.add_beamline_element(beamline_element)
-#     propagation_parameters = PropagationParameters(wavefront=input_wavefront,
-#                                                    propagation_elements=propagation_elements)
-#     # self.set_additional_parameters(propagation_parameters)
-#     #
-#     propagation_parameters.set_additional_parameters('magnification_x', magnification_x)
-#     #
-#     propagator = PropagationManager.Instance()
-#     try:
-#         propagator.add_propagator(FresnelZoom1D())
-#     except:
-#         pass
-#     output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-#                                                  handler_name='FRESNEL_ZOOM_1D')
-#
-#     #
-#     # ---- plots -----
-#     #
-#     if plot_from_oe <= 1: plot(output_wavefront.get_abscissas() * 1e6, output_wavefront.get_intensity(),
-#                                title='OPTICAL ELEMENT NR 1', xtitle="x [um]", show=0)
-#
-#     return output_wavefront
 
 if __name__ == "__main__":
     from srxraylib.plot.gol import plot, plot_image, plot_table, set_qt
@@ -484,7 +412,10 @@ if __name__ == "__main__":
     for i in range(SD.size):
         SD[i] = CSD[i,i]
 
-    radiation_intensity = co.output_wavefront.get_intensity()
+    try:
+        radiation_intensity = co.output_wavefront.get_intensity()
+    except:
+        radiation_intensity = abscissas * 0
     weight = np.exp(-abscissas**2 / 2 / sigmaxx**2)
     conv = np.convolve(radiation_intensity, weight, mode='same')
     plot(

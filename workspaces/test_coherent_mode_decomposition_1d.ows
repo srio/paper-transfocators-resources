@@ -1,16 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <scheme description="" title="ID18" version="2.0" working_directory="/users/srio/Oasys" workspace_units="0">
 	<nodes>
-		<node id="0" name="Undulator" position="(480.0, 141.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
-		<node id="1" name="Back Propagation" position="(668.0, 135.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_back_propagation.OWSRWBackPropagation" title="Back Propagation" version="" />
+		<node id="0" name="Undulator" position="(471.0, 246.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
+		<node id="1" name="Back Propagation" position="(665.0, 174.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_back_propagation.OWSRWBackPropagation" title="Back Propagation" version="" />
 		<node id="2" name="Undulator Light Source" position="(293.0, 155.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U20" version="" />
-		<node id="3" name="To Wofry Wavefront 2D" position="(788.0, 130.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_wavefront_to_wofry.OWToWofryWavefront2d" title="To Wofry Wavefront 2D" version="" />
-		<node id="4" name="Wavefront 2D to 1D" position="(938.0, 115.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_2D_to_1D.OW2Dto1D" title="Wavefront 2D to 1D" version="" />
-		<node id="5" name="To Wofry Wavefront 2D" position="(789.0, 226.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_wavefront_to_wofry.OWToWofryWavefront2d" title="To Wofry Wavefront 2D" version="" />
-		<node id="6" name="Wavefront 2D to 1D" position="(941.0, 215.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_2D_to_1D.OW2Dto1D" title="Wavefront 2D to 1D" version="" />
-		<node id="7" name="Screen" position="(1158.0, 476.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen.OWWOScreen" title="Screen" version="" />
-		<node id="8" name="Generic Wavefront  File Writer" position="(1073.0, 344.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_wavefront_file_writer.OWWavefrontFileWriter" title="Generic Wavefront  File Writer" version="" />
-		<node id="9" name="Generic Wavefront File Reader" position="(841.0, 477.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_wavefront_file_reader.OWWavefrontFileReader" title="Generic Wavefront File Reader" version="" />
+		<node id="3" name="To Wofry Wavefront 2D" position="(802.0, 170.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_wavefront_to_wofry.OWToWofryWavefront2d" title="To Wofry Wavefront 2D" version="" />
+		<node id="4" name="Wavefront 2D to 1D" position="(931.0, 175.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_2D_to_1D.OW2Dto1D" title="Wavefront 2D to 1D" version="" />
+		<node id="5" name="To Wofry Wavefront 2D" position="(790.0, 366.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_wavefront_to_wofry.OWToWofryWavefront2d" title="To Wofry Wavefront 2D" version="" />
+		<node id="6" name="Wavefront 2D to 1D" position="(924.0, 308.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_2D_to_1D.OW2Dto1D" title="Wavefront 2D to 1D" version="" />
+		<node id="7" name="Generic Wavefront File Reader" position="(841.0, 477.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.tools.ow_wavefront_file_reader.OWWavefrontFileReader" title="Generic Wavefront File Reader" version="" />
+		<node id="8" name="Python Script" position="(1079.0, 487.0)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="Python Script" version="" />
+		<node id="9" name="Screen 1D" position="(1090.0, 312.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D" version="" />
+		<node id="10" name="Screen 1D" position="(1100.0, 170.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D" version="" />
+		<node id="11" name="Screen" position="(1088.0, 409.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen.OWWOScreen" title="Screen" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="SRWData" sink_node_id="1" source_channel="SRWData" source_node_id="0" />
@@ -18,8 +20,10 @@
 		<link enabled="true" id="2" sink_channel="GenericWavefront2D" sink_node_id="4" source_channel="GenericWavefront2D" source_node_id="3" />
 		<link enabled="true" id="3" sink_channel="GenericWavefront2D" sink_node_id="6" source_channel="GenericWavefront2D" source_node_id="5" />
 		<link enabled="true" id="4" sink_channel="SRWData" sink_node_id="5" source_channel="SRWData" source_node_id="0" />
-		<link enabled="true" id="5" sink_channel="WofryData" sink_node_id="8" source_channel="WofryData" source_node_id="6" />
-		<link enabled="true" id="6" sink_channel="WofryData" sink_node_id="7" source_channel="WofryData1D" source_node_id="9" />
+		<link enabled="true" id="5" sink_channel="in_object_1" sink_node_id="8" source_channel="WofryData" source_node_id="6" />
+		<link enabled="true" id="6" sink_channel="WofryData" sink_node_id="9" source_channel="WofryData" source_node_id="6" />
+		<link enabled="true" id="7" sink_channel="WofryData" sink_node_id="10" source_channel="WofryData" source_node_id="4" />
+		<link enabled="true" id="8" sink_channel="GenericWavefront2D" sink_node_id="11" source_channel="GenericWavefront2D" source_node_id="5" />
 	</links>
 	<annotations />
 	<thumbnail />
@@ -47,8 +51,8 @@ QFkAAAAAAABYDQAAAHBlcmlvZF9sZW5ndGhxJEc/lHrhR64Ue1gLAAAAcmFuZ2VfeF9tYXhxJUsy
 WAsAAAByYW5nZV94X21pbnEmSs7///9YCwAAAHJhbmdlX3lfbWF4cSdLMlgLAAAAcmFuZ2VfeV9t
 aW5xKErO////WAwAAAByaW5nX2N1cnJlbnRxKUc/yZmZmZmZmlgTAAAAc2F2ZWRXaWRnZXRHZW9t
 ZXRyeXEqY3NpcApfdW5waWNrbGVfdHlwZQpxK1gMAAAAUHlRdDUuUXRDb3JlcSxYCgAAAFFCeXRl
-QXJyYXlxLUNCAdnQywADAAAAAAEIAAAA7AAABi8AAAPMAAABCAAAAREAAAYvAAADzAAAAAAAAAAA
-B4AAAAEIAAABEQAABi8AAAPMcS6FcS+HcTBScTFYLAAAAHN5bW1ldHJ5X3ZzX2xvbmdpdHVkaW5h
+QXJyYXlxLUNCAdnQywADAAAAAAEIAAABEQAABi8AAAPMAAABCAAAAREAAAYvAAADzAAAAAAAAAAA
+BpAAAAEIAAABEQAABi8AAAPMcS6FcS+HcTBScTFYLAAAAHN5bW1ldHJ5X3ZzX2xvbmdpdHVkaW5h
 bF9wb3NpdGlvbl9ob3Jpem9udGFscTJLAFgqAAAAc3ltbWV0cnlfdnNfbG9uZ2l0dWRpbmFsX3Bv
 c2l0aW9uX3ZlcnRpY2FscTNLAVgWAAAAdHlwZV9vZl9pbml0aWFsaXphdGlvbnE0SwBYEgAAAHR5
 cGVfb2ZfcHJvcGVydGllc3E1SwFYDAAAAHVud3JhcF9waGFzZXE2SwBYCQAAAHVzZV9yYW5nZXE3
@@ -182,34 +186,60 @@ owAAAFAAAABAAAACtgAAAKMAAAAAAAAAAAeAAAAAUAAAAEAAAAK2AAAAo3EFhXEGh3EHUnEIcy4=
 </properties>
 		<properties format="pickle" node_id="6">gAN9cQAoWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0aW9ucQGIWBMAAABzYXZlZFdpZGdldEdlb21l
 dHJ5cQJjc2lwCl91bnBpY2tsZV90eXBlCnEDWAwAAABQeVF0NS5RdENvcmVxBFgKAAAAUUJ5dGVB
-cnJheXEFQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAwAAAABQAAAAQAAABXcAAAMAAAAAAAAAAAAH
-gAAAAFAAAABAAAAFdwAAAwBxBoVxB4dxCFJxCVgMAAAAc2VjdGlvbl9heGlzcQpLAVgSAAAAc2Vj
+cnJheXEFQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAwAAAABQAAAAQAAABXcAAAMAAAAAAAAAAAAG
+kAAAAFAAAABAAAAFdwAAAwBxBoVxB4dxCFJxCVgMAAAAc2VjdGlvbl9heGlzcQpLAVgSAAAAc2Vj
 dGlvbl9jb29yZGluYXRlcQtHAAAAAAAAAABYCQAAAHZpZXdfdHlwZXEMSwF1Lg==
 </properties>
-		<properties format="pickle" node_id="7">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
-AAAAAAAAAABYEwAAAGNhbGN1bGF0ZV9ncmlkX29ubHlxA0sBWAYAAABoZWlnaHRxBEcAAAAAAAAA
-AFgQAAAAaG9yaXpvbnRhbF9zaGlmdHEFRwAAAAAAAAAAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0
-aW9ucQaIWA8AAABtYWduaWZpY2F0aW9uX3hxB0c/0AAAAAAAAFgPAAAAbWFnbmlmaWNhdGlvbl95
-cQhHP+AAAAAAAABYBwAAAG9lX25hbWVxCVgAAAAAcQpYAQAAAHBxC0fAWQAAAAAAAFgKAAAAcHJv
-cGFnYXRvcnEMSwRYAQAAAHFxDUcAAAAAAAAAAFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEOY3Np
-cApfdW5waWNrbGVfdHlwZQpxD1gMAAAAUHlRdDUuUXRDb3JlcRBYCgAAAFFCeXRlQXJyYXlxEUNC
-AdnQywADAAAAAAEzAAABoAAABloAAASFAAABMwAAAcUAAAZaAAAEhQAAAAAAAAAAB4AAAAEzAAAB
-xQAABloAAASFcRKFcROHcRRScRVYBQAAAHNoYXBlcRZLAFgQAAAAc2hpZnRfaGFsZl9waXhlbHEX
-SwFYEAAAAHNodWZmbGVfaW50ZXJ2YWxxGEsAWA0AAABzdXJmYWNlX3NoYXBlcRlLAFgOAAAAdmVy
-dGljYWxfc2hpZnRxGkcAAAAAAAAAAFgJAAAAdmlld190eXBlcRtLAlgFAAAAd2lkdGhxHEcAAAAA
-AAAAAHUu
-</properties>
-		<properties format="pickle" node_id="8">gAN9cQAoWAkAAABkYXRhX3BhdGhxAVgDAAAAd2ZycQJYCQAAAGZpbGVfbmFtZXEDWAYAAAB0bXAu
-aDVxBFgQAAAAaXNfYXV0b21hdGljX3J1bnEFSwFYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxBmNz
-aXAKX3VucGlja2xlX3R5cGUKcQdYDAAAAFB5UXQ1LlF0Q29yZXEIWAoAAABRQnl0ZUFycmF5cQlD
-QgHZ0MsAAwAAAAACswAAAYIAAAUAAAAC0gAAArMAAAGnAAAFAAAAAtIAAAAAAAAAAAeAAAACswAA
-AacAAAUAAAAC0nEKhXELh3EMUnENdS4=
-</properties>
-		<properties format="pickle" node_id="9">gAN9cQAoWAkAAABkYXRhX3BhdGhxAVgEAAAAL3dmcnECWAkAAABmaWxlX25hbWVxA1gYAAAAL3Vz
+		<properties format="pickle" node_id="7">gAN9cQAoWAkAAABkYXRhX3BhdGhxAVgEAAAAL3dmcnECWAkAAABmaWxlX25hbWVxA1gYAAAAL3Vz
 ZXJzL3NyaW8vT2FzeXMvdG1wLmg1cQRYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxBWNzaXAKX3Vu
 cGlja2xlX3R5cGUKcQZYDAAAAFB5UXQ1LlF0Q29yZXEHWAoAAABRQnl0ZUFycmF5cQhDQgHZ0MsA
 AwAAAAACswAAAZsAAAUAAAACuQAAArMAAAHAAAAFAAAAArkAAAAAAAAAAAeAAAACswAAAcAAAAUA
 AAACuXEJhXEKh3ELUnEMdS4=
+</properties>
+		<properties format="pickle" node_id="8">gAN9cQAoWAwAAABhdXRvX2V4ZWN1dGVxAYlYEgAAAGN1cnJlbnRTY3JpcHRJbmRleHECSwBYCQAA
+AGZvbnRfc2l6ZXEDSwRYEQAAAGxpYnJhcnlMaXN0U291cmNlcQRdcQVjb2FzeXMud2lkZ2V0cy50
+b29scy5vd19weXRob25fc2NyaXB0ClNjcmlwdApxBimBcQd9cQgoWAQAAABuYW1lcQlYCwAAAEhl
+bGxvIHdvcmxkcQpYBgAAAHNjcmlwdHELWEUAAABwcmludCgnSGVsbG8gd29ybGQnKQpvMSA9IGlu
+X29iamVjdF8xCnByaW50KHR5cGUobzEuZ2V0X3dhdmVmcm9udCgpKSlxDFgFAAAAZmxhZ3NxDUsA
+WAgAAABmaWxlbmFtZXEOTnViYVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEPY3NpcApfdW5waWNr
+bGVfdHlwZQpxEFgMAAAAUHlRdDUuUXRDb3JlcRFYCgAAAFFCeXRlQXJyYXlxEkNCAdnQywADAAAA
+AAHSAAAAxgAABPEAAAMdAAAB0gAAAMYAAATxAAADHQAAAAAAAAAABpAAAAHSAAAAxgAABPEAAAMd
+cROFcRSHcRVScRZYDQAAAHNwbGl0dGVyU3RhdGVxF051Lg==
+</properties>
+		<properties format="pickle" node_id="9">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
+TnEERz+EeuFHrhR7WA8AAABtYWduaWZpY2F0aW9uX3hxBUc/hHrhR64Ue1gHAAAAb2VfbmFtZXEG
+WAAAAABxB1gBAAAAcHEIR8BZAAAAAAAAWAoAAABwcm9wYWdhdG9ycQlLBFgBAAAAcXEKRwAAAAAA
+AAAAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQtjc2lwCl91bnBpY2tsZV90eXBlCnEMWAwAAABQ
+eVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAwAA
+AABQAAAAQAAABXcAAAMAAAAAAAAAAAAGkAAAAFAAAABAAAAFdwAAAwBxD4VxEIdxEVJxElgIAAAA
+c2NhbGVkX05xE0tkWAgAAABzY2FsZWRfUnEUR0CPQAAAAAAAWAsAAABzY2FsZWRfUm1heHEVR0BZ
+AAAAAAAAWA4AAABzY2FsZWRfZ3Vlc3NfUnEWiFgFAAAAc2hhcGVxF0sAWA0AAABzdXJmYWNlX3No
+YXBlcRhLAFgJAAAAdmlld190eXBlcRlLAXUu
+</properties>
+		<properties format="pickle" node_id="10">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
+TnEERz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxBUc/8AAAAAAAAFgHAAAAb2VfbmFtZXEG
+WAAAAABxB1gBAAAAcHEIRwAAAAAAAAAAWAoAAABwcm9wYWdhdG9ycQlLBFgBAAAAcXEKRwAAAAAA
+AAAAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQtjc2lwCl91bnBpY2tsZV90eXBlCnEMWAwAAABQ
+eVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAwAA
+AABQAAAAQAAABXcAAAMAAAAAAAAAAAAGkAAAAFAAAABAAAAFdwAAAwBxD4VxEIdxEVJxElgIAAAA
+c2NhbGVkX05xE0tkWAgAAABzY2FsZWRfUnEUR0CPQAAAAAAAWAsAAABzY2FsZWRfUm1heHEVR0BZ
+AAAAAAAAWA4AAABzY2FsZWRfZ3Vlc3NfUnEWiFgFAAAAc2hhcGVxF0sAWA0AAABzdXJmYWNlX3No
+YXBlcRhLAFgJAAAAdmlld190eXBlcRlLAXUu
+</properties>
+		<properties format="pickle" node_id="11">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
+AAAAAAAAAABYEwAAAGNhbGN1bGF0ZV9ncmlkX29ubHlxA0sBWAYAAABoZWlnaHRxBEcAAAAAAAAA
+AFgQAAAAaG9yaXpvbnRhbF9zaGlmdHEFRwAAAAAAAAAAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0
+aW9ucQaIWA8AAABtYWduaWZpY2F0aW9uX3hxB0c/hHrhR64Ue1gPAAAAbWFnbmlmaWNhdGlvbl95
+cQhHP4R64UeuFHtYBwAAAG9lX25hbWVxCVgAAAAAcQpYAQAAAHBxC0fAWQAAAAAAAFgKAAAAcHJv
+cGFnYXRvcnEMSwRYAQAAAHFxDUcAAAAAAAAAAFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEOY3Np
+cApfdW5waWNrbGVfdHlwZQpxD1gMAAAAUHlRdDUuUXRDb3JlcRBYCgAAAFFCeXRlQXJyYXlxEUNC
+AdnQywADAAAAAACQAAAAegAABbcAAANfAAAAkAAAAJ8AAAW3AAADXwAAAAAAAAAABpAAAACQAAAA
+nwAABbcAAANfcRKFcROHcRRScRVYBQAAAHNoYXBlcRZLAFgQAAAAc2hpZnRfaGFsZl9waXhlbHEX
+SwFYEAAAAHNodWZmbGVfaW50ZXJ2YWxxGEsAWA0AAABzdXJmYWNlX3NoYXBlcRlLAFgOAAAAdmVy
+dGljYWxfc2hpZnRxGkcAAAAAAAAAAFgJAAAAdmlld190eXBlcRtLAlgFAAAAd2lkdGhxHEcAAAAA
+AAAAAHUu
 </properties>
 	</node_properties>
 </scheme>
