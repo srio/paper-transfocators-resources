@@ -3,6 +3,8 @@
 # Import section
 #
 import numpy
+from wofry.propagator.util.gaussian_schell_model import GaussianSchellModel1D
+from wofryimpl.propagator.util.undulator_coherent_mode_decomposition_1d import UndulatorCoherentModeDecomposition1D
 
 def W(x1,x2):
     delta_x = x2 - x1
@@ -69,9 +71,6 @@ if __name__ == "__main__":
              title="Spectral density", legend=["SD function", "SD array", "Gaussian with sigma_x"])
 
 
-    from wofry.propagator.util.gaussian_schell_model import GaussianSchellModel1D, GaussianSchellModel2D
-
-
     gsm = GaussianSchellModel1D(1.0, sigma_x, sigma_xi)
 
     # plot(x1, y2) # , legend=["numeric","theoretical"] )
@@ -100,7 +99,7 @@ if __name__ == "__main__":
     #
     # undulator
     #
-    from undulator_coherent_mode_decomposition_1d import UndulatorCoherentModeDecomposition1D
+
 
     co = UndulatorCoherentModeDecomposition1D(
                                     electron_energy=6.0,
