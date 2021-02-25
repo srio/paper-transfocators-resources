@@ -18,7 +18,7 @@
 		<node id="14" name="Ideal Lens" position="(898.0, 384.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.special_elements.ow_ideal_lens.IdealLens" title="Ideal Lens" version="" />
 		<node id="15" name="Screen-Slits" position="(790.0, 382.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.optical_elements.ow_screen_slits.ScreenSlits" title="Screen-Slits" version="" />
 		<node id="16" name="Screen-Slits" position="(1076.0, 375.0)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.optical_elements.ow_screen_slits.ScreenSlits" title="Screen-Slits" version="" />
-		<node id="17" name="Undulator" position="(194.0, 519.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
+		<node id="17" name="Undulator" position="(195.0, 519.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
 		<node id="18" name="Ideal Lens" position="(652.0, 526.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_ideal_lens.OWSRWIdealLens" title="Ideal Lens" version="" />
 		<node id="19" name="Aperture" position="(415.0, 518.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="Aperture" version="" />
 		<node id="20" name="Ideal Lens" position="(874.0, 532.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_ideal_lens.OWSRWIdealLens" title="Ideal Lens" version="" />
@@ -1422,7 +1422,7 @@ AAAAZHJpZnRfbmV3X3ZlcnRpY2FsX3dhdmVmcm9udF9jZW50ZXJfcG9zaXRpb25fYWZ0ZXJfc2hp
 ZnRxIUsAWDoAAABkcmlmdF9yZWxhdGl2ZV9wcmVjaXNpb25fZm9yX3Byb3BhZ2F0aW9uX3dpdGhf
 YXV0b3Jlc2l6aW5ncSJHP/AAAAAAAABYLQAAAGRyaWZ0X3R5cGVfb2Zfd2F2ZWZyb250X3NoaWZ0
 X2JlZm9yZV9yZXNpemluZ3EjSwBYNAAAAGRyaWZ0X3ZlcnRpY2FsX3JhbmdlX21vZGlmaWNhdGlv
-bl9mYWN0b3JfYXRfcmVzaXppbmdxJEc/uZmZmZmZmlg5AAAAZHJpZnRfdmVydGljYWxfcmVzb2x1
+bl9mYWN0b3JfYXRfcmVzaXppbmdxJEc/yZmZmZmZmlg5AAAAZHJpZnRfdmVydGljYWxfcmVzb2x1
 dGlvbl9tb2RpZmljYXRpb25fZmFjdG9yX2F0X3Jlc2l6aW5ncSVHQCQAAAAAAABYEAAAAGhhc19k
 aXNwbGFjZW1lbnRxJksAWBgAAABpbnZlcnRfdGFuZ2VudF9jb21wb25lbnRxJ0sAWBAAAABpc19h
 dXRvbWF0aWNfcnVucSiIWA8AAABpc19maW5hbF9zY3JlZW5xKUsAWDkAAABvZV9hbGxvd19zZW1p
@@ -1449,7 +1449,7 @@ R0A+AAAAAAAAWAsAAAByYW5nZV94X21heHE+SzJYCwAAAHJhbmdlX3hfbWlucT9Kzv///1gLAAAA
 cmFuZ2VfeV9tYXhxQEsyWAsAAAByYW5nZV95X21pbnFBSs7///9YCgAAAHJvdGF0aW9uX3hxQkcA
 AAAAAAAAAFgKAAAAcm90YXRpb25feXFDRwAAAAAAAAAAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5
 cURjc2lwCl91bnBpY2tsZV90eXBlCnFFWAwAAABQeVF0NS5RdENvcmVxRlgKAAAAUUJ5dGVBcnJh
-eXFHQ0IB2dDLAAMAAAAAAFAAAABAAAAFdwAAAvsAAABQAAAAQAAABXcAAAL7AAAAAAAAAAAHgAAA
+eXFHQ0IB2dDLAAMAAAAAAFAAAAAbAAAFdwAAAvsAAABQAAAAQAAABXcAAAL7AAAAAAAAAAAHgAAA
 AFAAAABAAAAFdwAAAvtxSIVxSYdxSlJxS1gFAAAAc2hhcGVxTEsAWAcAAABzaGlmdF94cU1HAAAA
 AAAAAABYBwAAAHNoaWZ0X3lxTkcAAAAAAAAAAFgNAAAAc3VyZmFjZV9zaGFwZXFPSwBYDAAAAHVu
 d3JhcF9waGFzZXFQSwBYCQAAAHVzZV9yYW5nZXFRSwBYCQAAAHZpZXdfdHlwZXFSSwFYDAAAAHdl
