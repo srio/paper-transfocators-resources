@@ -1,254 +1,6 @@
 import numpy
 
-#
-# Import section
-#
-import numpy
-
-from syned.beamline.beamline_element import BeamlineElement
-from syned.beamline.element_coordinates import ElementCoordinates
-from wofry.propagator.propagator import PropagationManager, PropagationElements, PropagationParameters
-
-from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
-
-from wofryimpl.propagator.propagators1D.fresnel import Fresnel1D
-from wofryimpl.propagator.propagators1D.fresnel_convolution import FresnelConvolution1D
-from wofryimpl.propagator.propagators1D.fraunhofer import Fraunhofer1D
-from wofryimpl.propagator.propagators1D.integral import Integral1D
-from wofryimpl.propagator.propagators1D.fresnel_zoom import FresnelZoom1D
-from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import FresnelZoomScaling1D
-
-
-#
-# SOURCE========================
-#
-
-
-def run_source(my_mode_index=0):
-    ##########  SOURCE ##########
-
-    #
-    # create output_wavefront
-    #
-    #
-    output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.00012, x_max=0.00012,
-                                                                          number_of_points=1000)
-    output_wavefront.set_photon_energy(7000)
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.04613e-05, amplitude=1, mode_x=0, shift=0, beta=0.118608)
-    # previous command is useless but...
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.04613e-05, amplitude=1, mode_x=my_mode_index, shift=0,
-                                               beta=0.118608)
-    return output_wavefront
-
-
-#
-# BEAMLINE========================
-#
-
-
-def run_beamline(output_wavefront,
-                f2 = 143.648000,
-                f1 = 71.824100):
-    ##########  OPTICAL SYSTEM ##########
-
-    ##########  OPTICAL ELEMENT NUMBER 1 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
-
-    optical_element = WOScreen1D()
-
-    # drift_before 35 m
-    #
-    # propagating
-    #
-    #
-    propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=35.000000, q=0.000000,
-                                                                      angle_radial=numpy.radians(0.000000),
-                                                                      angle_azimuthal=numpy.radians(0.000000)))
-    propagation_elements.add_beamline_element(beamline_element)
-    propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
-    # self.set_additional_parameters(propagation_parameters)
-    #
-    propagation_parameters.set_additional_parameters('magnification_x', 4.0)
-    #
-    propagator = PropagationManager.Instance()
-    try:
-        propagator.add_propagator(FresnelZoom1D())
-    except:
-        pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                 handler_name='FRESNEL_ZOOM_1D')
-
-    ##########  OPTICAL ELEMENT NUMBER 2 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from syned.beamline.shape import Rectangle
-    boundary_shape = Rectangle(-1.81362e-05, 1.81362e-05, -1.81362e-05, 1.81362e-05)
-    from wofryimpl.beamline.optical_elements.absorbers.slit import WOGaussianSlit1D
-    optical_element = WOGaussianSlit1D(boundary_shape=boundary_shape)
-
-    # no drift in this element
-    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
-    ##########  OPTICAL ELEMENT NUMBER 3 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
-
-    optical_element = WOScreen1D()
-
-    # drift_before 31 m
-    #
-    # propagating
-    #
-    #
-    propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=31.000000, q=0.000000,
-                                                                      angle_radial=numpy.radians(0.000000),
-                                                                      angle_azimuthal=numpy.radians(0.000000)))
-    propagation_elements.add_beamline_element(beamline_element)
-    propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
-    # self.set_additional_parameters(propagation_parameters)
-    #
-    propagation_parameters.set_additional_parameters('magnification_x', 1.5)
-    #
-    propagator = PropagationManager.Instance()
-    try:
-        propagator.add_propagator(FresnelZoom1D())
-    except:
-        pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                 handler_name='FRESNEL_ZOOM_1D')
-
-    ##########  OPTICAL ELEMENT NUMBER 4 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
-
-
-    optical_element = WOIdealLens1D(name='IdealLensF=71.8', focal_length=f1)
-
-    # no drift in this element
-    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
-    ##########  OPTICAL ELEMENT NUMBER 5 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from syned.beamline.shape import Rectangle
-    boundary_shape = Rectangle(-0.0005, 0.0005, -0.0005, 0.0005)
-    from wofryimpl.beamline.optical_elements.absorbers.slit import WOSlit1D
-    optical_element = WOSlit1D(boundary_shape=boundary_shape)
-
-    # drift_before 104 m
-    #
-    # propagating
-    #
-    #
-    propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=104.000000, q=0.000000,
-                                                                      angle_radial=numpy.radians(0.000000),
-                                                                      angle_azimuthal=numpy.radians(0.000000)))
-    propagation_elements.add_beamline_element(beamline_element)
-    propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
-    # self.set_additional_parameters(propagation_parameters)
-    #
-    propagation_parameters.set_additional_parameters('magnification_x', 2.0)
-    #
-    propagator = PropagationManager.Instance()
-    try:
-        propagator.add_propagator(FresnelZoom1D())
-    except:
-        pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                 handler_name='FRESNEL_ZOOM_1D')
-
-    ##########  OPTICAL ELEMENT NUMBER 6 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
-
-
-    optical_element = WOIdealLens1D(name='IdealLensF=143.648', focal_length=f2)
-
-    # no drift in this element
-    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
-    # ##########  OPTICAL ELEMENT NUMBER 7 ##########
-    #
-    # input_wavefront = output_wavefront.duplicate()
-    # from orangecontrib.esrf.wofry.util.thin_object_corrector import WOThinObjectCorrector1D  # TODO update
-    #
-    # optical_element = WOThinObjectCorrector1D(
-    #     name='',
-    #     file_with_thickness_mesh_flag=1,
-    #     file_with_thickness_mesh='profile1D.dat',
-    #     material='Be',
-    #     focus_at=30,
-    #     wall_thickness=0,
-    #     apply_correction_to_wavefront=1)
-    #
-    # # no drift in this element
-    # output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
-    ##########  OPTICAL ELEMENT NUMBER 8 ##########
-
-    input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
-
-    optical_element = WOScreen1D()
-
-    # drift_before 30 m
-    #
-    # propagating
-    #
-    #
-    propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=30.000000, q=0.000000,
-                                                                      angle_radial=numpy.radians(0.000000),
-                                                                      angle_azimuthal=numpy.radians(0.000000)))
-    propagation_elements.add_beamline_element(beamline_element)
-    propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
-    # self.set_additional_parameters(propagation_parameters)
-    #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.25)
-    #
-    propagator = PropagationManager.Instance()
-    try:
-        propagator.add_propagator(FresnelZoom1D())
-    except:
-        pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,
-                                                 handler_name='FRESNEL_ZOOM_1D')
-    return output_wavefront
-
-def run_all():
-    #
-    # MAIN========================
-    #
-
-
-    from srxraylib.plot.gol import plot, plot_image
-    from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
-
-    tally = TallyCoherentModes()
-    for my_mode_index in range(50):
-        output_wavefront = run_source(my_mode_index=my_mode_index)
-        output_wavefront = run_beamline(output_wavefront)
-        tally.append(output_wavefront)
-
-    cf, eigenvalues, eigenvectors, cross_spectral_density = tally.calculate_coherent_fraction(do_plot=True)
-    print('Coherent fraction from new (rediagonalized) modes: %f ' % cf)
-
-
-if __name__ == "__main__":
-    from srxraylib.plot.gol import plot
-
+def parse_data_marco():
     directions = ['h','v']
     focii = ['large', 'small', ]
     energies = [7, 10, 15, 20, 35]
@@ -276,54 +28,170 @@ if __name__ == "__main__":
                     print(">>>>%s %s :  slit: %g m, f1: %g, f2: %g, size: %g um (%g at %g m)" %
                           (label, direction, slit, f1, f2, 1e6*size200, 1e6*sizewaist, poswaist))
 
+def get_data_marco(label="e07keV_f2_at_170m",direction='h'):
+    # directions = ['h','v']
+    # focii = ['large', 'small', ]
+    # energies = [7, 10, 15, 20, 35]
+    # distances = [170, 192]
+
+    import datastorage
+    data = datastorage.read("summary_of_GSM_results_for_Manuel.npz")
+
+    # print("%s  %s" % (label, direction))
+    tmp = data[label][direction]
+    for key in tmp.keys():
+        print(key, tmp[key])
+        slit      = tmp["p035m_hard_aperture"]
+        f1        = tmp["p066m_f1_used"]
+        f2        = tmp["pf2pos_f2_used"]
+        f1w         = tmp["p066m_f1_desired"]
+        f2w        = tmp["pf2pos_f2_desired"]
+        size200   = tmp["p200m_fwhm_beam"]
+        sizewaist = tmp["waist_fwhm_size"]
+        poswaist  = tmp["waist_pos"]
+    # print(">>>>%s %s :  slit: %g m, f1: %g, f2: %g, size: %g um (%g at %g m)" %
+    #       (label, direction, slit, f1, f2, 1e6*size200, 1e6*sizewaist, poswaist))
+
+    return slit, f1, f2, f1w, f2w, size200, sizewaist
+
+def fit_profile(photon_energy):
+    a = numpy.loadtxt('profile1D.dat')
+    n = a.shape[0]
+    w = n // 20
+
+    x = a[(n // 2 - w):(n // 2 + w), 0] * 1e-6
+    y = a[(n // 2 - w):(n // 2 + w), 1] * 1e-6
+
+    yder = numpy.gradient(y, x)
+    coeff = numpy.polyfit(x, yder, 1)
+
+    print("\n\n\n ==========  fitted radius in the profile center : ")
+    radius = 2e6 / coeff[0]
+    print("fitted lens (with two curved sides) of radius = %g m " % (radius))
 
 
-    # attached the npz file, best is to read it with "datastorage": data = datastorage.read(fname)
-    #
-    #
-    # and here the δ,β
-    #
-    # In [1]: from sr import materials
-    #
-    # In [2]: for energy in (7,10,15,20,35):
-    #    ...: print(materials.get_delta_beta("Be",energy=energy))
-    # ...:
-    # (6.959562521724472e-06, 3.920823829597519e-09)
-    # (3.4079264780162433e-06, 1.1184654031792269e-09)
-    # (1.514042063277543e-06, 3.6034468029877136e-10)
-    # (8.515233095307551e-07, 2.0080453378588767e-10)
-    # (2.780114856104632e-07, 8.816014655748295e-11) """
+    import scipy.constants as codata
+    import xraylib
+
+
+    element = "Be"
+    density = xraylib.ElementDensity(4)
+
+    refraction_index = xraylib.Refractive_Index(element, photon_energy/1000, density)
+    refraction_index_delta = 1 - refraction_index.real
+    # att_coefficient = 4*numpy.pi * (xraylib.Refractive_Index(element, photon_energy/1000, density)).imag / wave_length
+
+    f2 = radius / 2 / refraction_index_delta
+    print("which corresponds for Be to a focal length of %g m " % (f2))
+    return f2
+
+def e07keV_f2_at_170m_h_calculate():
+    from e07keV_f2_at_170m_h import main
+
+    F1 = numpy.linspace(5.0,500.0,500)
+    F2 = numpy.zeros_like(F1)
+    FWHM = numpy.zeros_like(F1)
+    CF = numpy.zeros_like(F1)
+    I0 = numpy.zeros_like(F1)
+
+    for f1 in [F1[0],F1[-1]]:
+        tally = main(slit=3.62724e-05, f1=f1)
+        # tally.plot_spectral_density()
+        _, cf = tally.get_occupation()
+        abscissas = tally.get_abscissas()
+        spectral_density = tally.get_spectral_density()
+
+        fwhm, quote, coordinates = get_fwhm(spectral_density, 1e6 * abscissas)
+        plot(abscissas, spectral_density, title="F1: %g m, CF: %g, FWHM: %g um" % (f1, cf[0], fwhm))
+
+
+    for i in range(F1.size):
+        tally = main(slit=3.62724e-05, f1=F1[i])
+        _, occ = tally.get_occupation()
+        abscissas = tally.get_abscissas()
+        spectral_density = tally.get_spectral_density()
+        fwhm, quote, coordinates = get_fwhm(spectral_density, 1e6 * abscissas)
+        CF[i] = occ[0]
+        FWHM[i] = fwhm
+        I0[i] = spectral_density[spectral_density.size//2]
+        F2[i] = fit_profile(7000)
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", i, F1[i], FWHM[i], CF[i], I0[i] )
 
 
 
-    # print(data["e07keV_f2_at_170m_large"]['v'])
 
-    # F1 = []
-    # F2 = []
-    # for label in key1:
-    #     # label = "e07keV_f2_at_170m_large"
-    #     for direction in directions:
-    #         tmp = data[label][direction]
-    #         for key in tmp.keys():
-    #             # print(key, tmp[key])
-    #             slit      = tmp["p035m_hard_aperture"]
-    #             f1        = tmp["p066m_f1_used"]
-    #             f2        = tmp["pf2pos_f2_used"]
-    #             size200   = tmp["p200m_fwhm_beam"]
-    #             sizewaist = tmp["waist_fwhm_size"]
-    #             poswaist  = tmp["waist_pos"]
-    #         F1.append(f1)
-    #         F2.append(f2)
-    #         print(">>>>%s %s :  slit: %g m, f1: %g, f2: %g, size: %g um (%g at %g m)" %
-    #               (label, direction, slit, f1, f2, 1e6*size200, 1e6*sizewaist, poswaist))
+    plot(F1,FWHM)
 
-    # print(ENERGY)
-    # print(F1)
-    # print(len(ENERGY),len(F1))
-    # plot(numpy.array(F1),numpy.array(F2)) #,xrange=[0,100], yrange=[0,100])
-    # print(key1[0], data[key1[0]]['h'])
+    fileout = "e07keV_f2_at_170m_h.dat"
+    f = open(fileout, "w")
+    f.write("#L  f1  f2  FWHM  CF  I0")
+    for i in range(F1.size):
+        f.write("%g %g %g %g %g\n" % (F1[i], F2[i], FWHM[i], CF[i], I0[i]))
+    f.close()
+    print("File written to disk: ", fileout)
 
-    # run_all()
+
+def plot_file(fileout):
+    # fileout = "e07keV_f2_at_170m_h.dat"
+    a = numpy.loadtxt(fileout, skiprows=1)
+    print(a.shape)
+
+
+
+    plot(a[:, 0], a[:, 3], title="CF", xtitle="f1 [m]", ytitle="CF", xrange=[0,100])
+    plot(a[:, 0], a[:, 4], title="I0", xtitle="f1 [m]", ytitle="I0", xrange=[0,100])
+
+
+    _, f1v, f2v, f1vw, f2vw, _, _                = get_data_marco("e07keV_f2_at_170m_large", direction='v')
+    slit, f1, f2, f1w, f2w, size200l, sizewaistl = get_data_marco("e07keV_f2_at_170m_large", direction='h')
+    F1l = 1 / (1 / f1w + 1 / f1vw)
+    F2l = 1 / (1 / f2w + 1 / f2vw)
+    F1wl = 1 / (1 / f1w + 1 / f1vw)
+    F2wl = 1 / (1 / f2w + 1 / f2vw)
+    print(">>>>>>>Large", slit, F1l, F2l, size200l, sizewaistl)
+    _, f1v, f2v,f1vw, f2vw, _, _                = get_data_marco("e07keV_f2_at_170m_small", direction='v')
+    slit, f1, f2, f1w, f2w, size200s, sizewaists = get_data_marco("e07keV_f2_at_170m_small", direction='h')
+    F1s = 1 / (1 / f1 + 1 / f1v)
+    F2s = 1 / (1 / f2 + 1 / f2v)
+    F1ws = 1 / (1 / f1w + 1 / f1vw)
+    F2ws = 1 / (1 / f2w + 1 / f2vw)
+    print(">>>>>>>Small", slit, F1s, F2s, size200s, sizewaists)
+
+
+
+    f = plot(a[:, 0], a[:, 1],
+             [F1l, F1s], [F2l, F2s],
+             [F1wl, F1ws], [F2wl, F2ws],
+             title="trajectories", xtitle="f1 [m]", ytitle="f2 [m]", xrange=[0, 115], yrange=[15, 35], show=1,
+             marker=["None",'+','o'],
+             legend=["Wofry","Marco used","Marco wanted"])
+
+
+    g = plot(a[:, 0], a[:, 2],
+             [F1l, F1s], [size200l * 1e6, size200s * 1e6],
+             [F1wl, F1ws], [sizewaistl * 1e6, sizewaists * 1e6],
+             title="FWHM", xtitle="f1 [m]", ytitle="FWHM [um]", xrange=[0,115], show=1,
+             marker=["None", '+', 'o'],
+             legend=["Wofry", "Marco used", "Marco wanted"])
+
+
+if __name__ == "__main__":
+    from srxraylib.plot.gol import plot, set_qt
+    from oasys.util.oasys_util import get_fwhm
+    set_qt()
+
+    parse_data_marco()
+
+    # e07keV_f2_at_170m_h_calculate()
+    # plot_file("tmp.dat")
+    plot_file("e07keV_f2_at_170m_h.dat")
+
+
+
+
+
+
+
 
 
 
