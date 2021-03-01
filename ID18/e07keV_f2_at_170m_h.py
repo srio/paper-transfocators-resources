@@ -81,7 +81,7 @@ def run_source(my_mode_index=0):
 
 
 
-def run_beamline(output_wavefront,slit=3.62724e-05, f1=71.8241, my_mode_index=0):
+def run_beamline(output_wavefront,slit=3.62724e-05, f1=71.8241, f2=None, my_mode_index=0):
     
     
     ##########  OPTICAL SYSTEM ##########
@@ -183,7 +183,7 @@ def run_beamline(output_wavefront,slit=3.62724e-05, f1=71.8241, my_mode_index=0)
     
     input_wavefront = output_wavefront.duplicate()
     from syned.beamline.shape import Rectangle
-    boundary_shape=Rectangle(-0.0005, 0.0005, -0.0005, 0.0005)
+    boundary_shape=Rectangle(-0.5, 0.5, -0.5, 0.5)
     from wofryimpl.beamline.optical_elements.absorbers.slit import WOSlit1D
     optical_element = WOSlit1D(boundary_shape=boundary_shape)
     
@@ -235,10 +235,13 @@ def run_beamline(output_wavefront,slit=3.62724e-05, f1=71.8241, my_mode_index=0)
     input_wavefront = output_wavefront.duplicate()
     from orangecontrib.esrf.wofry.util.thin_object import WOThinObject1D #TODO update
 
+    if f2 is None:
+        f2used = fit_profile(photon_energy=input_wavefront.get_photon_energy())
+    else:
+        f2used = f2
 
-    f2 = fit_profile(photon_energy=input_wavefront.get_photon_energy())
     # optical_element = WOThinObject1D(name='',file_with_thickness_mesh='profile1D.dat',material='Be')
-    optical_element = WOIdealLens1D(name='IdealLensF=%g' % f2, focal_length=f2)
+    optical_element = WOIdealLens1D(name='IdealLensF=%g' % f2used, focal_length=f2used)
     # optical_element = WOThinObject1D(name='', file_with_thickness_mesh='profile1D.dat', material='External', refraction_index_delta=6.96076e-06, att_coefficient=0)
     
     # no drift in this element 
@@ -283,14 +286,14 @@ def run_beamline(output_wavefront,slit=3.62724e-05, f1=71.8241, my_mode_index=0)
 
 
 
-def main(slit=3.62724e-05, f1=71.8241):
+def main(slit=3.62724e-05, f1=71.8241, f2=None):
     from srxraylib.plot.gol import plot, plot_image
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
     
     tally = TallyCoherentModes()
     for my_mode_index in range(50):
         output_wavefront = run_source(my_mode_index=my_mode_index)
-        output_wavefront = run_beamline(output_wavefront,slit=slit, f1=f1, my_mode_index=my_mode_index)
+        output_wavefront = run_beamline(output_wavefront,slit=slit, f1=f1, f2=f2, my_mode_index=my_mode_index)
         tally.append(output_wavefront)
     
     # tally.plot_cross_spectral_density()
