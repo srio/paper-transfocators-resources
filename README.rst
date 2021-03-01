@@ -24,6 +24,7 @@ TODO
 ====
 
 - Recalculate using rectangular slit (Gaussian used) and real lenses (ideal used) and undulator coherent mode decomposition
+- Calculate all wanted energies
 - compute transmission (intensity at center and integrated intensity)
 - Obtain GSM trajectories (f1,f2) and corresponding size for better comparison
 - Start thinking in 2D simulations and compare
