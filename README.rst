@@ -9,6 +9,8 @@ Select the aperture to match the desired coherent fraction:
 
 .. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1cf.png
 
+Slit size in the following calculations: 36 microns (H) x 201 microns (V).
+
 (f1,f2) trajectories
 ====================
 
