@@ -42,6 +42,7 @@ To compare the methods I calculates the sizes using the same (f1,f2) trajectory 
 TODO
 ====
 - Recalculate using rectangular slit (Gaussian used) and real lenses (ideal used) and undulator coherent mode decomposition
+- calculate f2 position at 190
 - Calculate all wanted energies
 - compute transmission (intensity at center and integrated intensity)
 - Start thinking in 2D simulations and compare
