@@ -2,14 +2,18 @@
 paper-transfocators-resources
 =============================
 
+Calculations for f2 at 177m 
+Slit size in the following calculations: 37 microns (H) x 205 microns (V).
+
 Select slit opening
 ===================
 
 Select the aperture to match the desired coherent fraction:
 
 .. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1cf.png
+.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1cf_und.png
 
-Slit size in the following calculations: 36 microns (H) x 201 microns (V).
+
 
 (f1,f2) trajectories
 ====================
@@ -29,11 +33,14 @@ To compare the methods I calculates the sizes using the same (f1,f2) trajectory 
 
 .. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1size_comparison2.png
 
+To compare the methods I calculates the sizes using the same (f1,f2) trajectory (the one from GSMM)
+
+.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1size_comparison3.png
+
 
 
 TODO
 ====
-- Double-check the papameters used in GSMM and WOFRY
 - Recalculate using rectangular slit (Gaussian used) and real lenses (ideal used) and undulator coherent mode decomposition
 - Calculate all wanted energies
 - compute transmission (intensity at center and integrated intensity)
@@ -42,3 +49,4 @@ TODO
 DONE
 ====
 - Obtain GSM trajectories (f1,f2) and corresponding size for better comparison
+- Double-check the papameters used in GSMM and WOFRY
