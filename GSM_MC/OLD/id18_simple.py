@@ -204,6 +204,7 @@ def plot_comparisom(root="tmp"):
              show=1,
              xrange=[0, 400], yrange=[0,75])
 
+
 def run_loop(root="tmp"):
 
     outfileH = "%sH.dat" % root
@@ -411,10 +412,9 @@ if __name__ == "__main__":
     # run_single_case()
     # run_loop()
     # plot_loop()
-    plot_comparisom(root="tmp")
+    # plot_comparisom(root="tmp")
 
     # run_loop_with_wofry_f1f2(root="gsm_marco_with_wofry_f1f2")
     # plot_loop(root="gsm_marco_with_wofry_f1f2")
 
     plot_comparisom(root="gsm_marco_with_wofry_f1f2")
-
