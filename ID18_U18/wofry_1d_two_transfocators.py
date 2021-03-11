@@ -164,11 +164,11 @@ if __name__ == "__main__":
     # plot_file("e07keV_f2_at_170m_h.dat")
     # plot_file("e07keV_f2_at_170m_v.dat", direction='v')
 
-    # e07keV_f2_at_170m_v_calculate(fileout="e07keV_f2_at_170m_v_f1f2_from_marco.dat",
-    #                               f1f2_grid_file="../GSM_MC/f1_f2_scan_7keV_f2_at_170_v.dat")
+    e07keV_f2_at_170m_v_calculate(fileout="e07keV_f2_at_170m_v_f1f2_from_marco.dat",
+                                  f1f2_grid_file="../GSM_MC/f1_f2_scan_7keV_f2_at_170_v.dat")
 
-    # e07keV_f2_at_170m_h_calculate(fileout="e07keV_f2_at_170m_h_f1f2_from_marco.dat",
-    #                               f1f2_grid_file="../GSM_MC/f1_f2_scan_7keV_f2_at_170_h.dat")
+    e07keV_f2_at_170m_h_calculate(fileout="e07keV_f2_at_170m_h_f1f2_from_marco.dat",
+                                  f1f2_grid_file="../GSM_MC/f1_f2_scan_7keV_f2_at_170_h.dat")
 
 
 

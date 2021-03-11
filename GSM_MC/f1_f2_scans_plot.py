@@ -57,9 +57,12 @@ def plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='each'
 
 if __name__ == "__main__":
     # main()
-    from srxraylib.plot.gol import plot
+    from srxraylib.plot.gol import plot, set_qt
+    set_qt()
 
     energy = 7
     pos_last_focusing = 170
 
-    plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='marco')
+    plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='each')
+    # plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='wofry')
+    # plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='marco')
