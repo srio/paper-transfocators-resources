@@ -20,7 +20,7 @@ Select the aperture to match the desired coherent fraction:
 
 For a given f1, calculate f2 in order to have the focus at the sample. 
 
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1traj_comparison1.png
+.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_1traj_comparison.png
 
 Focal sizes
 ===========
