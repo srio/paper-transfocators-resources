@@ -247,32 +247,30 @@ def rxoptics_display(tkt):
     gain = tkt["gain"]
 
     print("===== Inputs: =====")
-    print("Lens material is: %s" % (MATERIAL))
-    print("Radius of curvature R at the apex of the individual lenses: %g" % (R))
-    if D2 == 0:
-        print("Lens type: 1D")
-    else:
-        print("Lens type: 2D")
+    print("MATERIAL: %s (Lens material is: %s)" % (MATERIAL, MATERIAL))
+    print("R: %g (Radius of curvature R at the apex of the individual lenses)" % (R))
 
-    print("Average web thickness d, that is, the distance of the apices of each lens' paraboloids. The most common values are 30 μm and 50 μm.: %g μm" % d)
-    print("Thickness D of the individual lenses. The most common value is 1 mm: %g mm" % th)
-    print("Thickness F of the individual lenses' frames. The most common value is 2 mm: %g mm" % F)
+    print("D2: %d (Lens type: %dD)" % (D2, D2+1))
 
-    print("Please choose whether you wish to specify the focal length (0) of the CRL or the distance of the CRL to the secondary source (1): %d" % presf)
+    print("d: %g μm (Average web thickness d, that is, the distance of the apices of each lens' paraboloids. The most common values are 30 μm and 50 μm.)" % d)
+    print("th: %g mm (Thickness D of the individual lenses. The most common value is 1 mm)" % th)
+    print("F: %g mm (Thickness F of the individual lenses' frames. The most common value is 2 mm)" % F)
+
+    print("presf: %d (Please choose whether you wish to specify the focal length (0) of the CRL or the distance of the CRL to the secondary source (1))" % presf)
     if presf == 0:
-        print(" Focal length value: %g mm" % desf)
+        print("desf: %g mm (Focal length value)" % desf)
     else:
-        print("Distance of the CRL to the secondary source value: %g mm" % desf)
+        print("desf: %g mm (Distance of the CRL to the secondary source value)" % desf)
 
-    print("photon energy of the x-ray beam: %g keV" % (e))
+    print("e: %g keV (photon energy of the x-ray beam)" % (e))
 
-    print("Distance of the x-ray source to the CRL (more precisely, to its secondary principal plane): %g m" % (dist))
+    print("dist: %g m (Distance of the x-ray source to the CRL (more precisely, to its secondary principal plane))" % (dist))
 
     if D2:
-        print("width (FWHM) of the x-ray source: %g um" % (w))
-        print("height (FWHM) of the x-ray source: %g um" % (h))
+        print("w: %g um (width (FWHM) of the x-ray source)" % (w))
+        print("h: %g um (height (FWHM) of the x-ray source)" % (h))
     else:
-        print("lateral extent (FWHM) of the x-ray source in the focused direction: %g um" % (w))
+        print("w: %g um (lateral extent (FWHM) of the x-ray source in the focused direction)" % (w))
 
     print("==========\n\n")
 
@@ -307,13 +305,13 @@ if __name__ == "__main__":
     # tkt = rxoptics_compute()
     tkt = rxoptics_compute(
         MATERIAL="Be",  # *
-        R=0.2,  # * radius of curvature R at the apex of the individual lenses in the CRL [mm]
-        D2=1,  # * lens type: 0=1D, 1=2D
-        d=30,  # * web thickness [um]
-        th=1.0,  # * thickness D of the individual lenses [mm]
-        F=2.0,  # * thickness of the lens frame [mm]
-        presf=0,  # * 0=focal length, 1=image distance,
-        desf=28200.0,  # * desired focal lengt - focal length (presf=0) in mm or image distance (presf=1) in mm
+        R=0.2,        # * radius of curvature R at the apex of the individual lenses in the CRL [mm]
+        D2=1,         # * lens type: 0=1D, 1=2D
+        d=30,         # * web thickness [um]
+        th=1.0,       # * thickness D of the individual lenses [mm]
+        F=2.0,        # * thickness of the lens frame [mm]
+        presf=0,      # * 0=focal length, 1=image distance,
+        desf=28200.0, # * desired focal lengt - focal length (presf=0) in mm or image distance (presf=1) in mm
         e=10.0,  # * photon energy in keV
         dist=65.0,  # * distance source-lens [m]
         w=15.3,  # * width (FWHM) of the x-ray source [um]
