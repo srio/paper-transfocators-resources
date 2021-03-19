@@ -40,6 +40,7 @@ class Transfocator(SynedObject, OpticalElementDecorator):
     def __init__(self,
             sr_lensset=None,
             ):
+        SynedObject.__init__(self)
         self._stack_list = []
         if sr_lensset is not None:
             for lens in sr_lensset:
@@ -56,15 +57,16 @@ class Transfocator(SynedObject, OpticalElementDecorator):
         return dict_to_save
 
 
+
     def reset(self):
         self._stack_list = []
 
     def get_number_of_lenses(self):
         return len(self._stack_list)
 
-    def get_focal_distance(self, index, photon_energy=10000.0):
+    def get_focal_distance_one_lens(self, index, photon_energy=10000.0, verbose=False):
         #
-        print("\n\n\n ==========  parameters in use : ")
+        if verbose: print("\n\n\n ==========  parameters in use : ")
 
         refraction_index_delta, att_coefficient = \
             self._stack_list[index].get_refraction_index(photon_energy=photon_energy)
@@ -74,20 +76,97 @@ class Transfocator(SynedObject, OpticalElementDecorator):
         lens_radius = self._stack_list[index]._keywords_at_creation["radius"]
         n_lenses = self._stack_list[index]._keywords_at_creation["n_lenses"]
 
-        print("\n\nRadius of curvature R = %g um" % (1e6 * lens_radius))
-        print("Number of lenses N: %d" % n_lenses)
-        print("Number of curved refractive surfaces in a lens Nd = %d" % (number_of_curved_surfaces))
+        if verbose:
+            print("\n\nRadius of curvature R = %g um" % (1e6 * lens_radius))
+            print("Number of lenses N: %d" % n_lenses)
+            print("Number of curved refractive surfaces in a lens Nd = %d" % (number_of_curved_surfaces))
         if number_of_curved_surfaces != 0:
             F = lens_radius / (number_of_curved_surfaces * n_lenses * refraction_index_delta)
-            print("Focal distance F = R / (Nd N delta) = %g m" % (F))
+            if verbose:
+                print("Focal distance F = R / (Nd N delta) = %g m" % (F))
         return F
 
-    def get_focal_distances(self, photon_energy=10000.0):
-        out = []
-        for i in range(self.get_number_of_lenses()):
-            out.append(self.get_focal_distance(i))
-        return out
-    
+    def get_focal_distances(self, photon_energy=10000.0): # , mask=None):
+        n = self.get_number_of_lenses()
+        # if mask is None:
+        #     mask = numpy.ones(n)
+        out = numpy.zeros(n)
+
+        for i in range(n):
+            out[i] = self.get_focal_distance_one_lens(i, photon_energy=photon_energy) #* mask[i]
+        return numpy.array(out)
+
+    def get_inverse_focal_distances(self, photon_energy=10000.0): #, mask=None):
+        return 1.0 / self.get_focal_distances(photon_energy=photon_energy)
+
+    def get_inverse_focal_distance(self, photon_energy=10000.0, mask=None):
+        n = self.get_number_of_lenses()
+        if mask is None:
+            mask = numpy.ones(n)
+        f_inv_out = 0.0
+        fs = self.get_inverse_focal_distances(photon_energy=photon_energy)
+        for i in range(n):
+            if mask[i]: f_inv_out += fs[i]
+        return f_inv_out
+
+    def get_focal_distance(self, photon_energy=10000.0, mask=None):
+        return 1.0 / self.get_inverse_focal_distance(photon_energy=photon_energy, mask=mask)
+
+
+    def get_mask_from_index(self, index):
+        aa = numpy.binary_repr(index, width=self.get_number_of_lenses())
+        return numpy.array(list(aa), dtype=int)
+
+    def get_index_from_mask(self, mask):
+        idx = 0
+        n = len(mask)
+        for i in range(n):
+            idx += mask[i] * 2**(n-i-1)
+        return idx
+
+
+    def calculate_focal_length_for_all_masks(self, photon_energy=10000.0):
+        f_inverse = self.get_inverse_focal_distances(photon_energy=photon_energy)
+        print(">>>>", f_inverse.shape )
+        n = self.get_number_of_lenses()
+        Fs = numpy.zeros(2**n)
+        # print("n=%d, analyzing 2**N=%d configurations: " % (n, 2**n) )
+        for i in range(2**n):
+            # aa = str(numpy.binary_repr(i, width=n))
+            # mask = numpy.array(list(aa), dtype=int)
+            mask = self.get_mask_from_index(i)
+            Fs[i] = 1.0 / (f_inverse * mask).sum()
+            print(i, mask, Fs[i], self.get_index_from_mask(mask))
+        return Fs
+
+    def guess_configuration_index(self, p=100.0, q=None, photon_energy=10000.0):
+        if q is None:
+            f = p
+        else:
+            f = 1.0 (1.0 / p + 1.0 / q)
+
+        Fn = self.calculate_focal_length_for_all_masks(photon_energy=photon_energy)
+        distances = numpy.abs(Fn - f)
+        mask_index = numpy.argmin(distances)
+        return mask_index
+
+
+    def guess_configuration_mask(self, p=100.0, q=None, photon_energy=10000.0):
+        mask_index = self.guess_configuration_index(p=p, q=q, photon_energy=photon_energy)
+        return self.get_mask_from_index(mask_index)
+
+    def info_configuration(self, mask=None):
+        n = self.get_number_of_lenses()
+        if mask is None:
+            mask = numpy.ones(n)
+        print("\n\n###############################################################")
+        print("AXIS #   OFF(0)/ON(1)   N   MATERIAL   RADIUS")
+        for i in range(n):
+            lens_radius = self._stack_list[i]._keywords_at_creation["radius"]
+            n_lenses = self._stack_list[i]._keywords_at_creation["n_lenses"]
+            material = self._stack_list[i].get_material()
+            print("%d        %d              %d   %s         %f" % (i, mask[i], n_lenses, material, lens_radius))
+        print("###############################################################\n\n")
 
     # def get_boundaries(self):
     #     boundaries_list = []
@@ -118,6 +197,8 @@ class Transfocator(SynedObject, OpticalElementDecorator):
 
 
 if __name__ == "__main__":
+    from srxraylib.plot.gol import plot
+
     l_1x10mm =   LensBlock(1,   radius=10000e-6, thickness=1e-3)
     l_1x5mm =    LensBlock(1,   radius=5000e-6,  thickness=1e-3)
     l_1x2mm =    LensBlock(1,   radius=2000e-6,  thickness=1e-3)
@@ -129,9 +210,9 @@ if __name__ == "__main__":
     l_2x200um =  LensBlock(2,   radius=200e-6,   thickness=1e-3)
     l_4x200um =  LensBlock(4,   radius=200e-6,   thickness=1e-3)
     l_8x200um =  LensBlock(8,   radius=200e-6,   thickness=1e-3)
-    l_16x200um = LensBlock(16, radius=200e-6,   thickness=1e-3)
-    l_32x200um = LensBlock(32, radius=200e-6,   thickness=1e-3)
-    l_64x200um = LensBlock(64, radius=200e-6,   thickness=1e-3)
+    l_16x200um = LensBlock(16,  radius=200e-6,   thickness=1e-3)
+    l_32x200um = LensBlock(32,  radius=200e-6,   thickness=1e-3)
+    l_64x200um = LensBlock(64,  radius=200e-6,   thickness=1e-3)
 
 
 collimating_transfocator = Transfocator(
@@ -148,7 +229,26 @@ collimating_transfocator = Transfocator(
     )
 )
 
-print(collimating_transfocator.info())
-print(collimating_transfocator.get_focal_distances())
+# print(collimating_transfocator.info())
+# print(collimating_transfocator.get_focal_distances())
+# print(collimating_transfocator.get_focal_distance())
+# print(collimating_transfocator.to_dictionary())
+
+Fs = collimating_transfocator.calculate_focal_length_for_all_masks()
+print(Fs.min(), Fs.max())
+
+isorted = numpy.argsort(Fs)
+x = numpy.arange(Fs.size)
+plot(x, Fs[isorted], ylog=True)
 
 
+
+
+idx = collimating_transfocator.guess_configuration_index()
+mask = collimating_transfocator.get_mask_from_index(idx)
+print(">>>> mask: ", mask.shape, mask)
+f_with_mask = collimating_transfocator.get_focal_distance(photon_energy=10000., mask=mask)
+print(idx, mask,
+        collimating_transfocator.get_focal_distance(photon_energy=10000., mask=mask))
+
+collimating_transfocator.info_configuration(mask=mask)

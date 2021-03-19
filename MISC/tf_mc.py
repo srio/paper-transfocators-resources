@@ -14,6 +14,7 @@ Lens = roe.DoubleParaboloidLens
 from sr.crl import LensBlock, Transfocator
 
 # lp = dict(aperture=1e-3)
+
 lp = dict(thickness=1e-3)
 
 l_1x10mm = LensBlock(1, radius=10000e-6, **lp)
