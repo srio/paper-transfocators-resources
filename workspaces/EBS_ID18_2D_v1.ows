@@ -31,7 +31,7 @@
 		<node id="27" name="FocNew" position="(1200, 300)" project_name="OASYS1-ShadowOui" qualified_name="orangecontrib.shadow.widgets.plots.ow_focnew.FocNew" title="FocNew" version="" />
 		<node id="28" name="Screen" position="(1200, 900)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="sample" version="" />
 		<node id="29" name="Screen" position="(600, 750)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="drift" version="" />
-		<node id="30" name="Screen" position="(1200, 1050)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen at best focus" version="" />
+		<node id="30" name="Screen" position="(1200, 1200)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen at best focus" version="" />
 		<node id="31" name="Back Propagation" position="(450, 900)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_back_propagation.OWSRWBackPropagation" title="Back Propagation" version="" />
 		<node id="32" name="Undulator Light Source" position="(0, 750)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="U18" version="" />
 		<node id="33" name="Python Script" position="(750, 600)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
@@ -42,22 +42,24 @@
 		<node id="38" name="Screen" position="(900, 750)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="drift" version="" />
 		<node id="39" name="Python Script" position="(1050, 600)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
 		<node id="40" name="Aperture" position="(1050, 900)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="Aperture f2" version="" />
-		<node id="41" name="Python Script" position="(1200, 1200)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="41" name="Python Script" position="(1200, 1350)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
 		<node id="42" name="Python Script" position="(1350, 750)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
-		<node id="43" name="Python Script" position="(1350, 1200)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="43" name="Python Script" position="(1350, 1350)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
 		<node id="44" name="Aperture" position="(1350, 900)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="resize" version="" />
 		<node id="45" name="Python Script" position="(1500, 750)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
-		<node id="46" name="Aperture" position="(1350, 1050)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="resize" version="" />
-		<node id="47" name="Python Script" position="(1500, 1050)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
-		<node id="48" name="Info" position="(1500, 1200)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_info.OWSRWInfo" title="Info" version="" />
+		<node id="46" name="Aperture" position="(1350, 1200)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="resize" version="" />
+		<node id="47" name="Python Script" position="(1500, 1200)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="48" name="Info" position="(1500, 1350)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.tools.ow_srw_info.OWSRWInfo" title="Info" version="" />
 		<node id="49" name="Screen" position="(750, 1200)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="horizontal focal plane" version="" />
 		<node id="50" name="Python Script" position="(900, 1200)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
 		<node id="51" name="Screen" position="(750, 1350)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="vertical focal plane" version="" />
 		<node id="52" name="Python Script" position="(900, 1350)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
-		<node id="53" name="Screen" position="(1352.0, 444.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="horizontal focal plane" version="" />
-		<node id="54" name="Python Script" position="(1502.0, 444.0)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
-		<node id="55" name="Screen" position="(1352.0, 594.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="vertical focal plane" version="" />
-		<node id="56" name="Python Script" position="(1502.0, 594.0)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="53" name="Screen" position="(1350, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="horizontal focal plane" version="" />
+		<node id="54" name="Python Script" position="(1500, 450)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="55" name="Screen" position="(1350, 600)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="vertical focal plane" version="" />
+		<node id="56" name="Python Script" position="(1500, 600)" project_name="OASYS1" qualified_name="oasys.widgets.tools.ow_python_script.OWPythonScript" title="wavefront stats" version="" />
+		<node id="57" name="SRW Python Script (ME)" position="(1500, 1050)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_python_script_me.SRWPythonScriptME" title="SRW Python Script (ME)" version="" />
+		<node id="58" name="SRW Python Script (SE)" position="(1350, 1050)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_python_script_se.SRWPythonScriptSE" title="SRW Python Script (SE)" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="WofryData" sink_node_id="3" source_channel="WofryData" source_node_id="2" />
@@ -111,6 +113,8 @@
 		<link enabled="true" id="48" sink_channel="in_object_1" sink_node_id="56" source_channel="SRWData" source_node_id="55" />
 		<link enabled="true" id="49" sink_channel="SRWData" sink_node_id="55" source_channel="SRWData" source_node_id="53" />
 		<link enabled="false" id="50" sink_channel="SRWData" sink_node_id="53" source_channel="SRWData" source_node_id="40" />
+		<link enabled="true" id="51" sink_channel="SRWData" sink_node_id="58" source_channel="SRWData" source_node_id="28" />
+		<link enabled="true" id="52" sink_channel="SRWData" sink_node_id="57" source_channel="SRWData" source_node_id="28" />
 	</links>
 	<annotations>
 		<text font-family="Helvetica" font-size="16" id="0" rect="(54.0, 593.0, 336.0, 47.0)">SRW workspace - config #1</text>
@@ -2629,6 +2633,19 @@ cy93YXZlZnJvbnRfc3RhdHMucHlxD3ViYVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEQY1B5UXQ1
 LnNpcApfdW5waWNrbGVfdHlwZQpxEVgMAAAAUHlRdDUuUXRDb3JlcRJYCgAAAFFCeXRlQXJyYXlx
 E0MyAdnQywACAAAAAABjAAAAFQAAA4QAAAKGAAAAZAAAACsAAAODAAACggAAAAAAAAAABpBxFIVx
 FYdxFlJxF1gNAAAAc3BsaXR0ZXJTdGF0ZXEYTnUu
+</properties>
+		<properties format="pickle" node_id="57">gAN9cQAoWAUAAABfY2hhcnEBSwBYEAAAAGlzX2F1dG9tYXRpY19ydW5xAohYCgAAAG5NYWNyb0Vs
+ZWNxA0ogoQcAWBQAAABuTWFjcm9FbGVjQXZnT25lUHJvY3EESwVYEQAAAG5NYWNyb0VsZWNTYXZl
+UGVycQVLFFgTAAAAc2FtcEZhY3ROeE55Rm9yUHJvcHEGRz/wAAAAAAAAWBMAAABzYXZlZFdpZGdl
+dEdlb21ldHJ5cQdjUHlRdDUuc2lwCl91bnBpY2tsZV90eXBlCnEIWAwAAABQeVF0NS5RdENvcmVx
+CVgKAAAAUUJ5dGVBcnJheXEKQzIB2dDLAAIAAAAAAFMAAAAbAAAFfAAAAvAAAABUAAAAMQAABXsA
+AALsAAAAAAAAAAAGkHELhXEMh3ENUnEOWAoAAABzckNhbGNNZXRocQ9LAVgKAAAAc3JDYWxjUHJl
+Y3EQRz+EeuFHrhR7WBgAAABzdHJJbnRQcm9wTUVfT3V0RmlsZU5hbWVxEVgYAAAAb3V0cHV0X3Ny
+d19zY3JpcHRfbWUuZGF0cRJ1Lg==
+</properties>
+		<properties format="pickle" node_id="58">gAN9cQBYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxAWNQeVF0NS5zaXAKX3VucGlja2xlX3R5cGUK
+cQJYDAAAAFB5UXQ1LlF0Q29yZXEDWAoAAABRQnl0ZUFycmF5cQRDMgHZ0MsAAgAAAAAAUwAAABsA
+AAQKAAACvgAAAFQAAAAxAAAECQAAAroAAAAAAAAAAAaQcQWFcQaHcQdScQhzLg==
 </properties>
 	</node_properties>
 </scheme>
