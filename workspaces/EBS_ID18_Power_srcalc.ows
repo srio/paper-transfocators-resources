@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <scheme description="" title="ID18 SRCALC-IDPOWER" version="2.0" working_directory="/users/srio/Oasys" workspace_units="0">
 	<nodes>
-		<node id="0" name="Undulator Light Source" position="(127.0, 279.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U18 New EBS parameters" version="" />
-		<node id="1" name="SRCALC-IDPOWER" position="(345.0, 286.0)" project_name="OASYS1-XOPPY" qualified_name="orangecontrib.xoppy.widgets.optics.srcalc_idpower.OWsrcalc_idpower" title="SRCALC-IDPOWER" version="" />
+		<node id="0" name="Undulator Light Source" position="(141.0, 333.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U18 New EBS parameters" version="" />
+		<node id="1" name="SRCALC-IDPOWER" position="(365.0, 177.0)" project_name="OASYS1-XOPPY" qualified_name="orangecontrib.xoppy.widgets.optics.srcalc_idpower.OWsrcalc_idpower" title="SRCALC-IDPOWER" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="SynedData" sink_node_id="1" source_channel="SynedData" source_node_id="0" />
