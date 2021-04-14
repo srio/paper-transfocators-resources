@@ -64,11 +64,16 @@ Paremeters at: https://confluence.esrf.fr/display/PROJEBSL1/Parameters+for+hybri
      
 Note that coherent fraction refers to the final beam after all optics (not at the source).
 
-Images at sample position for Und with Rect slit:
+Images at sample position for Und with Rect slit H and V:
 
 .. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_System1_H.png
 
 .. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_System1_V.png
+
+
+The differences between GSM and Und+RectSlit come from both the source and the slit, but it seems that theeffect of the slit is more important. This is a Wofry 2D calculation for the fist GSM mode using a Rectangular slit:
+
+.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_System1_2D_GSM.png
 
 TODO
 ====
