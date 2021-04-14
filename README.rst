@@ -78,12 +78,12 @@ The differences between GSM and Und+RectSlit come from both the source and the s
 TODO
 ====
 - compute transmission (intensity at center and integrated intensity)
+- calculate f2 position at 190
+- Calculate all wanted energies
 
 DONE
 ====
 - Obtain GSM trajectories (f1,f2) and corresponding size for better comparison
 - Double-check the papameters used in GSMM and WOFRY
 - Recalculate using undulator coherent mode decomposition, rectangular slit (Gaussian used) and real lenses (ideal used)
-- calculate f2 position at 190
-- Calculate all wanted energies
 - Select parameters for 2D simulations and compare
