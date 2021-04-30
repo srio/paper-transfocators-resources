@@ -5,7 +5,7 @@ import matplotlib.pylab as plt
 
 subdirectory = "." # "Data7keV_200um"
 beam_dimension_at_slit_in_um = 565  # needed for calculating Fresnel number
-lens_radius = 100e-6 # for plot title
+lens_radius = 200e-6 # for plot title
 
 #
 #
@@ -109,7 +109,7 @@ else:
 # plt.grid()
 ax.xaxis.grid()
 ax.yaxis.grid()
-ax.set_title("Be Lens radius: %d um" % (lens_radius * 1e6))
+# ax.set_title("Be Lens radius: %d um" % (lens_radius * 1e6))
 
 # F (source): 14.3507, p1: 65, q1: 18.4168
 # F (slit): 14.3507, p1: 29, q1: 28.4089
@@ -133,5 +133,6 @@ ax.plot([qslt,qslt], [1e-9,10000])
 # file_png = "scan_%s.pdf" % mirror_name
 # plt.savefig(file_png)
 # print("File written to disk: %s" % file_png)
+
 
 plt.show()

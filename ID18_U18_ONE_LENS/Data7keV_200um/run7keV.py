@@ -1,6 +1,6 @@
 import numpy
 
-def run_wofry(source=None, aperture=1.0, distance=18.4168, number_of_points=2000, lens_radius=200e-6):
+def run_wofry(source=None, aperture=1.0, distance=18.4168, number_of_points=2000):
     #
     # Import section
     #
@@ -159,7 +159,7 @@ def run_wofry(source=None, aperture=1.0, distance=18.4168, number_of_points=2000
     optical_element = WOLens1D.create_from_keywords(
         name='',
         shape=1,
-        radius=lens_radius,
+        radius=0.0002,
         lens_aperture=0.001,
         wall_thickness=5e-05,
         material='Be',
@@ -231,36 +231,27 @@ def run_wofry(source=None, aperture=1.0, distance=18.4168, number_of_points=2000
 
 if __name__ == "__main__":
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes, Tally
-    from srxraylib.plot.gol import plot
 
 
 
     size_at_aperture = 565e-6
-    lens_radius = 100e-6
-    # APERTURE_FACTOR = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5] #, 2, 4, 6]
-    APERTURE_FACTOR = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5] # , 2, 4, 6]
-    APERTURE_FACTOR.reverse()
-    if lens_radius == 100e-6:
-        DISTANCE = numpy.linspace(7, 10, 100)
-    else:
-        DISTANCE = numpy.linspace(10, 100, 100)
-    number_of_points = 2000
+    APERTURE_FACTOR = [0.0001, 0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5, 2, 4, 6]
+    DISTANCE = numpy.linspace(10, 50, 1000)
+    number_of_points = 3000
 
 
 
 
-    for i,aperture_factor in enumerate(APERTURE_FACTOR):
+    for aperture_factor in APERTURE_FACTOR:
         aperture = size_at_aperture * aperture_factor
-        src1, wf = run_wofry(source=None, aperture=aperture, distance=8,
-                             number_of_points=number_of_points, lens_radius=lens_radius)
+        src1, wf = run_wofry(source=None, aperture=aperture, distance=18.4168, number_of_points=number_of_points)
 
-        # plot(wf.get_abscissas(), wf.get_intensity())
 
         tally = Tally(scan_variable_name='distance')
 
         for i,distance in enumerate(DISTANCE):
             print(src1)
-            src2, wf = run_wofry(source=src1, aperture=aperture, distance=distance, lens_radius=lens_radius)
+            src2, wf = run_wofry(source=src1, aperture=aperture, distance=distance)
             tally.append(wf, scan_variable_value=distance)
 
         # tally.plot()
