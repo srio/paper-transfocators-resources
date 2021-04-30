@@ -5,6 +5,7 @@ import matplotlib.pylab as plt
 
 subdirectory = "." # "Data7keV_200um"
 beam_dimension_at_slit_in_um = 565  # needed for calculating Fresnel number
+beam_dimension_at_source = 9.13 # needed for magnification and theoretical sizes
 lens_radius = 200e-6 # for plot title
 
 #
@@ -46,6 +47,11 @@ FWHM       = []
 ICENTER    = []
 SIGMASF    = []
 LEGEND     = []
+FWHM_THEORY_SOURCE       = []
+FWHM_THEORY_SLIT         = []
+FWHM_THEORY_AVERAGE         = []
+FWHM_RATIO_SOURCE         = []
+FWHM_RATIO_SLIT         = []
 
 for i in range(len(FACTOR)):
         filein = "%s/aperture_factor_%g.dat" % (subdirectory, FACTOR[i])
@@ -67,9 +73,52 @@ for i in range(len(FACTOR)):
         N2 = p * s ** 2 / (wavelength * pa ** 2)
         print("Effect for slit aperture less than [um] = ", 2e6 * numpy.sqrt(pp ** 2 * wavelength / p))
 
+        # magnification, theoretical sizes
+        fwhm_theory_source = beam_dimension_at_source * distance1 / p
+        fwhm_theory_slit = slit_size_in_um * distance1 / pa
+        FWHM_RATIO_SOURCE.append(numpy.abs((fwhm1 - fwhm_theory_source) / fwhm1))
+        FWHM_RATIO_SLIT.append(numpy.abs((fwhm1 - fwhm_theory_slit) / fwhm1))
+        w1 = FACTOR[i]
+        if w1 > 1:
+                w1 = 1
+        w1 = (w1) ** (1/15)
+        w2 = 1.0 - w1
+        wtot = w1 + w2
+        w1 /= wtot
+        w2 /= wtot
+        fwhm_theory_average = fwhm_theory_source * (w1) + fwhm_theory_slit * (w2)
+        # fwhm_theory_average = fwhm_theory_source * (N2/35) + fwhm_theory_slit * (1.0 - (N2/35))
+
+        FWHM_THEORY_SOURCE.append(fwhm_theory_source)
+        FWHM_THEORY_SLIT.append(fwhm_theory_slit)
+        FWHM_THEORY_AVERAGE.append(fwhm_theory_average)
+
         LEGEND.append(r'$n$=%5.3g; N=%4.3f' % (FACTOR[i], N2))
 
         # LEGEND.append(r'$a$=%s a$_{FWHM}$' % (SIGMAS[i]))
+
+        plot(
+                DISTANCE[i], FWHM[i],
+                DISTANCE[i], FWHM_THEORY_SOURCE[i],
+                DISTANCE[i], FWHM_THEORY_SLIT[i],
+                # DISTANCE[i], FWHM_THEORY_AVERAGE[i],
+                ytitle="FWHM [um]",
+                xtitle="Distance from lens [m]",
+                figsize=(15, 4),
+                show=1,
+                legend=["Numeric","Theory (source)", "Theory (slit)"],
+                ylog=1, title="aperture_factor = %g  w1:%g, w2:%g" % (FACTOR[i],w1, w2))
+
+        # plot(
+        #         DISTANCE[i], FWHM_RATIO_SOURCE[i],
+        #         DISTANCE[i], FWHM_RATIO_SLIT[i],
+        #         ytitle="RATIO",
+        #         xtitle="Distance from lens [m]",
+        #         figsize=(15, 4),
+        #         show=1,
+        #         yrange=[0,1],
+        #         legend=["Ratio (source)", "Ratio (slit)"],
+        #         ylog=0, title="aperture_factor = %g  w1:%g, w2:%g" % (FACTOR[i],w1, w2))
 
 show_fwhm =  True
 
@@ -89,6 +138,8 @@ if show_fwhm:
             show=0,
             legend=LEGEND,
             ylog=1,)
+
+
 
 else:
     fig, ax = plot(   DISTANCE[0], ICENTER[0],
