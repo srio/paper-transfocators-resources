@@ -1,8 +1,8 @@
 import numpy
-from srxraylib.plot.gol import plot
+from srxraylib.plot.gol import plot, set_qt
 import matplotlib.pylab as plt
 
-
+set_qt()
 subdirectory = "." # "Data7keV_200um"
 beam_dimension_at_slit_in_um = 565  # needed for calculating Fresnel number
 beam_dimension_at_source = 9.13 # needed for magnification and theoretical sizes
@@ -107,7 +107,7 @@ for i in range(len(FACTOR)):
                 figsize=(15, 4),
                 show=1,
                 legend=["Numeric","Theory (source)", "Theory (slit)"],
-                ylog=1, title="aperture_factor = %g  w1:%g, w2:%g" % (FACTOR[i],w1, w2))
+                ylog=1, title="aperture_factor = %g  w1:%g, w2:%g, size: %g" % (FACTOR[i],w1, w2, slit_size_in_um))
 
         # plot(
         #         DISTANCE[i], FWHM_RATIO_SOURCE[i],

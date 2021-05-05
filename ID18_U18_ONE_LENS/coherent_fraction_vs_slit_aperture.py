@@ -47,8 +47,8 @@ def run_source_und_h(my_mode_index=0):
             number_of_points=800,
             distance_to_screen=100,
             scan_direction='H',
-            sigmaxx=3.01836e-05,
-            sigmaxpxp=4.36821e-06,
+            sigmaxx=2.97321e-05,
+            sigmaxpxp=4.37237e-06,
             useGSMapproximation=False,)
         # make calculation
         coherent_mode_decomposition_results = coherent_mode_decomposition_h.calculate()
@@ -83,8 +83,8 @@ def run_source_und_v(my_mode_index=0):
             number_of_points=800,
             distance_to_screen=100,
             scan_direction='V',
-            sigmaxx=3.63641e-06,
-            sigmaxpxp=1.37498e-06,
+            sigmaxx=5.2915e-06,
+            sigmaxpxp=1.88982e-06,
             useGSMapproximation=False, )
         # make calculation
         coherent_mode_decomposition_results = coherent_mode_decomposition_v.calculate()
@@ -104,10 +104,10 @@ def run_source_gsm_h(my_mode_index=0):
     output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.00012, x_max=0.00012,
                                                                           number_of_points=1000)
     output_wavefront.set_photon_energy(7000)
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.05281e-05, amplitude=1, mode_x=0, shift=0, beta=0.127769)
+    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.00818e-05, amplitude=1, mode_x=0, shift=0, beta=0.129748)
     # previous command is useless but...
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.05281e-05, amplitude=1, mode_x=my_mode_index, shift=0,
-                                               beta=0.127769)
+    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.00818e-05, amplitude=1, mode_x=my_mode_index, shift=0,
+                                               beta=0.129748)
     return output_wavefront
 
 
@@ -126,10 +126,11 @@ def run_source_gsm_v(my_mode_index=0):
     output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-5e-05, x_max=5e-05,
                                                                           number_of_points=1000)
     output_wavefront.set_photon_energy(7000)
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=5.84299e-06, amplitude=1, mode_x=0, shift=0, beta=1.56094)
+    # output_wavefront.set_gaussian_hermite_mode(sigma_x=5.84299e-06, amplitude=1, mode_x=0, shift=0, beta=1.56094)
+    output_wavefront.set_gaussian_hermite_mode(sigma_x=6.99408e-06, amplitude=1, mode_x=0, shift=0, beta=1.01172)
     # previous command is useless but...
-    output_wavefront.set_gaussian_hermite_mode(sigma_x=5.84299e-06, amplitude=1, mode_x=my_mode_index, shift=0,
-                                               beta=1.56094)
+    output_wavefront.set_gaussian_hermite_mode(sigma_x=6.99408e-06, amplitude=1, mode_x=my_mode_index, shift=0,
+                                               beta=1.01172)
     return output_wavefront
 
 #
@@ -154,14 +155,14 @@ def run_beamline_h(output_wavefront,slit=50e-6, gaussian_slit=True):
     #
     propagation_elements = PropagationElements()
     beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=35.000000, q=0.000000,
+                                       coordinates=ElementCoordinates(p=36.000000, q=0.000000,
                                                                       angle_radial=numpy.radians(0.000000),
                                                                       angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
     propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
     # self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 4.0)
+    propagation_parameters.set_additional_parameters('magnification_x', 8.0)
     #
     propagator = PropagationManager.Instance()
     try:
@@ -202,14 +203,14 @@ def run_beamline_v(output_wavefront,slit=50e-6, gaussian_slit=True):
 
     optical_element = WOScreen1D()
 
-    # drift_before 35 m
+    # drift_before 36 m
     #
     # propagating
     #
     #
     propagation_elements = PropagationElements()
     beamline_element = BeamlineElement(optical_element=optical_element,
-                                       coordinates=ElementCoordinates(p=35.000000, q=0.000000,
+                                       coordinates=ElementCoordinates(p=36.000000, q=0.000000,
                                                                       angle_radial=numpy.radians(0.000000),
                                                                       angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
@@ -248,7 +249,6 @@ def run_beamline_v(output_wavefront,slit=50e-6, gaussian_slit=True):
 
 
 def main_h(source_gsm=True, slit=50e-6,gaussian_slit=False):
-    from srxraylib.plot.gol import plot, plot_image
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
 
     tally = TallyCoherentModes()
@@ -268,7 +268,6 @@ def main_h(source_gsm=True, slit=50e-6,gaussian_slit=False):
 
 
 def main_v(source_gsm=True, slit=50e-6,gaussian_slit=False):
-    from srxraylib.plot.gol import plot, plot_image
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
 
     tally = TallyCoherentModes()
@@ -290,6 +289,9 @@ def main_v(source_gsm=True, slit=50e-6,gaussian_slit=False):
 # MAIN========================
 #
 if __name__ == "__main__":
+    import matplotlib.pylab as plt
+    from srxraylib.plot.gol import plot, plot_show, set_qt
+    set_qt()
 
     do_calculate = False
     do_plots = True
@@ -307,7 +309,7 @@ if __name__ == "__main__":
         for aperture in apertures:
             for source in sources:
 
-                outfile = "data/coherent_fraction_vs_slit_source_%s_aperture_%s.dat" % (source, aperture)
+                outfile = "DataCF/coherent_fraction_vs_slit_source_%s_aperture_%s.dat" % (source, aperture)
 
                 slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21)))
 
@@ -343,15 +345,14 @@ if __name__ == "__main__":
     #
     if do_plots:
         for source in sources:
-            a = numpy.loadtxt("data/coherent_fraction_vs_slit_source_%s_aperture_GAUSSIAN.dat" % (source))
-            b = numpy.loadtxt("data/coherent_fraction_vs_slit_source_%s_aperture_RECTANGULAR.dat" % (source))
+            a = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_%s_aperture_GAUSSIAN.dat" % (source))
+            b = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_%s_aperture_RECTANGULAR.dat" % (source))
 
             if source == "GSM":
                 title = "GSM source"
             else:
                 title = "UNDULATOR source"
 
-            from srxraylib.plot.gol import plot, plot_show
             g = plot(
                  1e6 * a[:,0], a[:,1],
                  1e6 * a[:,0], a[:,2],
@@ -364,15 +365,13 @@ if __name__ == "__main__":
                  xlog=True, yrange=[0,1.01], show=False)
 
             g[1].grid()
-            import matplotlib.pylab as plt
-            # locs, labels = plt.yticks()
             plt.yticks(numpy.arange(0, 1.1, step=0.1))
 
-        plot_show()
+            plot_show()
 
         for aperture in apertures:
-            b1 = numpy.loadtxt("data/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % aperture)
-            b2 = numpy.loadtxt("data/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % aperture)
+            b1 = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % aperture)
+            b2 = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % aperture)
 
             g = plot(
                 1e6 * b1[:, 0], b1[:, 1],
@@ -384,5 +383,57 @@ if __name__ == "__main__":
                 color=['green', 'blue', 'green', 'blue'],
                 linestyle=['--', '--', None, None],
                 xlog=True, yrange=[0, 1.01], show=False)
+
+            g[1].grid()
+            plt.yticks(numpy.arange(0, 1.1, step=0.1))
+
+            plot_show()
+
+        #
+        # paper
+        #
+
+        aperture = apertures[0]
+        source = sources[0]
+        b1 = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % aperture)
+        b2 = numpy.loadtxt("DataCF/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % aperture)
+
+
+        #
+        # smooth
+        #
+        # from scipy.interpolate import make_interp_spline, BSpline
+        # T = 1e6 * b2[:, 0]
+        # power = b2[:, 1]
+        # xnew = numpy.linspace(T.min(), T.max(), T.size)
+        # spl = make_interp_spline(T, power, k=1)  # type: BSpline
+        # power_smooth = spl(xnew)
+
+
+        from scipy.signal import savgol_filter
+        w = savgol_filter(b2[:, 1], 5, 2)
+
+
+        g = plot(
+            1e6 * b2[:, 0], w, #b2[:, 1],
+            1e6 * b2[:, 0], b2[:, 2],
+            legend=['Horizontal', 'Vertical'],
+            xtitle="Slit aperture [um]", ytitle="Coherent Fraction",
+            color=['green', 'blue'],
+            linestyle=[None, None],
+            xlog=False, yrange=[0, 1.01], show=False)
+
+        g[1].grid()
+        plt.yticks(numpy.arange(0, 1.1, step=0.1))
+
+        def aa(x):
+            return x / 565
+        def invaa(x):
+            return 565 * x
+
+        secax = g[1].secondary_xaxis('top', functions=(aa, invaa))
+        secax.set_xlabel('n')
+
+        plt.savefig("cf_cv_aperture.eps")
 
         plot_show()
