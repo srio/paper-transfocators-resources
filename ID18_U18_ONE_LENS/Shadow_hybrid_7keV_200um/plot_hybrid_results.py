@@ -70,18 +70,8 @@ for i in range(len(FACTOR)):
     print("Effect for slit aperture less than [um] = ", 2e6 * numpy.sqrt(pp ** 2 * wavelength / p))
     LEGEND.append(r'$n$=%5.3g; N=%4.3f' % (FACTOR[i], N2))
     # LEGEND.append(r'$a$=%s a$_{FWHM}$' % (SIGMAS[i]))
+    a1.close()
 
-#for i in range(len(FACTOR)):
-#
-#    plt.plot(DISTANCE[i],FWHM[i], label = LEGEND[i])
-#
-#plt.xlabel('Distance from lens [m]')
-#plt.ylabel('FWHM [$\mu$m]')
-#handles, labels = plt.gca().get_legend_handles_labels()
-#order = numpy.flipud(numpy.array(range(0,8,1)))
-#plt.legend([handles[idx] for idx in order],[labels[idx] for idx in order], loc='upper right')
-##plt.legend()
-#plt.show()
 show_fwhm =  True
 
 if show_fwhm:
@@ -141,8 +131,8 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-file_png = "ray-tracing_FWHM_dist_from_lens.pdf"
-plt.savefig(file_png)
-print("File written to disk: %s" % file_png)
+# file_png = "ray-tracing_FWHM_dist_from_lens.pdf"
+# plt.savefig(file_png)
+# print("File written to disk: %s" % file_png)
 
 plt.show()
