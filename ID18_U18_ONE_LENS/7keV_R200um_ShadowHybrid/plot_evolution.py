@@ -84,6 +84,7 @@ if show_fwhm:
             DISTANCE[5], FWHM[5],
             DISTANCE[6], FWHM[6],
             DISTANCE[7], FWHM[7],
+            xrange=[8, 52],
             ytitle="FWHM [$\mu$m]",
             xtitle="Distance from lens [m]",
             figsize=(15, 4),
@@ -131,8 +132,8 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-# file_png = "ray-tracing_FWHM_dist_from_lens.pdf"
-# plt.savefig(file_png)
-# print("File written to disk: %s" % file_png)
+file_png = "oneTFundHYBRID_200um.eps" #"scan_%s.pdf" % mirror_name
+plt.savefig(file_png)
+print("File written to disk: %s" % file_png)
 
 plt.show()

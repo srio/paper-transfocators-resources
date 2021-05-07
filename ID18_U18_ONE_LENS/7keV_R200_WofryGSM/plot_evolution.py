@@ -97,17 +97,17 @@ for i in range(len(FACTOR)):
 
         # LEGEND.append(r'$a$=%s a$_{FWHM}$' % (SIGMAS[i]))
 
-        plot(
-                DISTANCE[i], FWHM[i],
-                DISTANCE[i], FWHM_THEORY_SOURCE[i],
-                DISTANCE[i], FWHM_THEORY_SLIT[i],
-                # DISTANCE[i], FWHM_THEORY_AVERAGE[i],
-                ytitle="FWHM [um]",
-                xtitle="Distance from lens [m]",
-                figsize=(15, 4),
-                show=1,
-                legend=["Numeric","Theory (source)", "Theory (slit)"],
-                ylog=1, title="aperture_factor = %g  w1:%g, w2:%g, size: %g" % (FACTOR[i],w1, w2, slit_size_in_um))
+        # plot(
+        #         DISTANCE[i], FWHM[i],
+        #         DISTANCE[i], FWHM_THEORY_SOURCE[i],
+        #         DISTANCE[i], FWHM_THEORY_SLIT[i],
+        #         # DISTANCE[i], FWHM_THEORY_AVERAGE[i],
+        #         ytitle="FWHM [um]",
+        #         xtitle="Distance from lens [m]",
+        #         figsize=(15, 4),
+        #         show=1,
+        #         legend=["Numeric","Theory (source)", "Theory (slit)"],
+        #         ylog=1, title="aperture_factor = %g  w1:%g, w2:%g, size: %g" % (FACTOR[i],w1, w2, slit_size_in_um))
 
         # plot(
         #         DISTANCE[i], FWHM_RATIO_SOURCE[i],
@@ -132,6 +132,7 @@ if show_fwhm:
             DISTANCE[5], FWHM[5],
             DISTANCE[6], FWHM[6],
             DISTANCE[7], FWHM[7],
+            xrange=[8,52],
             ytitle="FWHM [um]",
             xtitle="Distance from lens [m]",
             figsize=(15, 4),
@@ -181,9 +182,10 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-# file_png = "scan_%s.pdf" % mirror_name
-# plt.savefig(file_png)
-# print("File written to disk: %s" % file_png)
+file_png = "oneTFundGSM_200um.eps"
+plt.savefig(file_png)
+print("File written to disk: %s" % file_png)
 
 
 plt.show()
+
