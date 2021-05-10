@@ -1,9 +1,9 @@
 import numpy
-from gol import plot
+from gol import plot, set_qt
 import matplotlib.pylab as plt
 import h5py
 
-
+set_qt()
 
 subdirectory = "." # "/home/esrf/reyesher/OASYS/EBSL1-ID18/focusing_paper"
 beam_dimension_at_slit_in_um = 565  # needed for calculating Fresnel number
@@ -132,7 +132,7 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-file_png = "oneTFundHYBRID_200um.eps" #"scan_%s.pdf" % mirror_name
+file_png = "oneTF_ShadowHybrid_R200um.eps" #"scan_%s.pdf" % mirror_name
 plt.savefig(file_png)
 print("File written to disk: %s" % file_png)
 

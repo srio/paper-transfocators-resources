@@ -182,7 +182,8 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-file_png = "oneTFfullGAUSSIAN_200um.eps"
+# file_png = "oneTFund_200um.eps" #"scan_%s.pdf" % mirror_name
+file_png = "oneTF_UndSource_RectSlit_R200um.eps" #"scan_%s.pdf" % mirror_name
 plt.savefig(file_png)
 print("File written to disk: %s" % file_png)
 

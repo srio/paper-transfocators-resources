@@ -182,7 +182,7 @@ print("R_Be [mm]= ", 1e3*R)
 ax.plot([qsrc,qsrc], [1e-9,10000])
 ax.plot([qslt,qslt], [1e-9,10000])
 
-file_png = "oneTFundGSM_200um.eps"
+file_png = "oneTF_GaussianSource_RectSlit_R200um.eps"
 plt.savefig(file_png)
 print("File written to disk: %s" % file_png)
 
