@@ -232,36 +232,57 @@ def run_wofry(source=None, aperture=1.0, distance=18.4168, number_of_points=2000
 if __name__ == "__main__":
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes, Tally
     from srxraylib.plot.gol import plot
+    import xraylib
 
-
-
+    energy_keV = 7
     size_at_aperture = 565e-6
-    lens_radius = 100e-6
-    # APERTURE_FACTOR = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5] #, 2, 4, 6]
-    APERTURE_FACTOR = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5] # , 2, 4, 6]
+    # lens_radius = 200e-6
+    APERTURE_FACTOR = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1, 1.5]
     APERTURE_FACTOR.reverse()
-    if lens_radius == 100e-6:
-        DISTANCE = numpy.linspace(7, 10, 100)
-    else:
-        DISTANCE = numpy.linspace(10, 100, 100)
+
     number_of_points = 2000
 
 
+    LENS_RADII_IN_MICRONS = [400, 200,  100, 50, 25]
+
+    xrl_delta = 1.0 - (xraylib.Refractive_Index("Be", energy_keV, 1.85)).real
 
 
-    for i,aperture_factor in enumerate(APERTURE_FACTOR):
-        aperture = size_at_aperture * aperture_factor
-        src1, wf = run_wofry(source=None, aperture=aperture, distance=8,
-                             number_of_points=number_of_points, lens_radius=lens_radius)
+    for j in range(len(LENS_RADII_IN_MICRONS)):
 
-        # plot(wf.get_abscissas(), wf.get_intensity())
+        lens_radius = LENS_RADII_IN_MICRONS[j] * 1e-6
 
-        tally = Tally(scan_variable_name='distance')
+        #
+        #
+        #
+        # geometrical focii
+        p = 65.0
+        pp = 36
+        pa = p - pp
+        R = lens_radius
+        F = R / (2 * xrl_delta)
+        qsrc = 1/(1/F-1/p)
+        print("F (source): %g, p1: %g, q1: %g" % (F,p,qsrc))
+        # p=65 -36.0
+        qslt = 1/(1/F-1/pa)
+        print("F (slit): %g, p1: %g, q1: %g" % (F,pa,qslt))
+        print("R_Be [mm]= ", 1e3*R)
+        qdist = numpy.abs(qslt - qsrc)
+        DISTANCE = numpy.linspace(numpy.min((qsrc,qslt)) - 0.5 * qdist, numpy.max((qsrc,qslt)) + 0.5 * qdist, 100)
 
-        for i,distance in enumerate(DISTANCE):
-            print(src1)
-            src2, wf = run_wofry(source=src1, aperture=aperture, distance=distance, lens_radius=lens_radius)
-            tally.append(wf, scan_variable_value=distance)
 
-        # tally.plot()
-        tally.save("aperture_factor_%g.dat" % (aperture_factor))
+
+        for i,aperture_factor in enumerate(APERTURE_FACTOR):
+            aperture = size_at_aperture * aperture_factor
+            src1, wf = run_wofry(source=None, aperture=aperture, distance=8,
+                                 number_of_points=number_of_points, lens_radius=lens_radius)
+
+
+            tally = Tally(scan_variable_name='distance')
+
+            for i,distance in enumerate(DISTANCE):
+                print(src1)
+                src2, wf = run_wofry(source=src1, aperture=aperture, distance=distance, lens_radius=lens_radius)
+                tally.append(wf, scan_variable_value=distance)
+
+            tally.save("aperture_factor_%g_R%dum.dat" % (aperture_factor, LENS_RADII_IN_MICRONS[j]))
