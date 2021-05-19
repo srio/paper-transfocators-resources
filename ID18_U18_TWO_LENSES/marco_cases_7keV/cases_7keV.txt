@@ -1,5 +1,35 @@
 
 
+Below there are Marco's cases and this GSM results
+
+I only ran cases with real lens (even cases)
+
+I ran EBS_ID18_wofry_cases7keV_v1.ows to create a bunch of scripts *.py
+
+I then ran the scripts that created the data for each case
+
+I extracted data "grep UFWHM *.dat"
+
+
+
+This is the comparison
+
+case                    slit      R1       R2   size marco  size wofry   100*(wofry-marco)/wofry
+2	7	170	20  Y	h	40.0	580.3	 364.0      20.0       16.3           22.7
+                    v	206.8	692.1	 552.9      20.0       23.5          -14.8
+4	7	170	30  Y	h	40.0	413.9	 337.9      30.0       28.5            5.1
+                    v	206.8	636.2	 804.9      30.1       31.1           -3.2
+6	7	170	7	Y	h	40.0	1391.9	 350.2      11.5        7.7           49.4
+                    v	206.8	1391.9	 378.0       7.5        8.2           -8.7
+8	7   192	7   Y	h	40.0	412.5	 104.8       7.0        7.7           -9.6
+                    v	206.8	634.9	 129.2      12.0       10.8           11.2
+10	7   192 3	Y	h	40.0	1391.9	 106.6       3.2        1.8           73.4
+                    v	206.8	995.0	 110.2       3.0        2.7           11.2
+
+
+
+========================================   Marco's results ===========================================
+
 
 """
 
