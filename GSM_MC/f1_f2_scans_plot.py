@@ -31,13 +31,22 @@ def plot_comparison_f1f2_scan(root="f1_f2_scan_7keV_f2_at_170", f1f2_from='each'
         aWV = np.loadtxt("../ID18_U18/e07keV_f2_at_170m_v.dat", skiprows=1)
 
 
+    marco_h_f1 =   [29.73, 41.69, 100.00]
+    marco_h_f2 =   [24.27, 26.15, 25.16 ]
+    marco_h_fwhm = [30.0,  20.0,  11.5  ]
+    marco_v_f1 =   [45.71, 49.73, 100   ]
+    marco_v_f2 =   [57.82, 39.72, 27.16 ]
+    marco_v_fwhm = [30.1,  20.0,  7.5   ]
+
 
     f = plot(aH[:, 0], aH[:, 1],
              aV[:, 0], aV[:, 1],
              aWH[:, 0], aWH[:, 1],
              aWV[:, 0], aWV[:, 1],
+             marco_h_f1, marco_h_f2,
+             marco_v_f1, marco_v_f2,
              title=" trajectories from "+f1f2_from, xtitle="f1 [m]", ytitle="f2 [m]",
-             legend = ["H GSM MARCO", "V GSM MARCO", "H WOFRY", "V WOFRY"],
+             legend = ["H GSM MARCO", "V GSM MARCO", "H WOFRY", "V WOFRY", "H MARCO NEW", "V MARCH NEW"],
              show=1,
              xrange=[0,100], yrange=[5,100])
 

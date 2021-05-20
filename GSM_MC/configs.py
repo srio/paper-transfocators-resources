@@ -13,7 +13,7 @@ import scipy
 # import transfocators
 
 
-from f1_f2_scans_v2 import id18_scan,source_id18
+from f1_f2_scans_v3 import id18_scan,source_id18
 
 def do_config(target=20,pos_last_focusing=170,energy=7,use_crl_lens=False):
     r=id18_scan(pos_last_focusing=pos_last_focusing, energy=energy,use_crl_lens=use_crl_lens,plot=False) 
