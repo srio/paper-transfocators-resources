@@ -51,12 +51,14 @@ if __name__ == "__main__":
             marco_fwhm = [20.0, 30.0, 11.5]
             mc = numpy.loadtxt("../../GSM_MC/tmp_h.dat")
             slit = 40.0
+            sourcesize = 70.57
         else:
             marco_f1 = [49.73,45.71,100]
             marco_f2 = [39.72,57.82,27.16]
             marco_fwhm = [20.0, 30.1, 7.5]
             mc = numpy.loadtxt("../../GSM_MC/tmp_v.dat")
             slit = 206.8
+            sourcesize = 15.02
 
         F1 = []
         F2 = []
@@ -65,7 +67,8 @@ if __name__ == "__main__":
         R1 = []
         R2 = []
         FWHM = []
-        M = []
+        Msource_at_id = []
+        Msource_at_slit = []
         for index in Index:
             a = numpy.loadtxt("%s_%03d.txt" % (fileroot, index), skiprows=3)
             print(">>>>>> ", a[0], a[1], a[3], a[4])
@@ -93,7 +96,8 @@ if __name__ == "__main__":
                                      position_sample=200.0,
                                      verbose=True)
 
-            M.append(mm_source_at_slit)
+            Msource_at_id.append(mm_source_at_id)
+            Msource_at_slit.append(mm_source_at_slit)
 
             F2theory1.append(ff_source_at_id)
             F2theory2.append(ff_source_at_slit)
@@ -106,7 +110,8 @@ if __name__ == "__main__":
 
         F2theory1smooth = numpy.array(F2theory1)
         F2theory2smooth = numpy.array(F2theory2)
-        Msmooth = numpy.array(M)
+        Msource_at_id = numpy.array(Msource_at_id)
+        Msource_at_slit = numpy.array(Msource_at_slit)
 
         for i in range(15):
             F2theory1smooth = savgol_filter(F2theory1smooth, 11, 1)  # window size 51, polynomial order 3
@@ -126,12 +131,13 @@ if __name__ == "__main__":
             xtitle="F1 [m]", ytitle="F2 [m]", title="trajectories F %s" %fileroot)
         # plot(1e6 * numpy.array(R1), 1e6 * numpy.array(R2), xtitle="R1 [um]", ytitle="R2 [um]", title="trajectories R %s" %fileroot)
         plot(numpy.array(F1), numpy.array(FWHM),
+             numpy.array(F1), Msource_at_id * sourcesize,
+             numpy.array(F1), Msource_at_slit * slit,
              numpy.array(marco_f1), numpy.array(marco_fwhm),
              mc[:, 0], mc[:, 3],
-             numpy.array(F1), Msmooth * slit,
-             marker=[None,'x',None,None],
-             linestyle=['-',"None",'-','-'],
+             marker=[None,'.','.','x',None],
+             linestyle=['-',"None","None","None",'-'],
              yrange=[0,numpy.array(FWHM).max()*1.1],
-             legend=["Wofry1D","Marco Table","Marco GSM","Geometrical optics"],
+             legend=["Wofry1D","Geometrical optics (source at ID)","Geometrical optics (source at slit)","Marco Table","Marco GSM",],
              xtitle="F1 [m]", ytitle="FWHM [um]", title="Sizes %s" %fileroot)
 
