@@ -49,14 +49,14 @@ if __name__ == "__main__":
             marco_f1 = [41.69,29.73,100.00]
             marco_f2 = [26.15,24.27,25.16]
             marco_fwhm = [20.0, 30.0, 11.5]
-            mc = numpy.loadtxt("../../GSM_MC/tmp_h.dat")
+            mc = numpy.loadtxt("../../GSM_MC/f1_f2_scans_170_h.dat")
             slit = 40.0
             sourcesize = 70.57
         else:
             marco_f1 = [49.73,45.71,100]
             marco_f2 = [39.72,57.82,27.16]
             marco_fwhm = [20.0, 30.1, 7.5]
-            mc = numpy.loadtxt("../../GSM_MC/tmp_v.dat")
+            mc = numpy.loadtxt("../../GSM_MC/f1_f2_scans_170_v.dat")
             slit = 206.8
             sourcesize = 15.02
 

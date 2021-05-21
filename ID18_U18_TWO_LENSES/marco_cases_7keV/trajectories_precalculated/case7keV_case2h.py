@@ -1,0 +1,258 @@
+
+#
+# Import section
+#
+import numpy
+
+from syned.beamline.beamline_element import BeamlineElement
+from syned.beamline.element_coordinates import ElementCoordinates
+from wofry.propagator.propagator import PropagationManager, PropagationElements, PropagationParameters
+
+from wofry.propagator.wavefront1D.generic_wavefront import GenericWavefront1D
+
+from wofryimpl.propagator.propagators1D.fresnel import Fresnel1D
+from wofryimpl.propagator.propagators1D.fresnel_convolution import FresnelConvolution1D
+from wofryimpl.propagator.propagators1D.fraunhofer import Fraunhofer1D
+from wofryimpl.propagator.propagators1D.integral import Integral1D
+from wofryimpl.propagator.propagators1D.fresnel_zoom import FresnelZoom1D
+from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import FresnelZoomScaling1D
+
+from srxraylib.plot.gol import plot, plot_image
+plot_from_oe = 100 # set to a large number to avoid plots
+
+def run_source():
+    ##########  SOURCE ##########
+
+
+    #
+    # create output_wavefront
+    #
+    #
+    from wofryimpl.propagator.util.undulator_coherent_mode_decomposition_1d import UndulatorCoherentModeDecomposition1D
+    coherent_mode_decomposition = UndulatorCoherentModeDecomposition1D(
+        electron_energy=6,
+        electron_current=0.2,
+        undulator_period=0.018,
+        undulator_nperiods=138,
+        K=1.85108,
+        photon_energy=7000,
+        abscissas_interval=0.00025,
+        number_of_points=1000,
+        distance_to_screen=100,
+        scan_direction='V',
+        sigmaxx=2.97321e-05,
+        sigmaxpxp=4.37237e-06,
+        useGSMapproximation=False,)
+    # make calculation
+    coherent_mode_decomposition_results = coherent_mode_decomposition.calculate()
+
+    mode_index = 0
+    output_wavefront = coherent_mode_decomposition.get_eigenvector_wavefront(mode_index)
+
+
+    if plot_from_oe <= 0: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='SOURCE')
+
+    return output_wavefront
+
+def run_beamline(output_wavefront, f1=10.0):
+
+    ##########  OPTICAL SYSTEM ##########
+
+
+
+
+
+    ##########  OPTICAL ELEMENT NUMBER 1 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
+
+    optical_element = WOScreen1D()
+
+    # drift_before 36 m
+    #
+    # propagating
+    #
+    #
+    propagation_elements = PropagationElements()
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=36.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    propagation_elements.add_beamline_element(beamline_element)
+    propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
+    #self.set_additional_parameters(propagation_parameters)
+    #
+    propagation_parameters.set_additional_parameters('magnification_x', 5.0)
+    propagation_parameters.set_additional_parameters('magnification_N', 1.0)
+    #
+    propagator = PropagationManager.Instance()
+    try:
+        propagator.add_propagator(Integral1D())
+    except:
+        pass
+    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,    handler_name='INTEGRAL_1D')
+
+
+    #
+    #---- plots -----
+    #
+    if plot_from_oe <= 1: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 1')
+
+
+    ##########  OPTICAL ELEMENT NUMBER 2 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from syned.beamline.shape import Rectangle
+    boundary_shape=Rectangle(-2e-05, 2e-05, -2e-05, 2e-05)
+    from wofryimpl.beamline.optical_elements.absorbers.slit import WOGaussianSlit1D
+    optical_element = WOGaussianSlit1D(boundary_shape=boundary_shape)
+
+    # no drift in this element
+    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
+
+
+    #
+    #---- plots -----
+    #
+    if plot_from_oe <= 2: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 2')
+
+
+    ##########  OPTICAL ELEMENT NUMBER 3 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
+
+    optical_element = WOScreen1D()
+
+    # drift_before 29 m
+    #
+    # propagating
+    #
+    #
+    propagation_elements = PropagationElements()
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=29.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    propagation_elements.add_beamline_element(beamline_element)
+    propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
+    #self.set_additional_parameters(propagation_parameters)
+    #
+    propagation_parameters.set_additional_parameters('magnification_x', 2.5)
+    #
+    propagator = PropagationManager.Instance()
+    try:
+        propagator.add_propagator(FresnelZoom1D())
+    except:
+        pass
+    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,    handler_name='FRESNEL_ZOOM_1D')
+
+
+    #
+    #---- plots -----
+    #
+    if plot_from_oe <= 3: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 3')
+
+
+    ##########  OPTICAL ELEMENT NUMBER 4 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
+
+    optical_element = WOIdealLens1D(name='',focal_length=f1)
+
+    # no drift in this element
+    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
+
+
+    #
+    #---- plots -----
+    #
+    if plot_from_oe <= 4: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 4')
+
+
+    ##########  OPTICAL ELEMENT NUMBER 5 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from wofryimpl.beamline.optical_elements.ideal_elements.screen import WOScreen1D
+
+    optical_element = WOScreen1D()
+
+    # drift_before 105 m
+    #
+    # propagating
+    #
+    #
+    propagation_elements = PropagationElements()
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=105.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    propagation_elements.add_beamline_element(beamline_element)
+    propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
+    #self.set_additional_parameters(propagation_parameters)
+    #
+    propagation_parameters.set_additional_parameters('magnification_x', 2.0)
+    #
+    propagator = PropagationManager.Instance()
+    try:
+        propagator.add_propagator(FresnelZoom1D())
+    except:
+        pass
+    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,    handler_name='FRESNEL_ZOOM_1D')
+
+
+    #
+    #---- plots -----
+    #
+    if plot_from_oe <= 5: plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 5')
+
+
+    ##########  OPTICAL ELEMENT NUMBER 6 ##########
+
+
+
+    input_wavefront = output_wavefront.duplicate()
+    from orangecontrib.esrf.wofry.util.thin_object_corrector import WOThinObjectCorrector1D #TODO update
+
+    optical_element = WOThinObjectCorrector1D(
+        name='',
+        file_with_thickness_mesh_flag=0,
+        file_with_thickness_mesh='profile1D.dat',
+        material='Be',
+        focus_at=30,
+        wall_thickness=5e-05,
+        apply_correction_to_wavefront=0,
+        fit_fraction_in_length=0.025,
+        fit_filename='tmp.txt')
+
+    # no drift in this element
+    output_wavefront = optical_element.applyOpticalElement(input_wavefront)
+
+if __name__ == "__main__":
+
+    wf = run_source()
+    F1 = numpy.linspace(5,100,200) # numpy.array([5,41.69, 100.0]) #
+    F2 = numpy.zeros_like(F1)
+
+
+
+    for i in range(F1.size):
+        run_beamline(wf, f1=F1[i])
+        a = numpy.loadtxt("tmp.txt")
+        F2[i] = a[1]
+        print(">>>>", F1[i], F2[i])
+
+    filename = "f1_vs_f2_case2h.dat"
+    f = open(filename, 'w')
+    for i in range(F1.size):
+        f.write("%g  %g\n" % (F1[i], F2[i]))
+    f.close()
+    print("File written to disk: ", filename)
+#
+#---- plots -----
+#
+# if plot_from_oe <= 6:
+#     plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 6')

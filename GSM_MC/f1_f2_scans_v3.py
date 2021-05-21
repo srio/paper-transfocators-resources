@@ -154,6 +154,7 @@ def id18_scan(
     fname=None,
     plot=True,
     plot_transfocator=True,
+    specfileroot="",
 ):
     source = source_id18(energy=energy)
 
@@ -225,20 +226,20 @@ def id18_scan(
     #
 
 
+    if specfileroot != "":
+        for d in "h", "v":
+            f1 = out[d]["f1"]
+            f2 = out[d]["f2"]
+            size_at_f2 = out[d]["size_at_f2"]
+            size_at_sample = out[d]["size_at_sample"]
 
-    for d in "h", "v":
-        f1 = out[d]["f1"]
-        f2 = out[d]["f2"]
-        size_at_f2 = out[d]["size_at_f2"]
-        size_at_sample = out[d]["size_at_sample"]
 
-
-        f = open("tmp_%s.dat" % d,'w')
-        f.write("#S data\n#N 4\n#L f1  f2  size_at_f2  size_at_sample\n")
-        for i in range(f1.size):
-            f.write("%g  %g  %g  %g \n" % (f1[i], f2[i], size_at_f2[i], size_at_sample[i]))
-        f.close()
-        print("File written to disK: tmp.dat")
+            f = open("%s_%s.dat" % (specfileroot, d),'w')
+            f.write("#S data\n#N 4\n#L f1  f2  size_at_f2  size_at_sample\n")
+            for i in range(f1.size):
+                f.write("%g  %g  %g  %g \n" % (f1[i], f2[i], size_at_f2[i], size_at_sample[i]))
+            f.close()
+            print("File written to disK: ", "%s_%s.dat" % (specfileroot, d))
 
 
     # done calculating, now work on plot
@@ -336,6 +337,7 @@ if __name__ == "__main__":
     #    do_all()
     # pass
 
-    o = id18_scan(pos_last_focusing=170, energy=7)
+    o = id18_scan(pos_last_focusing=170, energy=7, specfileroot="f1_f2_scans_170")
+    o = id18_scan(pos_last_focusing=192, energy=7, specfileroot="f1_f2_scans_192")
     # compare_apertures(energy=7, pos_last_focusing=170)
     # plt.close("all")
