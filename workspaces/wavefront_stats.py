@@ -19,8 +19,8 @@ arP1 = array('d', [0] * wfr.mesh.nx * wfr.mesh.ny)
 srwl.CalcIntFromElecField(arP1, wfr, 0, 4, 3, wfr.mesh.eStart, 0, 0)
 
 wp_phase = np.reshape(arP1, (wfr.mesh.ny, wfr.mesh.nx))
-wp_phase_x = wp_phase[int(wfr.mesh.ny/2),int(wfr.mesh.nx/2)-stvt_x:int(wfr.mesh.nx/2)+stvt_x]
-wp_phase_y = wp_phase[int(wfr.mesh.ny/2)-stvt_y:int(wfr.mesh.ny/2)+stvt_y,int(wfr.mesh.nx/2)]
+wp_phase_x = wp_phase[int(wfr.mesh.ny/2),int(wfr.mesh.nx/2-stvt_x/2):int(wfr.mesh.nx/2+stvt_x/2)]
+wp_phase_y = wp_phase[int(wfr.mesh.ny/2-stvt_y/2):int(wfr.mesh.ny/2+stvt_y/2),int(wfr.mesh.nx/2)]
 
 # Unwrapped phase
 uwp_phase = unwrap_phase(wp_phase)
