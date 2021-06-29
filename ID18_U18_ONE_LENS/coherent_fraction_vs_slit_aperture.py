@@ -341,8 +341,8 @@ if __name__ == "__main__":
 
 
 
-    sources = ["UND", "GSM"]
-    apertures = ["RECTANGULAR","GAUSSIAN"]
+    sources = ["UND"] #, "GSM"]
+    apertures = ["RECTANGULAR"] #,"GAUSSIAN"]
     subdirectory = "DataCF%d" % energy_in_keV
     #
     #
