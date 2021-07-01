@@ -144,12 +144,12 @@ if __name__ == "__main__":
 
     sigma_GSM = tx
     xi_GSM = beta_GSM_h * sigma_GSM
-    print("xi GSM H,V: ", xi_GSM)
+    print("xi GSM 3, 9 keV: ", xi_GSM)
 
     wavelength = codata.h * codata.c / codata.e / Photon_energy
     Z_R = numpy.pi * sigma_GSM**2 / wavelength * (1 + (sigma_GSM/xi_GSM)**2 )**(-1/2)
 
-    print("Z_R: ", Z_R)
+    print("Z_R 3, 9 keV: ", Z_R)
 
     first_term_num = p_h / f_h - 1
     first_term_den = (p_h / f_h - 1)**2 + (Z_R / f_h)**2
@@ -161,11 +161,28 @@ if __name__ == "__main__":
     #
     #
     Aperture = numpy.linspace(50e-6, 900e-6, 100)
-    Sigma_aperture = Aperture / 4.55
-    Sigmap_aperture = Sigma_aperture / p_h
+    Sigma_aperture = Aperture / 4.55 * numpy.ones_like(Aperture)
 
-    Z_R_aperture_3 = numpy.pi * Sigma_aperture ** 2 / wavelength[0] * (1 + (1 / beta_GSM_h[0]) ** 2 )**(-1/2)
-    Z_R_aperture_9 = numpy.pi * Sigma_aperture ** 2 / wavelength[1] * (1 + (1 / beta_GSM_h[1]) ** 2) **(-1/2)
+    sigmap_GSM = wavelength / 4 / numpy.pi / sigma_GSM
+    print(">>> sigma_GSM, sigmap_GSM at 3, 9 keV", sigma_GSM, sigmap_GSM)
+    Sigma_beam_before_aperture_3 = numpy.sqrt( (sigmap_GSM[0] * p_h) ** 2 + sigmap_GSM[0] ** 2) * numpy.ones_like(Aperture)
+    Sigma_beam_before_aperture_9 = numpy.sqrt( (sigmap_GSM[1] * p_h) ** 2 + sigmap_GSM[1] ** 2) * numpy.ones_like(Aperture)
+
+    Sigma_beam_after_aperture_3 = numpy.sqrt(1.0 / (1 / Sigma_beam_before_aperture_3**2 + 1 / Sigma_aperture**2))
+    Sigma_beam_after_aperture_9 = numpy.sqrt(1.0 / (1 / Sigma_beam_before_aperture_9**2 + 1 / Sigma_aperture**2))
+
+
+    print("shapes: ", Sigma_beam_after_aperture_3.shape, Sigma_beam_after_aperture_9.shape)
+
+    beta_GSM_h_propagated_3 = beta_GSM_h[0] * Sigma_beam_before_aperture_3 / Sigma_beam_after_aperture_3
+    beta_GSM_h_propagated_9 = beta_GSM_h[1] * Sigma_beam_before_aperture_9 / Sigma_beam_after_aperture_9
+
+    Z_R_aperture_3 = numpy.pi * Sigma_beam_after_aperture_3 ** 2 / wavelength[0] # * (1 + (1.0 / beta_GSM_h_propagated_3) ** 2 )**(-1/2)
+    Z_R_aperture_9 = numpy.pi * Sigma_beam_after_aperture_9 ** 2 / wavelength[1] # * (1 + (1.0 / beta_GSM_h_propagated_9) ** 2) **(-1/2)
+
+    # Z_R_aperture_3 = numpy.zeros_like(Aperture)
+    # Z_R_aperture_9 = numpy.zeros_like(Aperture)
+
     print("Wavelength: ", wavelength)
     print("Z_R_aperture: ", Z_R_aperture_3, Z_R_aperture_9)
 
@@ -191,8 +208,27 @@ if __name__ == "__main__":
     plot(1e6 * Aperture, p_h + Q_3,
          1e6 * Aperture, p_h + Q_9,
          1e6 * Aperture, p_h + Q_G,
-         1e6 * Aperture, p_h + f_h * numpy.zeros_like(Aperture),)
+         1e6 * Aperture, p_h + f_h * numpy.zeros_like(Aperture),
+         legend=["3 keV", "9 keV", "geometric", "at slit"])
 
+    plot(1e6 * Aperture, 1e6 * Sigma_beam_before_aperture_3,
+         1e6 * Aperture, 1e6 * Sigma_beam_after_aperture_3,
+         1e6 * Aperture, 1e6 * Sigma_aperture,
+        legend=["before", "after", "aperture"])
+
+    plot(
+         # 1e6 * Aperture, Z_R_aperture_3,
+         # 1e6 * Aperture, Z_R_aperture_9,
+         1e6 * Aperture, ratio_Z_R_over_f_h_3,
+         1e6 * Aperture, ratio_Z_R_over_f_h_9,
+        legend=["Z_R/f 3", "Z_R/f 9"])
+
+    plot(
+         # 1e6 * Aperture, Z_R_aperture_3,
+         # 1e6 * Aperture, Z_R_aperture_9,
+         1e6 * Aperture, 1 / first_term_den_3,
+         1e6 * Aperture, 1 / first_term_den_9,
+        legend=["1/den 3", "1/den 9"])
 
     # # srp /= 2.0 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     #

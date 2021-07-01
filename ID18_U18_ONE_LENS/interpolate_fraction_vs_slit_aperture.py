@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # print(">>>>", numpy.all(numpy.diff(cfh) > 0))
 
 
-    for CF_target in [0.9, 0.8, 0.7]:
+    for CF_target in [0.9, 0.8, 0.7, 0.6, 0.5]:
         print("\n")
         for energy_in_keV in [7,15,30]:
             subdirectory = "DataCF%d" % energy_in_keV

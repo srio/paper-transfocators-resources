@@ -21,7 +21,7 @@ from srxraylib.plot.gol import plot, plot_image
 plot_from_oe = 100 # set to a large number to avoid plots
 
 def run_source():
-        ##########  SOURCE ##########
+    ##########  SOURCE ##########
 
 
     #
@@ -54,7 +54,7 @@ def run_source():
 
     return output_wavefront
 
-def run_beamline(output_wavefront, f1=None, radius1=0.0005):
+def run_beamline(output_wavefront, aperture=40e-6, radius1=0.0005):
 
     ##########  OPTICAL SYSTEM ##########
 
@@ -105,7 +105,7 @@ def run_beamline(output_wavefront, f1=None, radius1=0.0005):
 
     input_wavefront = output_wavefront.duplicate()
     from syned.beamline.shape import Rectangle
-    boundary_shape=Rectangle(-2e-05, 2e-05, -2e-05, 2e-05)
+    boundary_shape=Rectangle(-aperture/2, aperture/2, -aperture/2, aperture/2)
     from wofryimpl.beamline.optical_elements.absorbers.slit import WOGaussianSlit1D
     optical_element = WOGaussianSlit1D(boundary_shape=boundary_shape)
 
@@ -161,35 +161,31 @@ def run_beamline(output_wavefront, f1=None, radius1=0.0005):
 
     input_wavefront = output_wavefront.duplicate()
 
-    if f1 is not None:
-        from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
-        optical_element = WOIdealLens1D(name='',focal_length=f1)
-    else:
-        from orangecontrib.esrf.wofry.util.lens import WOLens1D
+    from orangecontrib.esrf.wofry.util.lens import WOLens1D
 
-        optical_element = WOLens1D.create_from_keywords(
-            name='',
-            shape=1,
-            radius=radius1,
-            lens_aperture=0.001,
-            wall_thickness=5e-05,
-            material='Be',
-            number_of_curved_surfaces=2,
-            n_lenses=1,
-            error_flag=0,
-            error_file='<none>',
-            error_edge_management=0,
-            write_profile_flag=0,
-            write_profile='profile1D.dat',
-            mis_flag=0,
-            xc=0,
-            ang_rot=0,
-            wt_offset_ffs=0,
-            offset_ffs=0,
-            tilt_ffs=0,
-            wt_offset_bfs=0,
-            offset_bfs=0,
-            tilt_bfs=0)
+    optical_element = WOLens1D.create_from_keywords(
+        name='',
+        shape=1,
+        radius=radius1,
+        lens_aperture=0.001,
+        wall_thickness=5e-05,
+        material='Be',
+        number_of_curved_surfaces=2,
+        n_lenses=1,
+        error_flag=0,
+        error_file='<none>',
+        error_edge_management=0,
+        write_profile_flag=0,
+        write_profile='profile1D.dat',
+        mis_flag=0,
+        xc=0,
+        ang_rot=0,
+        wt_offset_ffs=0,
+        offset_ffs=0,
+        tilt_ffs=0,
+        wt_offset_bfs=0,
+        offset_bfs=0,
+        tilt_bfs=0)
     # no drift in this element
     output_wavefront = optical_element.applyOpticalElement(input_wavefront)
 
@@ -209,26 +205,25 @@ def run_beamline(output_wavefront, f1=None, radius1=0.0005):
 
     optical_element = WOScreen1D()
 
-    # drift_before 127 m
+    # drift_before 105 m
     #
     # propagating
     #
     #
     propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=127.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=105.000000,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.25)
-    propagation_parameters.set_additional_parameters('magnification_N', 1.0)
+    propagation_parameters.set_additional_parameters('magnification_x', 2.0)
     #
     propagator = PropagationManager.Instance()
     try:
-        propagator.add_propagator(Integral1D())
+        propagator.add_propagator(FresnelZoom1D())
     except:
         pass
-    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,    handler_name='INTEGRAL_1D')
+    output_wavefront = propagator.do_propagation(propagation_parameters=propagation_parameters,    handler_name='FRESNEL_ZOOM_1D')
 
 
     #
@@ -249,7 +244,7 @@ def run_beamline(output_wavefront, f1=None, radius1=0.0005):
         file_with_thickness_mesh_flag=0,
         file_with_thickness_mesh='profile1D.dat',
         material='Be',
-        focus_at=8,
+        focus_at=30,
         wall_thickness=5e-05,
         apply_correction_to_wavefront=0,
         fit_fraction_in_length=0.025,
@@ -262,31 +257,32 @@ if __name__ == "__main__":
 
     import xraylib
 
+    APERTURE = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]
+
     wf = run_source()
-    F1 = numpy.linspace(20,100,200) # numpy.array([5,41.69, 100.0]) #
-    F2 = numpy.zeros_like(F1)
+    wf0= wf.duplicate()
 
-    R1 = []
-    for F in F1:
-        xrl_delta = 1.0 - (xraylib.Refractive_Index("Be", 7,1.85)).real
-        R = F * (2 * xrl_delta)
-        R1.append(R)
-        print("F: %g  R_Be [m]= %g" % (F, R))
+    for aperture in APERTURE:
 
-    for i in range(F1.size):
-        run_beamline(wf, f1=None, radius1=R1[i])
-        a = numpy.loadtxt("tmp.txt")
-        F2[i] = a[1]
-        print(">>>>", F1[i], F2[i])
+        F1 = numpy.linspace(5,100,200) # numpy.array([5,41.69, 100.0]) #
+        F2 = numpy.zeros_like(F1)
 
-    filename = "f1_vs_f2_case8h.dat"
-    f = open(filename, 'w')
-    for i in range(F1.size):
-        f.write("%g  %g\n" % (F1[i], F2[i]))
-    f.close()
-    print("File written to disk: ", filename)
-#
-#---- plots -----
-#
-# if plot_from_oe <= 6:
-#     plot(output_wavefront.get_abscissas(),output_wavefront.get_intensity(),title='OPTICAL ELEMENT NR 6')
+        R1 = []
+        for F in F1:
+            xrl_delta = 1.0 - (xraylib.Refractive_Index("Be", 7,1.85)).real
+            R = F * (2 * xrl_delta)
+            R1.append(R)
+            print("F: %g  R_Be [m]= %g" % (F, R))
+
+        for i in range(F1.size):
+            run_beamline(wf0, aperture=aperture, radius1=R1[i])
+            a = numpy.loadtxt("tmp.txt")
+            F2[i] = a[1]
+            print(">>>>", F1[i], F2[i])
+
+        filename = "f1_vs_f2_slit%g_h.dat" % (1e6 * aperture)
+        f = open(filename, 'w')
+        for i in range(F1.size):
+            f.write("%g  %g\n" % (F1[i], F2[i]))
+        f.close()
+        print("File written to disk: ", filename)

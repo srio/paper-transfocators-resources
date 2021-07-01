@@ -133,7 +133,7 @@ if show_fwhm:
             DISTANCE[6], FWHM[6],
             DISTANCE[7], FWHM[7],
             xrange=[8,52],
-            ytitle="FWHM [um]",
+            ytitle="FWHM [um]",yrange=[0.9,400],
             xtitle="Distance from lens [m]",
             figsize=(15, 4),
             show=0,

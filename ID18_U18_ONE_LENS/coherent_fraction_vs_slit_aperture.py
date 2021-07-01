@@ -337,7 +337,7 @@ if __name__ == "__main__":
     do_calculate = False
     do_plots = True
 
-    energy_in_keV = 30 # 15 # 7
+    energy_in_keV = 7 # 30 # 15 # 7
 
 
 

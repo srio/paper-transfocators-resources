@@ -142,7 +142,8 @@ if __name__ == "__main__":
             linestyle=['-',':',':',"None",'-'],
             yrange=[10,60],
             xtitle="F1 [m]", ytitle="F2 [m]", title="trajectories F %s" %fileroot)
-         plot(numpy.array(F1), numpy.array(FWHM),
+
+        plot(numpy.array(F1), numpy.array(FWHM),
              numpy.array(F1), Msource_at_id * sourcesize,
              numpy.array(F1), Msource_at_slit * slit,
              numpy.array(marco_f1), numpy.array(marco_fwhm),

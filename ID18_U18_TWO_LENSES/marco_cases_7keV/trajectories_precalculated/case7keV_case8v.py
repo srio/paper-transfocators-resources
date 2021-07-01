@@ -54,7 +54,7 @@ def run_source():
 
     return output_wavefront
 
-def run_beamline(output_wavefront, f1=10.0):
+def run_beamline(output_wavefront, f1=None, radius1=0.0005):
 
     ##########  OPTICAL SYSTEM ##########
 
@@ -159,10 +159,36 @@ def run_beamline(output_wavefront, f1=10.0):
 
 
     input_wavefront = output_wavefront.duplicate()
-    from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
 
-    optical_element = WOIdealLens1D(name='',focal_length=f1) #30.000000)
+    if f1 is not None:
+        from wofryimpl.beamline.optical_elements.ideal_elements.lens import WOIdealLens1D
+        optical_element = WOIdealLens1D(name='',focal_length=f1)
+    else:
+        from orangecontrib.esrf.wofry.util.lens import WOLens1D
 
+        optical_element = WOLens1D.create_from_keywords(
+            name='',
+            shape=1,
+            radius=radius1,
+            lens_aperture=0.001,
+            wall_thickness=5e-05,
+            material='Be',
+            number_of_curved_surfaces=2,
+            n_lenses=1,
+            error_flag=0,
+            error_file='<none>',
+            error_edge_management=0,
+            write_profile_flag=0,
+            write_profile='profile1D.dat',
+            mis_flag=0,
+            xc=0,
+            ang_rot=0,
+            wt_offset_ffs=0,
+            offset_ffs=0,
+            tilt_ffs=0,
+            wt_offset_bfs=0,
+            offset_bfs=0,
+            tilt_bfs=0)
     # no drift in this element
     output_wavefront = optical_element.applyOpticalElement(input_wavefront)
 
@@ -233,14 +259,21 @@ def run_beamline(output_wavefront, f1=10.0):
 
 if __name__ == "__main__":
 
+    import xraylib
+
     wf = run_source()
     F1 = numpy.linspace(30,100,200) # numpy.array([5,41.69, 100.0]) #
     F2 = numpy.zeros_like(F1)
 
-
+    R1 = []
+    for F in F1:
+        xrl_delta = 1.0 - (xraylib.Refractive_Index("Be", 7,1.85)).real
+        R = F * (2 * xrl_delta)
+        R1.append(R)
+        print("F: %g  R_Be [m]= %g" % (F, R))
 
     for i in range(F1.size):
-        run_beamline(wf, f1=F1[i])
+        run_beamline(wf, f1=None, radius1=R1[i])
         a = numpy.loadtxt("tmp.txt")
         F2[i] = a[1]
         print(">>>>", F1[i], F2[i])
