@@ -183,10 +183,10 @@ def plot_all_cases(direction='h',graphic_filename=None):
         Index = numpy.arange(200)
         if direction == 'h':
             sourcesize = 70.57e-6
-            yrange=[0,75]
+            yrange=[1,500] # [0,75]
         else:
             sourcesize = 15.02e-6
-            yrange = [0, 200]
+            yrange = [1,500] # [0, 200]
 
         # a = numpy.loadtxt("trajectories_precalculated/f1_vs_f2_slit%g_%s.dat" % (aperture*1e6, direction))
 
@@ -331,17 +331,18 @@ def plot_all_cases(direction='h',graphic_filename=None):
                 numpy.array(F1_2), numpy.array(FWHM_2),
                 numpy.array(F1_3), numpy.array(FWHM_3),
                 numpy.array(F1_0), Msource_at_id * sourcesize * 1e6,
-                numpy.array(F1_0), Msource_at_slit * 50 * 1e6,
+                numpy.array(F1_0), Msource_at_slit * APERTURE[0] * 1e6,
                 marker=[None,None,None,None,None,None],
                 color=['r', 'b', 'g', 'c', 'k', 'k'],
                 linestyle=[None, None, None, None, '--', ':'],
                 yrange=yrange, # numpy.array(FWHM_0).max()*1.1],
                 legend=["Slit %g um" % (1e6 * APERTURE[0]),\
                 "Slit %g um" % (1e6 * APERTURE[1]), \
-                "Slit %g um" % (1e6 * APERTURE[1]), \
                 "Slit %g um" % (1e6 * APERTURE[2]), \
-                "Geometrical optics (source at ID)", "Geometrical optics (source at slit)"],
+                "Slit %g um" % (1e6 * APERTURE[3]), \
+                "Analytical (source at ID)","Analytical (source at slit)"],
                 xtitle="F1 [m]", ytitle="FWHM [um]", title="%s Sizes" % (direction),
+                ylog=1,
                 show=0)
 
         ax2.xaxis.grid()
