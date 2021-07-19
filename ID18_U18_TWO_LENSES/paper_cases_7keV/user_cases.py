@@ -5,6 +5,15 @@ import matplotlib.pylab as plt
 import xraylib
 from silx.io.specfile import SpecFile
 
+import matplotlib
+matplotlib.rc('xtick', labelsize=20)
+matplotlib.rc('ytick', labelsize=20)
+import pylab as plt
+params = {'legend.fontsize': 20,
+          'legend.handlelength': 2}
+plt.rcParams.update(params)
+
+
 
 print("h/v     slit    F1        F2        R1         R2       FWHM     idx")
 
@@ -28,7 +37,7 @@ for direction in ['h','v']:
         Cases = [3,4]
     else:
         APERTURE = [25e-6, 227.0e-6, 506.7e-6, 1500e-6]
-        Selected_f1 = [15, 42]
+        Selected_f1 = [85, 42]
 
         # aperture = APERTURE[1]
         # Cases = [1,2]
@@ -80,9 +89,13 @@ for direction in ['h','v']:
 
 
 
-plot(A0[0], A1N[0],
+fig, ax = plot(A0[0], A1N[0],
      A0[2], A1N[2],
      legend=["case %d h" % Cases[0], "case %d v" % Cases[0]], figsize=[10,10], show=0)
+ax.xaxis.grid()
+ax.yaxis.grid()
+ax.set_xlabel("x [$\mu$ m]", fontsize=20)
+ax.set_ylabel("Intensity [a.u.]", fontsize=20)
 
 filename = "case_%d_profiles.eps" % Cases[0]
 plt.savefig(filename)
@@ -90,23 +103,32 @@ print("File written to disk: %s" % filename)
 plt.show()
 
 
-plot(A0[1], A1N[1],
+fig, ax = plot(A0[1], A1N[1],
      A0[3], A1N[3],
      legend=["case %d h" % Cases[1], "case %d v" % Cases[1]], figsize=[10,10], show=0)
+ax.xaxis.grid()
+ax.yaxis.grid()
+ax.set_xlabel("y [$\mu$ m]", fontsize=20)
+ax.set_ylabel("Intensity [a.u.]", fontsize=20)
 
 filename = "case_%d_profiles.eps" % Cases[1]
 plt.savefig(filename)
 print("File written to disk: %s" % filename)
 plt.show()
 
-
-plot_image( numpy.outer(A1N[0], A1N[2]), A0[0], A0[2], title="case %d" % Cases[0], figsize=[10,10], aspect=None, show=0)
+title="" #case %d" % Cases[0]
+fig, ax = plot_image( numpy.outer(A1N[0], A1N[2]), A0[0], A0[2], title=title, figsize=[10,10], aspect='auto', show=0)
+ax.set_xlabel("x [$\mu$ m]", fontsize=20)
+ax.set_ylabel("y [$\mu$ m]", fontsize=20)
 filename = "case_%d_image.eps" % Cases[0]
 plt.savefig(filename)
 print("File written to disk: %s" % filename)
 plt.show()
 
-plot_image( numpy.outer(A1N[1], A1N[3]), A0[1], A0[3], title="case %d" % Cases[1], figsize=[10,10], aspect=None, show=0)
+title="" #case %d" % Cases[1]
+fig, ax = plot_image( numpy.outer(A1N[1], A1N[3]), A0[1], A0[3], title=title, figsize=[10,10], aspect='auto', show=0)
+ax.set_xlabel("x [$\mu$ m]", fontsize=20)
+ax.set_ylabel("y [$\mu$ m]", fontsize=20)
 filename = "case_%d_image.eps" % Cases[1]
 plt.savefig(filename)
 print("File written to disk: %s" % filename)
