@@ -30,15 +30,20 @@ if __name__ == '__main__':
     print('# transfocators paper: config 02 #') if (srwl_uti_proc_is_master()) else 0
     print('##################################') if (srwl_uti_proc_is_master()) else 0
 
-    if not srwl_uti_proc_is_master(): exit()
-    plots = True
-    save = False
+    plots = False
+    save = True
+    MultiE = True  # partially coherent simulation
     beamE = 7.0
+    calculation = 0
+    nMacroElec = 25000
+
     strDataFolderName = 'results_configs'
     prfx = 'id18_c02_'
     energy = str(beamE)
     strIntPropOutFileName = prfx + energy + 'keV' + '_intensity.dat'
     strPhPropOutFileName  = prfx + energy + 'keV' + '_intensity.dat'
+    strIntPrtlChrnc       = prfx + energy + 'keV_' + str(int(nMacroElec/1000)).replace('.', 'p')+'k_ME_intensity.dat'
+
     ####################################################
     # LIGHT SOURCE
     part_beam = SRWLPartBeam()
@@ -87,6 +92,8 @@ if __name__ == '__main__':
     wfr.unitElFld = 1
 
     initial_mesh = deepcopy(wfr.mesh)
+
+    meshPartCoh = deepcopy(wfr.mesh)
 
     if srwl_uti_proc_is_master():
         # ******************************** Calculating Initial Wavefront and extracting Intensity:
@@ -287,58 +294,81 @@ if __name__ == '__main__':
     srw_pp_array.append(pp_drift_before_oe_9)
 
     # ============= reshape and resize
-    pp_final = [0, 0, 1, 1, 0, 1/3, 1.5, 1/3, 1.5, 0., 0., 0.]
+    pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1/3, 1., 0., 0., 0.]
     srw_pp_array.append(pp_final)
 
     ####################################################
     # PROPAGATION
-    print('- Simulating Electric Field Wavefront Propagation ... ')
-    optBL = SRWLOptC(srw_oe_array, srw_pp_array)
-    srwl.PropagElecField(wfr, optBL)
+    if srwl_uti_proc_is_master():
+        print('- Simulating Electric Field Wavefront Propagation ... ')
+        optBL = SRWLOptC(srw_oe_array, srw_pp_array)
+        srwl.PropagElecField(wfr, optBL)
 
-    print('Initial wavefront:')
-    print('Nx = %d, Ny = %d' % (wfr.mesh.nx, wfr.mesh.ny))
-    print('dx = %.4f um, dy = %.4f um' % (
-    (wfr.mesh.xFin - wfr.mesh.xStart) * 1E6 / wfr.mesh.nx, (wfr.mesh.yFin - wfr.mesh.yStart) * 1E6 / wfr.mesh.ny))
-    print('range x = %.4f mm, range y = %.4f mm' % (
-    (wfr.mesh.xFin - wfr.mesh.xStart) * 1E3, (wfr.mesh.yFin - wfr.mesh.yStart) * 1E3))
-    print('- Wavefront curvature:')
-    print('SRW native calculation: Rx = %.6f, Ry = %.6f' % (wfr.Rx, wfr.Ry))
+        print('Initial wavefront:')
+        print('Nx = %d, Ny = %d' % (wfr.mesh.nx, wfr.mesh.ny))
+        print('dx = %.4f um, dy = %.4f um' % (
+        (wfr.mesh.xFin - wfr.mesh.xStart) * 1E6 / wfr.mesh.nx, (wfr.mesh.yFin - wfr.mesh.yStart) * 1E6 / wfr.mesh.ny))
+        print('range x = %.4f mm, range y = %.4f mm' % (
+        (wfr.mesh.xFin - wfr.mesh.xStart) * 1E3, (wfr.mesh.yFin - wfr.mesh.yStart) * 1E3))
+        print('- Wavefront curvature:')
+        print('SRW native calculation: Rx = %.6f, Ry = %.6f' % (wfr.Rx, wfr.Ry))
+
+        if save is True or plots is True:
+            mesh = deepcopy(wfr.mesh)
+            arI = array('f', [0]*mesh.nx*mesh.ny)
+            srwl.CalcIntFromElecField(arI, wfr, 6, 0, 3, mesh.eStart, 0, 0)
+            arP = array('d', [0]*mesh.nx*mesh.ny)
+            srwl.CalcIntFromElecField(arP, wfr, 0, 4, 3, mesh.eStart, 0, 0)
+            if save:
+                srwl_uti_save_intens_ascii(arI, wfr.mesh,
+                                           os.path.join(os.getcwd(), strDataFolderName, strIntPropOutFileName), 0)
+                srwl_uti_save_intens_ascii(arP, wfr.mesh,
+                                           os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
+                print('>>> saved files')
+        if plots:
+
+            arIx = array('f', [0]*mesh.nx)
+            srwl.CalcIntFromElecField(arIx, wfr, 6, 0, 1, mesh.eStart, 0, 0)
+            arIy = array('f', [0]*mesh.ny)
+            srwl.CalcIntFromElecField(arIy, wfr, 6, 0, 2, mesh.eStart, 0, 0)
+
+            arPx = array('d', [0]*mesh.nx)
+            srwl.CalcIntFromElecField(arPx, wfr, 0, 4, 1, mesh.eStart, 0, 0)
+            arPy = array('d', [0]*mesh.ny)
+            srwl.CalcIntFromElecField(arPy, wfr, 0, 4, 2, mesh.eStart, 0, 0)
+
+            plotMeshx = [1000*mesh.xStart, 1000*mesh.xFin, mesh.nx]
+            plotMeshy = [1000*mesh.yStart, 1000*mesh.yFin, mesh.ny]
+            uti_plot2d1d(arI, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Intensity After Propagation'])
+            uti_plot2d1d(arP, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Phase After Propagation'])
+
+            uti_plot_show()
+
+    print('>> single electron calculations: done')
+
+    if MultiE is True:
+        print('- Simulating Partially-Coherent Wavefront Propagation... ') if(srwl_uti_proc_is_master()) else 0
+        nMacroElecAvgPerProc = 10   # number of macro-electrons / wavefront to average on worker processes
+        nMacroElecSavePer = 100     # intermediate data saving periodicity (in macro-electrons)
+        srCalcMeth = 1              # SR calculation method
+        srCalcPrec = 0.01           # SR calculation rel. accuracy
+        radStokesProp = srwl_wfr_emit_prop_multi_e(part_beam,
+                                                   magnetic_field_container,
+                                                   meshPartCoh,
+                                                   srCalcMeth,
+                                                   srCalcPrec,
+                                                   nMacroElec,
+                                                   nMacroElecAvgPerProc,
+                                                   nMacroElecSavePer,
+                                                   os.path.join(os.getcwd(), strDataFolderName, strIntPrtlChrnc),
+                                                   0.2,
+                                                   optBL,
+                                                   _char=calculation)
+        print('>> multi electron electron calculations: done') if(srwl_uti_proc_is_master()) else 0
+
 
     deltaT = time.time() - startTime
     hours, minutes = divmod(deltaT, 3600)
     minutes, seconds = divmod(minutes, 60)
     print(">>>> Elapsed time: " + str(int(hours)) + "h " + str(int(minutes)) + "min " + str(seconds) + "s ") if (srwl_uti_proc_is_master()) else 0
-
-    if save is True or plots is True:
-        mesh = deepcopy(wfr.mesh)
-        arI = array('f', [0]*mesh.nx*mesh.ny)
-        srwl.CalcIntFromElecField(arI, wfr, 6, 0, 3, mesh.eStart, 0, 0)
-        arP = array('d', [0]*mesh.nx*mesh.ny)
-        srwl.CalcIntFromElecField(arP, wfr, 0, 4, 3, mesh.eStart, 0, 0)
-        if save:
-            srwl_uti_save_intens_ascii(arI, wfr.mesh,
-                                       os.path.join(os.getcwd(), strDataFolderName, strIntPropOutFileName), 0)
-            srwl_uti_save_intens_ascii(arP, wfr.mesh,
-                                       os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
-            print('>>> saved files')
-    if plots:
-
-        arIx = array('f', [0]*mesh.nx)
-        srwl.CalcIntFromElecField(arIx, wfr, 6, 0, 1, mesh.eStart, 0, 0)
-        arIy = array('f', [0]*mesh.ny)
-        srwl.CalcIntFromElecField(arIy, wfr, 6, 0, 2, mesh.eStart, 0, 0)
-
-        arPx = array('d', [0]*mesh.nx)
-        srwl.CalcIntFromElecField(arPx, wfr, 0, 4, 1, mesh.eStart, 0, 0)
-        arPy = array('d', [0]*mesh.ny)
-        srwl.CalcIntFromElecField(arPy, wfr, 0, 4, 2, mesh.eStart, 0, 0)
-
-        plotMeshx = [1000*mesh.xStart, 1000*mesh.xFin, mesh.nx]
-        plotMeshy = [1000*mesh.yStart, 1000*mesh.yFin, mesh.ny]
-        uti_plot2d1d(arI, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Intensity After Propagation'])
-        uti_plot2d1d(arP, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Phase After Propagation'])
-
-        uti_plot_show()
-
 

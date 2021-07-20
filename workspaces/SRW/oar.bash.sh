@@ -1,7 +1,7 @@
 #!/bin/bash -l
-#OAR -l nodes=1/core=28,walltime=8
+#OAR -l nodes=1/core=28,walltime=12
 
-CMD_LAT="python ME_EBS_ID18_2D_v1.py "$@
+CMD_LAT="python config_01_SE.py "$@
 
 cat $OAR_NODEFILE
 which mpirun

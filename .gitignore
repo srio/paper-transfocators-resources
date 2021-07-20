@@ -1,2 +1,4 @@
 *srw_python*
 *.log
+*results_configs*
+*results_srw_vs_srwpy*
