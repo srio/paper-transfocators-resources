@@ -171,7 +171,7 @@ if __name__ == '__main__':
     srw_oe_array.append(oe_2)
     srw_pp_array.append(pp_oe_2)
 
-    Rv = 15 * 2 * 6.960764234342776e-06
+    Rv = 85.2 * 2 * 6.960764234342776e-06
     oe_3=srwl_opt_setup_CRL(_foc_plane=2,
                     _delta=6.960764234342776e-06,
                     _atten_len=0.0033406302038437438,
@@ -234,12 +234,13 @@ if __name__ == '__main__':
                     _nx=1001,
                     _ny=1001)
 
-    pp_oe_6 = [0, 0, 1, 1, 0, 3/4, 4/3, 1/5, 5., 0., 0., 0.]
+    # pp_oe_6 = [0, 0, 1, 1, 0, 3/4, 4/3, 1/5, 5., 0., 0., 0.]
+    pp_oe_6 = [0, 0, 1, 1, 0, 3/4, 4/3, 1, 1., 0., 0., 0.]
 
     srw_oe_array.append(oe_6)
     srw_pp_array.append(pp_oe_6)
 
-    Rv = 22.2 * 2 * 6.960764234342776e-06
+    Rv = 27.8* 2 * 6.960764234342776e-06
     oe_7=srwl_opt_setup_CRL(_foc_plane=2,
                     _delta=6.960764234342776e-06,
                     _atten_len=0.0033406302038437438,
@@ -261,29 +262,17 @@ if __name__ == '__main__':
 
     srw_oe_array.append(oe_7)
     srw_pp_array.append(pp_oe_7)
-    #
-    oe_8=SRWLOptA(_shape='r',
-                   _ap_or_ob='a',
-                   _Dx=0.001,
-                   _Dy=0.001,
-                   _x=0.0,
-                   _y=0.0)
-
-    pp_oe_8 = [0, 0, 1, 1, 0, 1., 1., 1., 1., 0., 0., 0.]
-
-    srw_oe_array.append(oe_8)
-    srw_pp_array.append(pp_oe_8)
 
     # ============= drift space to image plane
     drift_before_oe_9 = SRWLOptD(30)
-    pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 1., 1., 1., 1., 0., 0., 0.]
+    pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 1., 1., 1.5, 1., 0., 0., 0.]
 
     #
     srw_oe_array.append(drift_before_oe_9)
     srw_pp_array.append(pp_drift_before_oe_9)
 
-    # # ============= reshape and resize
-    pp_final = [0, 0, 1, 1, 0, 1/4, 1., 1/4, 1., 0., 0., 0.]
+    # # # ============= reshape and resize
+    pp_final = [0, 0, 1, 1, 0, 1/4, 1., 1/8, 1.5, 0., 0., 0.]
     srw_pp_array.append(pp_final)
 
     ####################################################
