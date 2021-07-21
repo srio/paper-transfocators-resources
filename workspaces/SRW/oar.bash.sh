@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#OAR -l nodes=1/core=28,walltime=12
+#OAR -l nodes=1/core=28,walltime=8
 
 CMD_LAT="python config_01_SE.py "$@
 

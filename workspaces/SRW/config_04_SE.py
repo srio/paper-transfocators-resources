@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     plots = False
     save = True
-    MultiE = True  # partially coherent simulation
+    MultiE = False  # partially coherent simulation
     beamE = 7.0
     calculation = 0
     nMacroElec = 25000
@@ -295,11 +295,12 @@ if __name__ == '__main__':
     pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1., 1./2, 0., 0., 0.]
     srw_pp_array.append(pp_final)
 
+    optBL = SRWLOptC(srw_oe_array, srw_pp_array)
+
     ####################################################
     # PROPAGATION
     if srwl_uti_proc_is_master():
         print('- Simulating Electric Field Wavefront Propagation ... ')
-        optBL = SRWLOptC(srw_oe_array, srw_pp_array)
         srwl.PropagElecField(wfr, optBL)
 
         print('Initial wavefront:')
@@ -320,8 +321,8 @@ if __name__ == '__main__':
             if save:
                 srwl_uti_save_intens_ascii(arI, wfr.mesh,
                                            os.path.join(os.getcwd(), strDataFolderName, strIntPropOutFileName), 0)
-                srwl_uti_save_intens_ascii(arP, wfr.mesh,
-                                           os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
+                # srwl_uti_save_intens_ascii(arP, wfr.mesh,
+                #                            os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
                 print('>>> saved files')
         if plots:
 
