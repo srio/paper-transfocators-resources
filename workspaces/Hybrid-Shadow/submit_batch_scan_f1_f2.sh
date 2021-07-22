@@ -1,0 +1,1 @@
+oarsub -l nodes=1/core=1,walltime=119:59:00 --name="paper_f1_f2_7_keV_170m_2nd_aperture" --notify="mail: juan.reyes-herrera@esrf.fr" "/scisoft/XRayOptics/OASYS1.1f_RNICE8/miniconda3/bin/python f1_f2_scan_HySDW.py"
