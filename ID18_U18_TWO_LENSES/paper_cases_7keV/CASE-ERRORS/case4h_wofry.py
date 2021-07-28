@@ -16,7 +16,7 @@ from wofryimpl.propagator.propagators1D.fraunhofer import Fraunhofer1D
 from wofryimpl.propagator.propagators1D.integral import Integral1D
 from wofryimpl.propagator.propagators1D.fresnel_zoom import FresnelZoom1D
 from wofryimpl.propagator.propagators1D.fresnel_zoom_scaling_theorem import FresnelZoomScaling1D
-
+from common_tools import shuffle
 
 #
 # SOURCE========================
@@ -49,7 +49,7 @@ def run_source(my_mode_index=0):
             K=1.85108,
             photon_energy=7000,
             abscissas_interval=0.00025,
-            number_of_points=1000,
+            number_of_points=shuffle(1000),
             distance_to_screen=100,
             scan_direction='H',
             sigmaxx=2.97321e-05,
@@ -100,7 +100,7 @@ def run_beamline(output_wavefront):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 5.0)
+    propagation_parameters.set_additional_parameters('magnification_x', shuffle(5.0))
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -145,7 +145,7 @@ def run_beamline(output_wavefront):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 2.5)
+    propagation_parameters.set_additional_parameters('magnification_x', shuffle(2.5))
     #
     propagator = PropagationManager.Instance()
     try:
@@ -210,7 +210,7 @@ def run_beamline(output_wavefront):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.5)
+    propagation_parameters.set_additional_parameters('magnification_x', shuffle(0.5))
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -276,7 +276,7 @@ def run_beamline(output_wavefront):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.25)
+    propagation_parameters.set_additional_parameters('magnification_x', shuffle(0.25))
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -298,20 +298,21 @@ def run_beamline(output_wavefront):
 def main():
     from srxraylib.plot.gol import plot, plot_image
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
-    
-    tally = TallyCoherentModes()
-    for my_mode_index in range(10):
-        output_wavefront = run_source(my_mode_index=my_mode_index)
-        output_wavefront = run_beamline(output_wavefront)
-        tally.append(output_wavefront)
-    
 
-    tally.plot_cross_spectral_density(show=1,filename="case4h_wofry_cross_spectral_density.png")
-    tally.plot_spectral_density(show=1,filename="case4h_wofry_spectral_density.png")
-    tally.plot_occupation(show=1,filename="case4h_wofry_occupation.png")
+    for nrun in range(200):
+        tally = TallyCoherentModes()
+        for my_mode_index in range(10):
+            output_wavefront = run_source(my_mode_index=my_mode_index)
+            output_wavefront = run_beamline(output_wavefront)
+            tally.append(output_wavefront)
 
-    tally.save_spectral_density(filename="case4h_wofry_spectral_density.dat")
-    tally.save_occupation(filename="case4h_wofry_occupation.dat")
+
+        # tally.plot_cross_spectral_density(show=1,filename="case4h_wofry_cross_spectral_density.png")
+        # tally.plot_spectral_density(show=1,filename="case4h_wofry_spectral_density.png")
+        # tally.plot_occupation(show=1,filename="case4h_wofry_occupation.png")
+
+        tally.save_spectral_density(filename="results4/case4h_wofry_spectral_density_%03d.dat" % nrun)
+        # tally.save_occupation(filename="case4h_wofry_occupation.dat")
 
 
 #
