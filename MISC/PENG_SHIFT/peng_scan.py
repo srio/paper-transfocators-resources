@@ -21,7 +21,7 @@ from srxraylib.plot.gol import plot, plot_image
 plot_from_oe = 100 # set to a large number to avoid plots
 
 
-def run_beamline():
+def run_beamline(ang_rot=0.1, distance=29.3087, ):
     ##########  SOURCE ##########
 
 
@@ -86,7 +86,7 @@ def run_beamline():
         write_profile='profile1D.dat',
         mis_flag=1,
         xc=0,
-        ang_rot=0.1,
+        ang_rot=ang_rot,
         wt_offset_ffs=0,
         offset_ffs=0,
         tilt_ffs=0,
@@ -119,12 +119,12 @@ def run_beamline():
     #
     #
     propagation_elements = PropagationElements()
-    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=29.308700,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
+    beamline_element = BeamlineElement(optical_element=optical_element,    coordinates=ElementCoordinates(p=distance,    q=0.000000,    angle_radial=numpy.radians(0.000000),    angle_azimuthal=numpy.radians(0.000000)))
     propagation_elements.add_beamline_element(beamline_element)
     propagation_parameters = PropagationParameters(wavefront=input_wavefront,    propagation_elements = propagation_elements)
     #self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 0.1)
+    propagation_parameters.set_additional_parameters('magnification_x', 0.2)
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -143,8 +143,30 @@ def run_beamline():
     return output_wavefront
 
 if __name__ == "__main__":
-    output_wavefront = run_beamline()
-    x, y = output_wavefront.get_abscissas(),output_wavefront.get_intensity()
+    from srxraylib.plot.gol import plot, plot_image
+    from orangecontrib.esrf.wofry.util.tally import Tally
+
+    f0 = 29.3087
+    Factor = numpy.linspace(0.78, 1.3, 55)  # 1.0 - 0.3
+    tally = Tally(do_store_wavefronts=True)
+    ang_rot = 0.1
+
+    for factor in Factor:
+        output_wavefront = run_beamline(ang_rot=ang_rot, distance=f0*factor)
+        tally.append(output_wavefront,scan_variable_value=factor)
+
+    tally.plot_fwhm(factor_fwhm=1e6,
+                    title="tilt=%3.2f rad; Minimum size: %g um" % \
+                                                (ang_rot, 1e6 * tally.get_fwhm().min()),
+                    xtitle="distance/f0",
+                    )
+    tally.plot_wavefronts_intensity(factor_abscissas=1e6,
+                                    xtitle="distance/f0",
+                                    ytitle="wavefront abscissas [um]",
+                                    title="Intensity for tilt = %3.2f rad; f0=%g m" % (ang_rot, f0))
+
+
+
 
 
 
