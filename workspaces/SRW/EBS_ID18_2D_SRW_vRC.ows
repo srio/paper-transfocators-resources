@@ -1,38 +1,38 @@
 <?xml version='1.0' encoding='utf-8'?>
 <scheme description="" title="ID18 2D models SRW" version="2.0" working_directory="/home/esrf/celestre/Oasys" workspace_units="0">
 	<nodes>
-		<node id="0" name="Undulator" position="(300, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
-		<node id="1" name="Aperture" position="(600, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="coherence slit (c1 &amp; c2)" version="" />
-		<node id="2" name="Undulator Light Source" position="(150, 150)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="U18" version="" />
-		<node id="3" name="CRL" position="(750, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="4" name="Aperture" position="(600, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="coherence slit (c3 &amp; c4)" version="" />
-		<node id="5" name="CRL" position="(900, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="6" name="Aperture" position="(1050, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="7" name="CRL" position="(1200, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="8" name="CRL" position="(1350, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="9" name="Aperture" position="(1500, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="10" name="Screen" position="(1650, 0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
-		<node id="11" name="CRL" position="(750, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="12" name="CRL" position="(900, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="13" name="Aperture" position="(1050, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="14" name="CRL" position="(1200, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="15" name="CRL" position="(1350, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="16" name="Aperture" position="(1500, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="17" name="Screen" position="(1650, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
-		<node id="18" name="CRL" position="(750, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="19" name="CRL" position="(900, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="20" name="Aperture" position="(1050, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="21" name="CRL" position="(1200, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="22" name="CRL" position="(1350, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="23" name="Aperture" position="(1500, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="24" name="Screen" position="(1650, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
-		<node id="25" name="CRL" position="(750, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="26" name="CRL" position="(900, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="27" name="Aperture" position="(1050, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="28" name="CRL" position="(1200, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
-		<node id="29" name="CRL" position="(1350, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
-		<node id="30" name="Aperture" position="(1500, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
-		<node id="31" name="Screen" position="(1650, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
+		<node id="0" name="Undulator" position="(296.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.light_sources.ow_srw_undulator.OWSRWUndulator" title="Undulator" version="" />
+		<node id="1" name="Aperture" position="(596.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="coherence slit (c1 &amp; c2)" version="" />
+		<node id="2" name="Undulator Light Source" position="(146.0, 220.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="U18" version="" />
+		<node id="3" name="CRL" position="(746.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="4" name="Aperture" position="(596.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="coherence slit (c3 &amp; c4)" version="" />
+		<node id="5" name="CRL" position="(896.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="6" name="Aperture" position="(1046.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="7" name="CRL" position="(1196.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="8" name="CRL" position="(1346.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="9" name="Aperture" position="(1496.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="10" name="Screen" position="(1646.0, 70.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
+		<node id="11" name="CRL" position="(746.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="12" name="CRL" position="(896.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="13" name="Aperture" position="(1046.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="14" name="CRL" position="(1196.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="15" name="CRL" position="(1346.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="16" name="Aperture" position="(1496.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="17" name="Screen" position="(1646.0, 220.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
+		<node id="18" name="CRL" position="(746.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="19" name="CRL" position="(896.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="20" name="Aperture" position="(1046.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="21" name="CRL" position="(1196.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="22" name="CRL" position="(1346.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="23" name="Aperture" position="(1496.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="24" name="Screen" position="(1646.0, 370.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
+		<node id="25" name="CRL" position="(746.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="26" name="CRL" position="(896.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="27" name="Aperture" position="(1046.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="28" name="CRL" position="(1196.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_h" version="" />
+		<node id="29" name="CRL" position="(1346.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_crl.OWSRWCRL" title="CRL_v" version="" />
+		<node id="30" name="Aperture" position="(1496.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_aperture.OWSRWAperture" title="CRL_A" version="" />
+		<node id="31" name="Screen" position="(1646.0, 520.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.optical_elements.ow_srw_screen.OWSRWScreen" title="Screen" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="SynedData#2" sink_node_id="0" source_channel="SynedData" source_node_id="2" />
@@ -68,10 +68,10 @@
 		<link enabled="true" id="30" sink_channel="SRWData" sink_node_id="25" source_channel="SRWData" source_node_id="4" />
 	</links>
 	<annotations>
-		<text font-family="Helvetica" font-size="16" id="0" rect="(731.0, 389.0, 150.0, 35.0)">case #4</text>
-		<text font-family="Helvetica" font-size="16" id="1" rect="(731.0, 89.0, 150.0, 35.0)">case #2</text>
-		<text font-family="Helvetica" font-size="16" id="2" rect="(729.0, -55.0, 150.0, 58.0)">case #1</text>
-		<text font-family="Helvetica" font-size="16" id="3" rect="(728.0, 248.0, 150.0, 58.0)">case #3</text>
+		<text font-family="Helvetica" font-size="16" id="0" rect="(727.0, 459.0, 150.0, 36.0)">case #4</text>
+		<text font-family="Helvetica" font-size="16" id="1" rect="(727.0, 159.0, 150.0, 36.0)">case #2</text>
+		<text font-family="Helvetica" font-size="16" id="2" rect="(725.0, 15.0, 150.0, 58.0)">case #1</text>
+		<text font-family="Helvetica" font-size="16" id="3" rect="(724.0, 318.0, 150.0, 58.0)">case #3</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>
