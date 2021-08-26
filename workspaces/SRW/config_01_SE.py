@@ -32,12 +32,12 @@ if __name__ == '__main__':
 
     plots = False
     save = True
-    MultiE = False  # partially coherent simulation
+    MultiE = True  # partially coherent simulation
     beamE = 7.0
     calculation = 0
-    nMacroElec = 25000
+    nMacroElec = 100000
 
-    strDataFolderName = 'results_configs'
+    strDataFolderName = 'me_tests'
     prfx = 'id18_c01_'
     energy = str(beamE)
     strIntPropOutFileName = prfx + energy + 'keV' + '_intensity.dat'
