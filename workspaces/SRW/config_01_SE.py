@@ -35,10 +35,10 @@ if __name__ == '__main__':
     MultiE = True  # partially coherent simulation
     beamE = 7.0
     calculation = 0
-    nMacroElec = 100000
+    nMacroElec = 5000
 
-    strDataFolderName = 'me_tests'
-    prfx = 'id18_c01_'
+    strDataFolderName = 'me_transmission'
+    prfx = 'c01_'
     energy = str(beamE)
     strIntPropOutFileName = prfx + energy + 'keV' + '_intensity.dat'
     strPhPropOutFileName  = prfx + energy + 'keV' + '_intensity.dat'
