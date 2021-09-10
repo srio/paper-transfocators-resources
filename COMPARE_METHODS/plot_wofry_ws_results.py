@@ -65,7 +65,7 @@ if __name__ == "__main__":
                         aspect='auto',
                         add_colorbar=0,
                         figsize=(10,10),
-                        cmap=ESRF_colors_2D(8),
+                        cmap=ESRF_colors_2D(5),
                         xrange=RangeH[i-1], yrange=RangeV[i-1],
                         show=0)
 

@@ -64,8 +64,8 @@ def run_beamline(ang_rot=0.1, distance=29.3087, ):
         name='',
         shape=1,
         radius=0.0005,
-        lens_aperture=0.005,
-        wall_thickness=1e-05,
+        lens_aperture=0.006,
+        wall_thickness=200e-6,
         material='Be',
         number_of_curved_surfaces=2,
         n_lenses=1,
@@ -75,7 +75,7 @@ def run_beamline(ang_rot=0.1, distance=29.3087, ):
         write_profile_flag=0,
         write_profile='profile1D.dat',
         mis_flag=1,
-        xc=0,
+        xc=0.000, # 0
         ang_rot=ang_rot,
         wt_offset_ffs=0,
         offset_ffs=0,
@@ -137,9 +137,9 @@ if __name__ == "__main__":
     set_qt()
 
     f0 = 73.2716
-    Factor = numpy.linspace(0.5, 1.3, 55)  # 1.0 - 0.3
+    Factor = numpy.linspace(0.5, 1.3, 15)  # 1.0 - 0.3
     tally = Tally(do_store_wavefronts=True)
-    ang_rot = 0.3
+    ang_rot = 0.1
 
     for factor in Factor:
         output_wavefront = run_beamline(ang_rot=ang_rot, distance=f0*factor)
