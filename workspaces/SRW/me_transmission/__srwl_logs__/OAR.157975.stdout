@@ -1,0 +1,80 @@
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+hpc3-2404
+/home/esrf/celestre/miniconda3/bin/mpirun
+PATH=/home/esrf/celestre/miniconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/gd1/Scripts:/usr/local/gd1/Linux-x86_64:/sware/exp/gnxas/debian8:/opt/oar/utilities:/opt/puppetlabs/bin:/opt/pxsoft/bin:/sware/pub/pycharm/pycharm-community-2017.2.3/bin:.
+CONDA_PYTHON_EXE=/home/esrf/celestre/miniconda3/bin/python
+mpiexec -machinefile /var/lib/oar/157975 -n 28 -env btl tcp,self -env btl_tcp_if_exclude ib0,lo,docker0 -launcher ssh -launcher-exec /usr/bin/oarsh python config_01_SE.py command_oriented_history
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+>> single electron calculations: done
+##################################
+# transfocators paper: config 01 #
+##################################
+- Performing Initial Electric Field calculation ... 
+Initial wavefront:
+Nx = 154, Ny = 154
+dx = 12.9870 um, dy = 12.9870 um
+range x = 2.0000 mm, range y = 2.0000 mm
+- Wavefront curvature:
+SRW native calculation: Rx = 35.995611, Ry = 35.995611
+- Simulating Electric Field Wavefront Propagation ... 
+Initial wavefront:
+Nx = 770, Ny = 770
+dx = 2.5974 um, dy = 2.5974 um
+range x = 2.0000 mm, range y = 2.0000 mm
+- Wavefront curvature:
+SRW native calculation: Rx = 35.995611, Ry = 35.995611
+>> single electron calculations: done
+- Simulating Partially-Coherent Wavefront Propagation... 
+>> multi electron electron calculations: done
+>>>> Elapsed time: 0h 7min 50.686946868896484s 

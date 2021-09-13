@@ -38,7 +38,7 @@ if __name__ == '__main__':
     nMacroElec = 5000
 
     strDataFolderName = 'me_transmission'
-    prfx = 'c01_'
+    prfx = 'c01_d'
     energy = str(beamE)
     strIntPropOutFileName = prfx + energy + 'keV' + '_intensity.dat'
     strPhPropOutFileName  = prfx + energy + 'keV' + '_intensity.dat'
@@ -204,7 +204,6 @@ if __name__ == '__main__':
     srw_oe_array.append(oe_3)
     srw_pp_array.append(pp_oe_3)
 
-
     oe_4=SRWLOptA(_shape='r',
                    _ap_or_ob='a',
                    _Dx=0.001,
@@ -284,19 +283,19 @@ if __name__ == '__main__':
     srw_oe_array.append(oe_8)
     srw_pp_array.append(pp_oe_8)
 
-    # ============= drift space to image plane
-    drift_before_oe_9 = SRWLOptD(30)
-    pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 0.65, 1.5, 0.65, 1.5, 0., 0., 0.]
-
-    # pp_drift_before_oe_9 = [0,0,1.0,0,0,0.7,2.0,0.7,2.0,0,0.0,0.0]
-
-    srw_oe_array.append(drift_before_oe_9)
-    srw_pp_array.append(pp_drift_before_oe_9)
-
-    # ============= reshape and resize
-    pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1/3, 1., 0., 0., 0.]
-    srw_pp_array.append(pp_final)
-
+    # # ============= drift space to image plane
+    # drift_before_oe_9 = SRWLOptD(30)
+    # pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 0.65, 1.5, 0.65, 1.5, 0., 0., 0.]
+    #
+    # # pp_drift_before_oe_9 = [0,0,1.0,0,0,0.7,2.0,0.7,2.0,0,0.0,0.0]
+    #
+    # srw_oe_array.append(drift_before_oe_9)
+    # srw_pp_array.append(pp_drift_before_oe_9)
+    #
+    # # ============= reshape and resize
+    # pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1/3, 1., 0., 0., 0.]
+    # srw_pp_array.append(pp_final)
+    #
     optBL = SRWLOptC(srw_oe_array, srw_pp_array)
 
     ####################################################
@@ -314,43 +313,43 @@ if __name__ == '__main__':
         print('- Wavefront curvature:')
         print('SRW native calculation: Rx = %.6f, Ry = %.6f' % (wfr.Rx, wfr.Ry))
 
-        if save is True or plots is True:
-            mesh = deepcopy(wfr.mesh)
-            arI = array('f', [0]*mesh.nx*mesh.ny)
-            srwl.CalcIntFromElecField(arI, wfr, 6, 0, 3, mesh.eStart, 0, 0)
-            arP = array('d', [0]*mesh.nx*mesh.ny)
-            srwl.CalcIntFromElecField(arP, wfr, 0, 4, 3, mesh.eStart, 0, 0)
-            if save:
-                srwl_uti_save_intens_ascii(arI, wfr.mesh,
-                                           os.path.join(os.getcwd(), strDataFolderName, strIntPropOutFileName), 0)
-                # srwl_uti_save_intens_ascii(arP, wfr.mesh,
-                #                            os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
-                print('>>> saved files')
-        if plots:
-
-            arIx = array('f', [0]*mesh.nx)
-            srwl.CalcIntFromElecField(arIx, wfr, 6, 0, 1, mesh.eStart, 0, 0)
-            arIy = array('f', [0]*mesh.ny)
-            srwl.CalcIntFromElecField(arIy, wfr, 6, 0, 2, mesh.eStart, 0, 0)
-
-            arPx = array('d', [0]*mesh.nx)
-            srwl.CalcIntFromElecField(arPx, wfr, 0, 4, 1, mesh.eStart, 0, 0)
-            arPy = array('d', [0]*mesh.ny)
-            srwl.CalcIntFromElecField(arPy, wfr, 0, 4, 2, mesh.eStart, 0, 0)
-
-            plotMeshx = [1000*mesh.xStart, 1000*mesh.xFin, mesh.nx]
-            plotMeshy = [1000*mesh.yStart, 1000*mesh.yFin, mesh.ny]
-            uti_plot2d1d(arI, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Intensity After Propagation'])
-            uti_plot2d1d(arP, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Phase After Propagation'])
-
-            uti_plot_show()
+        # if save is True or plots is True:
+        #     mesh = deepcopy(wfr.mesh)
+        #     arI = array('f', [0]*mesh.nx*mesh.ny)
+        #     srwl.CalcIntFromElecField(arI, wfr, 6, 0, 3, mesh.eStart, 0, 0)
+        #     arP = array('d', [0]*mesh.nx*mesh.ny)
+        #     srwl.CalcIntFromElecField(arP, wfr, 0, 4, 3, mesh.eStart, 0, 0)
+        #     # if save:
+        #     #     srwl_uti_save_intens_ascii(arI, wfr.mesh,
+        #     #                                os.path.join(os.getcwd(), strDataFolderName, strIntPropOutFileName), 0)
+        #         # srwl_uti_save_intens_ascii(arP, wfr.mesh,
+        #         #                            os.path.join(os.getcwd(), strDataFolderName, strPhPropOutFileName), 0)
+        #         print('>>> saved files')
+        # if plots:
+        #
+        #     arIx = array('f', [0]*mesh.nx)
+        #     srwl.CalcIntFromElecField(arIx, wfr, 6, 0, 1, mesh.eStart, 0, 0)
+        #     arIy = array('f', [0]*mesh.ny)
+        #     srwl.CalcIntFromElecField(arIy, wfr, 6, 0, 2, mesh.eStart, 0, 0)
+        #
+        #     arPx = array('d', [0]*mesh.nx)
+        #     srwl.CalcIntFromElecField(arPx, wfr, 0, 4, 1, mesh.eStart, 0, 0)
+        #     arPy = array('d', [0]*mesh.ny)
+        #     srwl.CalcIntFromElecField(arPy, wfr, 0, 4, 2, mesh.eStart, 0, 0)
+        #
+        #     plotMeshx = [1000*mesh.xStart, 1000*mesh.xFin, mesh.nx]
+        #     plotMeshy = [1000*mesh.yStart, 1000*mesh.yFin, mesh.ny]
+        #     uti_plot2d1d(arI, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Intensity After Propagation'])
+        #     uti_plot2d1d(arP, plotMeshx, plotMeshy, labels=['Horizontal Position [mm]', 'Vertical Position [mm]', 'Phase After Propagation'])
+        #
+        #     uti_plot_show()
 
     print('>> single electron calculations: done')
 
     if MultiE is True:
         print('- Simulating Partially-Coherent Wavefront Propagation... ') if(srwl_uti_proc_is_master()) else 0
         nMacroElecAvgPerProc = 10   # number of macro-electrons / wavefront to average on worker processes
-        nMacroElecSavePer = 100     # intermediate data saving periodicity (in macro-electrons)
+        nMacroElecSavePer = 500     # intermediate data saving periodicity (in macro-electrons)
         srCalcMeth = 1              # SR calculation method
         srCalcPrec = 0.01           # SR calculation rel. accuracy
         radStokesProp = srwl_wfr_emit_prop_multi_e(part_beam,
