@@ -10,7 +10,8 @@ cf = numpy.zeros_like(Energy)
 
 
 plot_from_raw_files = False
-
+what = "source"
+what = "sample"
 
 if plot_from_raw_files:
     dir = "case1h/"
@@ -19,7 +20,7 @@ if plot_from_raw_files:
     for i,energy in enumerate(Energy):
         if energy > (e0-20000*deltahalf)  and energy < (e0+10000*deltahalf):
             try:
-                sim = numpy.loadtxt("%s/sample_spectral_density_%4d.dat" % (dir,energy),
+                sim = numpy.loadtxt("%s/%s_spectral_density_%4d.dat" % (dir,what, energy),
                                     skiprows=4)
                 current = sim[:,1]
                 cumulated = cumulated + current
@@ -35,7 +36,7 @@ if plot_from_raw_files:
                         show=1, ylog=1,
                     )
 
-                cfi = numpy.loadtxt("%s/sample_occupation_%4d.dat" % (dir, energy),
+                cfi = numpy.loadtxt("%s/%s_occupation_%4d.dat" % (dir, what, energy),
                                     skiprows=3)
                 cf[i] = cfi[0,1]
             except:
@@ -43,7 +44,7 @@ if plot_from_raw_files:
 
 
     e00 = 7001
-    sim = numpy.loadtxt("%s/sample_spectral_density_%4d.dat" % (dir, e00), skiprows=4)
+    sim = numpy.loadtxt("%s/%s_spectral_density_%4d.dat" % (dir, what, e00), skiprows=4)
     current = sim[:,1]
 
     plot(
@@ -59,14 +60,14 @@ if plot_from_raw_files:
     plot(Energy, cf, title="CF")
 
 
-    filename = "case1h_intensity_at_sample.dat"
+    filename = "case1h_intensity_at_%s.dat" % what
     f = open(filename, "w")
     for i in range(cumulated.size):
         f.write("%g  %g  %g\n" % (sim[i, 0], cumulated[i], current[i]))
     f.close()
     print("File %s written to disk" % filename)
 
-    filename = "case1h_energy_scan.dat"
+    filename = "case1h_energy_scan_at_%s.dat" % what
     f = open(filename, "w")
     for i in range(Energy.size):
         f.write("%g  %g  %g\n" % (Energy[i], spectrum[i], cf[i]))
@@ -78,7 +79,7 @@ else:
     # replot from colected files
     #
 
-    sim = numpy.loadtxt("case1h_intensity_at_sample.dat")
+    sim = numpy.loadtxt("case1h_intensity_at_%s.dat" % what)
     e00 = 7001
     plot(
         sim[:, 0], sim[:, 2] / sim[:, 2].max(),
@@ -90,7 +91,7 @@ else:
         )
 
 
-    ene = numpy.loadtxt("case1h_energy_scan.dat")
+    ene = numpy.loadtxt("case1h_energy_scan_at_%s.dat" % what)
     plot(ene[:,0], ene[:,1], show=0)
     plot(ene[:,0], ene[:,2], title="CF")
 
