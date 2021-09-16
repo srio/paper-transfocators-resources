@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme description="" title="SRW - ME transmission calculation" version="2.0" working_directory="/home/esrf/celestre/XOG/simulations/beamlines/ID18/workspaces/SRW/me_transmission" workspace_units="1">
+	<nodes>
+		<node id="0" name="Intensity Plot" position="(150, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="beam before the slit" version="" />
+		<node id="1" name="Intensity Plot" position="(300, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after slit" version="" />
+		<node id="2" name="Intensity Plot" position="(450, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T1" version="" />
+		<node id="3" name="Intensity Plot" position="(600, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T2" version="" />
+	</nodes>
+	<links />
+	<annotations>
+		<text font-family="Helvetica" font-size="16" id="0" rect="(150.0, 92.0, 150.0, 58.0)">ME simulations</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties format="pickle" node_id="0">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYeAAAAC9kYXRhL29wdGljcy9yZWZyYWN0
+aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQxOC93b3Jrc3BhY2VzL1NSVy9tZV90
+cmFuc21pc3Npb24vYzAxX2E3LjBrZVZfNWtfTUVfaW50ZW5zaXR5LmRhdHECWBAAAABpc19hdXRv
+bWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAAAHJhbmdlX3hfbWlucQVKzv///1gL
+AAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEHSs7///9YEwAAAHNhdmVkV2lkZ2V0
+R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1LlF0Q29yZXEKWAoAAABR
+Qnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAAAABHAAAFpwAAAwIAAAAA
+AAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndyYXBfcGhhc2VxEEsAWAkA
+AAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+		<properties format="pickle" node_id="1">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYeAAAAC9kYXRhL29wdGljcy9yZWZyYWN0
+aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQxOC93b3Jrc3BhY2VzL1NSVy9tZV90
+cmFuc21pc3Npb24vYzAxX2I3LjBrZVZfNWtfTUVfaW50ZW5zaXR5LmRhdHECWBAAAABpc19hdXRv
+bWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAAAHJhbmdlX3hfbWlucQVKzv///1gL
+AAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEHSs7///9YEwAAAHNhdmVkV2lkZ2V0
+R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1LlF0Q29yZXEKWAoAAABR
+Qnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAAAABHAAAFpwAAAwIAAAAA
+AAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndyYXBfcGhhc2VxEEsAWAkA
+AAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+		<properties format="pickle" node_id="2">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYeAAAAC9kYXRhL29wdGljcy9yZWZyYWN0
+aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQxOC93b3Jrc3BhY2VzL1NSVy9tZV90
+cmFuc21pc3Npb24vYzAxX2M3LjBrZVZfNWtfTUVfaW50ZW5zaXR5LmRhdHECWBAAAABpc19hdXRv
+bWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAAAHJhbmdlX3hfbWlucQVKzv///1gL
+AAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEHSs7///9YEwAAAHNhdmVkV2lkZ2V0
+R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1LlF0Q29yZXEKWAoAAABR
+Qnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAAAABHAAAFpwAAAwIAAAAA
+AAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndyYXBfcGhhc2VxEEsAWAkA
+AAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+		<properties format="pickle" node_id="3">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYeAAAAC9kYXRhL29wdGljcy9yZWZyYWN0
+aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQxOC93b3Jrc3BhY2VzL1NSVy9tZV90
+cmFuc21pc3Npb24vYzAxX2Q3LjBrZVZfNWtfTUVfaW50ZW5zaXR5LmRhdHECWBAAAABpc19hdXRv
+bWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAAAHJhbmdlX3hfbWlucQVKzv///1gL
+AAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEHSs7///9YEwAAAHNhdmVkV2lkZ2V0
+R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1LlF0Q29yZXEKWAoAAABR
+Qnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAAAABHAAAFpwAAAwIAAAAA
+AAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndyYXBfcGhhc2VxEEsAWAkA
+AAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+	</node_properties>
+</scheme>
