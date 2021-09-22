@@ -20,9 +20,10 @@ def get_wofry_1d_intensities(fileh, filev):
 
 
 where = "at_36m"
-where = "at_sample"
-# dir = "./two_reflections/"
-dir = "./one_reflection/"
+# where = "at_sample"
+dir = "./two_reflections/"
+# dir = "./one_reflection/"
+# dir = "/users/srio/Oasys/"
 
 if True:
 
