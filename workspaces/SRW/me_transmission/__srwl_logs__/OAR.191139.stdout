@@ -1,0 +1,193 @@
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+hpc3-2403
+/home/esrf/celestre/miniconda3/bin/mpirun
+PATH=/home/esrf/celestre/miniconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/gd1/Scripts:/usr/local/gd1/Linux-x86_64:/sware/exp/gnxas/debian8:/opt/oar/utilities:/opt/puppetlabs/bin:/opt/pxsoft/bin:/sware/pub/pycharm/pycharm-community-2017.2.3/bin:.
+CONDA_PYTHON_EXE=/home/esrf/celestre/miniconda3/bin/python
+mpiexec -machinefile /var/lib/oar/191139 -n 28 -env btl tcp,self -env btl_tcp_if_exclude ib0,lo,docker0 -launcher ssh -launcher-exec /usr/bin/oarsh python config_02_SE.py command_oriented_history
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+>> single electron calculations: done
+##################################
+# transfocators paper: config 02 #
+##################################
+- Performing Initial Electric Field calculation ... 
+Initial wavefront:
+Nx = 154, Ny = 154
+dx = 12.9870 um, dy = 12.9870 um
+range x = 2.0000 mm, range y = 2.0000 mm
+- Wavefront curvature:
+SRW native calculation: Rx = 35.995611, Ry = 35.995611
+Optical Element Setup: CRL Focal Length: 25.1 m
+Optical Element Setup: CRL Focal Length: 42.2 m
+Optical Element Setup: CRL Focal Length: 21.3 m
+Optical Element Setup: CRL Focal Length: 55.6 m
+- Simulating Electric Field Wavefront Propagation ... 
+Initial wavefront:
+Nx = 2310, Ny = 2310
+dx = 1.7887 um, dy = 0.8607 um
+range x = 4.1319 mm, range y = 1.9883 mm
+- Wavefront curvature:
+SRW native calculation: Rx = -31.898119, Ry = -12.011867
+>>> saved files
+>> single electron calculations: done
+- Simulating Partially-Coherent Wavefront Propagation... 
+>> multi electron electron calculations: done
+>>>> Elapsed time: 1h 6min 27.11433744430542s 

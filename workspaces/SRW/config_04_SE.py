@@ -32,13 +32,13 @@ if __name__ == '__main__':
 
     plots = False
     save = True
-    MultiE = False  # partially coherent simulation
+    MultiE = True  # partially coherent simulation
     beamE = 7.0
     calculation = 0
-    nMacroElec = 25000
+    nMacroElec = 5000
 
-    strDataFolderName = 'results_configs'
-    prfx = 'id18_c04_'
+    strDataFolderName = 'me_transmission'
+    prfx = 'c04_d'
     energy = str(beamE)
     strIntPropOutFileName = prfx + energy + 'keV' + '_intensity.dat'
     strPhPropOutFileName  = prfx + energy + 'keV' + '_intensity.dat'
@@ -283,17 +283,17 @@ if __name__ == '__main__':
     srw_oe_array.append(oe_8)
     srw_pp_array.append(pp_oe_8)
 
-    # ============= drift space to image plane
-    drift_before_oe_9 = SRWLOptD(30)
-    pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 1., 1., 1., 1., 0., 0., 0.]
-
+    # # ============= drift space to image plane
+    # drift_before_oe_9 = SRWLOptD(30)
+    # pp_drift_before_oe_9 = [0, 0, 1, 1, 0, 1., 1., 1., 1., 0., 0., 0.]
     #
-    srw_oe_array.append(drift_before_oe_9)
-    srw_pp_array.append(pp_drift_before_oe_9)
-
-    # # # ============= reshape and resize
-    pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1., 1./2, 0., 0., 0.]
-    srw_pp_array.append(pp_final)
+    # #
+    # srw_oe_array.append(drift_before_oe_9)
+    # srw_pp_array.append(pp_drift_before_oe_9)
+    #
+    # # # # ============= reshape and resize
+    # pp_final = [0, 0, 1, 1, 0, 1/3, 1., 1., 1./2, 0., 0., 0.]
+    # srw_pp_array.append(pp_final)
 
     optBL = SRWLOptC(srw_oe_array, srw_pp_array)
 

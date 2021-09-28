@@ -5,10 +5,23 @@
 		<node id="1" name="Intensity Plot" position="(300, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after slit" version="" />
 		<node id="2" name="Intensity Plot" position="(450, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T1" version="" />
 		<node id="3" name="Intensity Plot" position="(600, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T2" version="" />
+		<node id="4" name="Intensity Plot" position="(750, 150)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="@sample" version="" />
+		<node id="5" name="Intensity Plot" position="(450, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T1" version="" />
+		<node id="6" name="Intensity Plot" position="(600, 300)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T2" version="" />
+		<node id="7" name="Intensity Plot" position="(300, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after slit" version="" />
+		<node id="8" name="Intensity Plot" position="(450, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T1" version="" />
+		<node id="9" name="Intensity Plot" position="(600, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T2" version="" />
+		<node id="10" name="Intensity Plot" position="(750, 450)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="@sample" version="" />
+		<node id="11" name="Intensity Plot" position="(450, 600)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T1" version="" />
+		<node id="12" name="Intensity Plot" position="(600, 600)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="after T2" version="" />
 	</nodes>
 	<links />
 	<annotations>
-		<text font-family="Helvetica" font-size="16" id="0" rect="(150.0, 92.0, 150.0, 58.0)">ME simulations</text>
+		<text font-family="Helvetica" font-size="16" id="0" rect="(126.0, 93.0, 150.0, 58.0)">case 01</text>
+		<text font-family="Helvetica" font-size="16" id="1" rect="(425.0, 244.0, 150.0, 58.0)">case 02</text>
+		<text font-family="Helvetica" font-size="16" id="2" rect="(277.0, 393.0, 150.0, 58.0)">case 03</text>
+		<text font-family="Helvetica" font-size="16" id="3" rect="(423.0, 540.0, 150.0, 58.0)">case 04
+</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>
@@ -51,6 +64,104 @@ R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1LlF0Q29yZXEKWAoAAABR
 Qnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAAAABHAAAFpwAAAwIAAAAA
 AAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndyYXBfcGhhc2VxEEsAWAkA
 AAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+		<properties format="pickle" node_id="4">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYkgAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9yZXN1bHRzX2NvbmZpZ3MvaWQxOF9jMDFfNy4wa2VWXzI1a19NRV9p
+bnRlbnNpdHkuZGF0cQJYEAAAAGlzX2F1dG9tYXRpY19ydW5xA4hYCwAAAHJhbmdlX3hfbWF4cQRL
+MlgLAAAAcmFuZ2VfeF9taW5xBUrO////WAsAAAByYW5nZV95X21heHEGSzJYCwAAAHJhbmdlX3lf
+bWlucQdKzv///1gTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEIY3NpcApfdW5waWNrbGVfdHlwZQpx
+CVgMAAAAUHlRdDUuUXRDb3JlcQpYCgAAAFFCeXRlQXJyYXlxC0NCAdnQywADAAAAAAB7AAAAKgAA
+BawAAAMHAAAAgAAAAEcAAAWnAAADAgAAAAAAAAAACgAAAACAAAAARwAABacAAAMCcQyFcQ2HcQ5S
+cQ9YDAAAAHVud3JhcF9waGFzZXEQSwBYCQAAAHVzZV9yYW5nZXERSwBYDAAAAHdlaWdodF9waGFz
+ZXESSwB1Lg==
+</properties>
+		<properties format="pickle" node_id="5">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzAyX2M3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAA////3AAAAV0AAAUNAAAE
+Ov///+EAAAF6AAAFCAAABDUAAAAAAAAAAAoA////4QAAAXoAAAUIAAAENXEMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
+</properties>
+		<properties format="pickle" node_id="6">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzAyX2Q3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAAD
+BwAAAIAAAABHAAAFpwAAAwIAAAAAAAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
+</properties>
+		<properties format="pickle" node_id="7">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzAzX2I3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAAD
+BwAAAIAAAABHAAAFpwAAAwIAAAAAAAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
+</properties>
+		<properties format="pickle" node_id="8">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYhwAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzAzX2M3LjBrZVZfaW50ZW5zaXR5LmRh
+dHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAAAHJhbmdl
+X3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEHSs7///9Y
+EwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ1
+LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAADBwAAAIAA
+AABHAAAFpwAAAwIAAAAAAAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwAAAB1bndy
+YXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksAdS4=
+</properties>
+		<properties format="pickle" node_id="9">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzAzX2Q3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAAD
+BwAAAIAAAABHAAAFpwAAAwIAAAAAAAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
+</properties>
+		<properties format="pickle" node_id="10">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYkgAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9yZXN1bHRzX2NvbmZpZ3MvaWQxOF9jMDJfNy4wa2VWXzI1a19NRV9p
+bnRlbnNpdHkuZGF0cQJYEAAAAGlzX2F1dG9tYXRpY19ydW5xA4hYCwAAAHJhbmdlX3hfbWF4cQRL
+MlgLAAAAcmFuZ2VfeF9taW5xBUrO////WAsAAAByYW5nZV95X21heHEGSzJYCwAAAHJhbmdlX3lf
+bWlucQdKzv///1gTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEIY3NpcApfdW5waWNrbGVfdHlwZQpx
+CVgMAAAAUHlRdDUuUXRDb3JlcQpYCgAAAFFCeXRlQXJyYXlxC0NCAdnQywADAAAAAAB7AAAAKgAA
+BawAAAMHAAAAgAAAAEcAAAWnAAADAgAAAAAAAAAACgAAAACAAAAARwAABacAAAMCcQyFcQ2HcQ5S
+cQ9YDAAAAHVud3JhcF9waGFzZXEQSwBYCQAAAHVzZV9yYW5nZXERSwBYDAAAAHdlaWdodF9waGFz
+ZXESSwB1Lg==
+</properties>
+		<properties format="pickle" node_id="11">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzA0X2M3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAA////kwAAAXMAAATEAAAE
+UP///5gAAAGQAAAEvwAABEsAAAAAAAAAAAoA////mAAAAZAAAAS/AAAES3EMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
+</properties>
+		<properties format="pickle" node_id="12">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYjQAAAC9tbnQvbXVsdGlwYXRoLXNoYXJl
+cy9kYXRhL29wdGljcy9yZWZyYWN0aXZlX29wdGljcy9zaW11bGF0aW9ucy9iZWFtbGluZXMvSUQx
+OC93b3Jrc3BhY2VzL1NSVy9tZV90cmFuc21pc3Npb24vYzA0X2Q3LjBrZVZfNWtfTUVfaW50ZW5z
+aXR5LmRhdHECWBAAAABpc19hdXRvbWF0aWNfcnVucQOIWAsAAAByYW5nZV94X21heHEESzJYCwAA
+AHJhbmdlX3hfbWlucQVKzv///1gLAAAAcmFuZ2VfeV9tYXhxBksyWAsAAAByYW5nZV95X21pbnEH
+Ss7///9YEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAA
+AFB5UXQ1LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5cQtDQgHZ0MsAAwAAAAAAewAAACoAAAWsAAAD
+BwAAAIAAAABHAAAFpwAAAwIAAAAAAAAAAAoAAAAAgAAAAEcAAAWnAAADAnEMhXENh3EOUnEPWAwA
+AAB1bndyYXBfcGhhc2VxEEsAWAkAAAB1c2VfcmFuZ2VxEUsAWAwAAAB3ZWlnaHRfcGhhc2VxEksA
+dS4=
 </properties>
 	</node_properties>
 </scheme>
