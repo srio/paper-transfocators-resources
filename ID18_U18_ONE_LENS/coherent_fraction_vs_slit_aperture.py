@@ -439,13 +439,13 @@ if __name__ == "__main__":
 
         aperture = apertures[0]
         source = sources[0]
-        b7_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF7", aperture))
+        # b7_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF7", aperture))
         b7_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF7", aperture))
 
-        b15_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF15", aperture))
+        # b15_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF15", aperture))
         b15_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF15", aperture))
 
-        b30_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF30", aperture))
+        # b30_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF30", aperture))
         b30_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF30", aperture))
 
 

@@ -213,7 +213,7 @@ def run_beamline(output_wavefront, aperture=40e-6, radius1=0.0005):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
     # self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 1.0)
+    propagation_parameters.set_additional_parameters('magnification_x', 1.0) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -243,7 +243,7 @@ def run_beamline(output_wavefront, aperture=40e-6, radius1=0.0005):
         focus_at=30,
         wall_thickness=5e-05,
         apply_correction_to_wavefront=0,
-        fit_fraction_in_length=0.15,
+        fit_fraction_in_length=0.15, #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         fit_filename='tmp.txt')
 
     # no drift in this element

@@ -34,12 +34,29 @@ def plot_f1f2(filename=None,direction='v'):
 
     if direction == 'h':
         APERTURE = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]
-        LEGEND = ["a=40.3 um", "a=85.1 um", "a=145.5 um", "a=1000 um", "analytical (source at ID)",
-                  "analytical (source at slit)"]
+        LEGEND = ["a=40.3 um CF=90%",
+                  "a=85.1 um CF=70%",
+                  "a=145.5 um CF=50%",
+                  "a=1000 um CF=13%", "analytical (source at ID)",
+                  "analytical (source at slit)",
+                  "cases 1-4"]
+        TITLE = "horizontal"
+        F1 = [46.1,25.1,46.1,25.1]
+        F2 = [26.5,21.3,31.8,20.7]
+        COLOR = ['r', 'b', 'g', 'c', 'k', 'k', 'k']
     else:
         APERTURE = [25e-6, 227.0e-6, 506.7e-6, 1500e-6]
-        LEGEND = ["a=25 um", "a=227 um", "a=506.7 um", "a=1500 um", "analytical (source at ID)",
-                  "analytical (source at slit)"]
+        LEGEND = ["a=25 um CF=99.86%",
+                  "a=227 um CF=90%",
+                  "a=506.7 um CF=70%",
+                  "a=1500 um CF=58%",
+                  "analytical (source at ID)",
+                  "analytical (source at slit)",
+                  "cases 1-4"]
+        TITLE = "vertical"
+        F1 = [15.0,42.2,85.2,42.2]
+        F2 = [22.2,55.6,27.8,55.7]
+        COLOR = ['m', 'r', 'b', 'g',  'k', 'k', 'k']
 
     a0 = numpy.loadtxt("f1_vs_f2_slit%g_%s.dat" % (1e6 * APERTURE[0], direction), skiprows=3)
     a1 = numpy.loadtxt("f1_vs_f2_slit%g_%s.dat" % (1e6 * APERTURE[1], direction), skiprows=3)
@@ -66,12 +83,14 @@ def plot_f1f2(filename=None,direction='v'):
                    a3[:, 0], a3[:, 1],
                    a0[:, 0], ff_source_at_id,
                    a0[:, 0], ff_source_at_slit,
-                   color=['r', 'b', 'g', 'c', 'k', 'k'],
-                   linestyle=[None, None, None, None, '--', ':'],
+                   F1,F2,
+                   color=COLOR,
+                   linestyle=[None, None, None, None, '--', ':',''],
+                   marker=[None, None, None, None, None, None, 'x'],
                    legend=LEGEND,
                    yrange=[0, 60],
                    # title="trajectories",
-                   xtitle="f1 [m]", ytitle="f2 [m]",
+                   xtitle="f1 [m]", ytitle="f2 [m]", title=TITLE,
                    show=0)
 
     ax.xaxis.grid()
