@@ -334,9 +334,6 @@ if __name__ == "__main__":
     from srxraylib.plot.gol import plot, plot_show, set_qt
     set_qt()
 
-    do_calculate = False
-    do_plots = True
-
     energy_in_keV = 7 # 30 # 15 # 7
 
 
@@ -348,152 +345,35 @@ if __name__ == "__main__":
     #
     #
 
+    for aperture in apertures:
+        for source in sources:
 
-    if do_calculate:
-        for aperture in apertures:
-            for source in sources:
+            outfile = "%s/coherent_fraction_vs_slit_source_%s_aperture_%s.dat" % (subdirectory, source, aperture)
 
-                outfile = "%s/coherent_fraction_vs_slit_source_%s_aperture_%s.dat" % (subdirectory, source, aperture)
-
-                slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21)))
+            slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21)))
 
 
-                f = open(outfile, "w")
-                if source == "GSM":
-                    source_gsm = True
-                else:
-                    source_gsm = False
+            f = open(outfile, "w")
+            if source == "GSM":
+                source_gsm = True
+            else:
+                source_gsm = False
 
-                if aperture == "GAUSSIAN":
-                    gaussian_slit = True
-                else:
-                    gaussian_slit = False
+            if aperture == "GAUSSIAN":
+                gaussian_slit = True
+            else:
+                gaussian_slit = False
 
-                for slit in slits:
-                    tally_v = main_v(energy_in_keV=energy_in_keV, source_gsm=source_gsm, slit=slit, gaussian_slit=gaussian_slit)
-                    tally_h = main_h(energy_in_keV=energy_in_keV, source_gsm=source_gsm, slit=slit, gaussian_slit=gaussian_slit)
-
-
-                    modes_v, occ_v = tally_v.get_occupation()
-                    modes_h, occ_h = tally_h.get_occupation()
-
-                    print("slit, CF H, V: ", 1e6*slit, occ_h[0], occ_v[0])
-                    f.write("%g %g %g\n" % (slit, occ_h[0], occ_v[0]))
-
-                f.close()
-                print("File written to disk: %s" % outfile)
+            for slit in slits:
+                tally_v = main_v(energy_in_keV=energy_in_keV, source_gsm=source_gsm, slit=slit, gaussian_slit=gaussian_slit)
+                tally_h = main_h(energy_in_keV=energy_in_keV, source_gsm=source_gsm, slit=slit, gaussian_slit=gaussian_slit)
 
 
-    #
-    # plots
-    #
-    if do_plots:
-        # for source in sources:
-        #     a = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_%s_aperture_GAUSSIAN.dat" % (subdirectory, source))
-        #     b = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_%s_aperture_RECTANGULAR.dat" % (subdirectory, source))
-        #
-        #     if source == "GSM":
-        #         title = "GSM source"
-        #     else:
-        #         title = "UNDULATOR source"
-        #
-        #     g = plot(
-        #          1e6 * a[:,0], a[:,1],
-        #          1e6 * a[:,0], a[:,2],
-        #          1e6 * b[:, 0], b[:, 1],
-        #          1e6 * b[:, 0], b[:, 2],
-        #          legend=['Horizontal Gaussian', 'Vertical Gaussian', 'Horizontal Rectangular', 'Vertical Rectangular'],
-        #          xtitle="Slit aperture [um]", ytitle="Coherent Fraction", title=title,
-        #          color = ['green','blue', 'green', 'blue'],
-        #          linestyle=['--','--',None,None],
-        #          xlog=True, yrange=[0,1.01], show=False)
-        #
-        #     g[1].grid()
-        #     plt.yticks(numpy.arange(0, 1.1, step=0.1))
-        #
-        #     plot_show()
-        #
-        # for aperture in apertures:
-        #     b1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % (subdirectory, aperture))
-        #     b2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % (subdirectory, aperture))
-        #
-        #     g = plot(
-        #         1e6 * b1[:, 0], b1[:, 1],
-        #         1e6 * b1[:, 0], b1[:, 2],
-        #         1e6 * b2[:, 0], b2[:, 1],
-        #         1e6 * b2[:, 0], b2[:, 2],
-        #         legend=['Horizontal GSM', 'Vertical GSM', 'Horizontal UND', 'Vertical UND'],
-        #         xtitle="Slit aperture [um]", ytitle="Coherent Fraction", title="aperture is %s" % aperture,
-        #         color=['green', 'blue', 'green', 'blue'],
-        #         linestyle=['--', '--', None, None],
-        #         xlog=True, yrange=[0, 1.01], show=False)
-        #
-        #     g[1].grid()
-        #     plt.yticks(numpy.arange(0, 1.1, step=0.1))
-        #
-        #     plot_show()
-        #
-        #
-        # paper
-        #
+                modes_v, occ_v = tally_v.get_occupation()
+                modes_h, occ_h = tally_h.get_occupation()
 
-        aperture = apertures[0]
-        source = sources[0]
-        # b7_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF7", aperture))
-        b7_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF7", aperture))
+                print("slit, CF H, V: ", 1e6*slit, occ_h[0], occ_v[0])
+                f.write("%g %g %g\n" % (slit, occ_h[0], occ_v[0]))
 
-        # b15_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF15", aperture))
-        b15_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF15", aperture))
-
-        # b30_1 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_GSM_aperture_%s.dat" % ("DataCF30", aperture))
-        b30_2 = numpy.loadtxt("%s/coherent_fraction_vs_slit_source_UND_aperture_%s.dat" % ("DataCF30", aperture))
-
-
-        #
-        # smooth
-        #
-        # from scipy.interpolate import make_interp_spline, BSpline
-        # T = 1e6 * b2[:, 0]
-        # power = b2[:, 1]
-        # xnew = numpy.linspace(T.min(), T.max(), T.size)
-        # spl = make_interp_spline(T, power, k=1)  # type: BSpline
-        # power_smooth = spl(xnew)
-
-
-        from scipy.signal import savgol_filter
-        w7 = savgol_filter(b7_2[:, 1], 5, 2)
-        w15 = savgol_filter(b15_2[:, 1], 5, 2)
-        w30 = savgol_filter(b30_2[:, 1], 5, 2)
-
-
-
-        g = plot(
-            1e6 * b7_2[:, 0], w7, #b2[:, 1],
-            1e6 * b7_2[:, 0], b7_2[:, 2],
-            1e6 * b15_2[:, 0], w15,  # b2[:, 1],
-            1e6 * b15_2[:, 0], b15_2[:, 2],
-            1e6 * b30_2[:, 0], w30,  # b2[:, 1],
-            1e6 * b30_2[:, 0], b30_2[:, 2],
-            legend=['7 keV Horizontal', '7 keV Vertical',
-                    '15 keV Horizontal', '15 keV Vertical',
-                    '30 keV Horizontal', '30 keV Vertical',
-                    ],
-            xtitle="Slit aperture [um]", ytitle="Coherent Fraction",
-            color=['green', 'green', 'blue', 'blue', 'red', 'red'],
-            linestyle=[None, '--', None, '--', None, '--',],
-            xlog=False, xrange=[0.,1000], yrange=[0, 1.01], show=False)
-
-        g[1].grid()
-        plt.yticks(numpy.arange(0, 1.1, step=0.1))
-
-        def aa(x):
-            return x / 565
-        def invaa(x):
-            return 565 * x
-
-        # secax = g[1].secondary_xaxis('top', functions=(aa, invaa))
-        # secax.set_xlabel('n')
-
-        plt.savefig("cf_vs_aperture.eps")
-
-        plot_show()
+            f.close()
+            print("File written to disk: %s" % outfile)

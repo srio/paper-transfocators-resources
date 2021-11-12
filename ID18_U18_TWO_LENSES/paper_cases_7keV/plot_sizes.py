@@ -160,11 +160,21 @@ def plot_all_cases(direction='h',graphic_filename=None):
 
     if direction == 'h':
         APERTURE = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]
+        CF = [90,70,50,13]
         NFILES = [200, 200, 200, 200]
         # ii = 2
+        F1 = [46.1, 25.1, 46.1, 25.1]
+        F1size2 = [8.570200000000256, 14.857999999999663, 20.02200000000076, 19.941000000000997]
+        F1size = [8.6, 42.0, 35.5, 24.0]
+        title="horizontal"
     else:
         APERTURE = [25e-6, 227.0e-6, 506.7e-6, 1500e-6]
+        CF = [99.86,90,70,58]
         NFILES = [200, 200, 200, 200]
+        F1 = [15.0, 42.2, 85.2, 42.2]
+        F1size2 = [4.8093000000000075, 32.384000000000356, 6.0996000000000095, 22.287000000000035]
+        F1size = [5.3, 32.3, 5.3, 134.4]
+        title="vertical"
         # ii = 1
 
     # aperture = APERTURE[ii]
@@ -183,10 +193,12 @@ def plot_all_cases(direction='h',graphic_filename=None):
         Index = numpy.arange(200)
         if direction == 'h':
             sourcesize = 70.57e-6
-            yrange=[1,500] # [0,75]
+            yrange=[1e0,2e3] #[1,500] # [0,75]
+            xrange=[10,100]
         else:
             sourcesize = 15.02e-6
             yrange = [1,500] # [0, 200]
+            xrange = [10, 100]
 
         # a = numpy.loadtxt("trajectories_precalculated/f1_vs_f2_slit%g_%s.dat" % (aperture*1e6, direction))
 
@@ -332,16 +344,19 @@ def plot_all_cases(direction='h',graphic_filename=None):
                 numpy.array(F1_3), numpy.array(FWHM_3),
                 numpy.array(F1_0), Msource_at_id * sourcesize * 1e6,
                 numpy.array(F1_0), Msource_at_slit * APERTURE[0] * 1e6,
-                marker=[None,None,None,None,None,None],
-                color=['r', 'b', 'g', 'c', 'k', 'k'],
-                linestyle=[None, None, None, None, '--', ':'],
-                yrange=yrange, # numpy.array(FWHM_0).max()*1.1],
-                legend=["Slit %g um" % (1e6 * APERTURE[0]),\
-                "Slit %g um" % (1e6 * APERTURE[1]), \
-                "Slit %g um" % (1e6 * APERTURE[2]), \
-                "Slit %g um" % (1e6 * APERTURE[3]), \
-                "Analytical (source at ID)","Analytical (source at slit)"],
-                xtitle="F1 [m]", ytitle="FWHM [um]", title="%s Sizes" % (direction),
+                numpy.array(F1), numpy.array(F1size),
+                # numpy.array(F1), numpy.array(F1size2),
+                marker=[None,None,None,None,None,None,'o'],
+                color=['r', 'b', 'g', 'c', 'k', 'k','g'],
+                linestyle=[None, None, None, None, '--', ':',''],
+                xrange=xrange,yrange=yrange, # numpy.array(FWHM_0).max()*1.1],
+                legend=[
+                "Slit %g $\mu$m CF=%g" % (1e6 * APERTURE[0], CF[0]),\
+                "Slit %g $\mu$m CF=%g" % (1e6 * APERTURE[1], CF[1]), \
+                "Slit %g $\mu$m CF=%g" % (1e6 * APERTURE[2], CF[2]), \
+                "Slit %g $\mu$m CF=%g" % (1e6 * APERTURE[3], CF[3]), \
+                "Analytical (source at ID)","Analytical (source at slit)","Cases 1-4"],
+                xtitle='$f_1$ [m]', ytitle=r'FWHM [$\mu$m]', title="%s" % (title),
                 ylog=1,
                 show=0)
 

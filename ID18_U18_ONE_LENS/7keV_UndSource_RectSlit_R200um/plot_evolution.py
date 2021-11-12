@@ -1,6 +1,7 @@
 import numpy
 from srxraylib.plot.gol import plot, set_qt
 import matplotlib.pylab as plt
+from scipy.signal import savgol_filter
 
 set_qt()
 subdirectory = "." # "Data7keV_200um"
@@ -14,15 +15,16 @@ lens_radius = 200e-6 # for plot title
 plt.rcParams.update(plt.rcParamsDefault)
 plt.rcParams.update({'figure.autolayout': True})
 
-params = {'legend.fontsize': 15,
+params = {'legend.fontsize': 23,
           'legend.frameon': False,
           'legend.handlelength': 2,
           # 'axes.titlesize' : 24,
-          'axes.labelsize' :   24,
+          'axes.labelsize' :   40,
           'lines.linewidth' :  3,
           'lines.markersize' : 10,
-          'xtick.labelsize' :  25,
-          'ytick.labelsize' :  25,
+          'xtick.labelsize' :  40,
+          'ytick.labelsize' :  40,
+          'legend.loc': 'lower right', # 'best'
           # 'grid.color':       'r',
           # 'grid.linestyle':   '-',
           # 'grid.linewidth':     2,
@@ -93,49 +95,24 @@ for i in range(len(FACTOR)):
         FWHM_THEORY_SLIT.append(fwhm_theory_slit)
         FWHM_THEORY_AVERAGE.append(fwhm_theory_average)
 
-        LEGEND.append(r'$n$=%5.3g; N=%4.3f' % (FACTOR[i], N2))
-
-        # LEGEND.append(r'$a$=%s a$_{FWHM}$' % (SIGMAS[i]))
-
-        # plot(
-        #         DISTANCE[i], FWHM[i],
-        #         DISTANCE[i], FWHM_THEORY_SOURCE[i],
-        #         DISTANCE[i], FWHM_THEORY_SLIT[i],
-        #         # DISTANCE[i], FWHM_THEORY_AVERAGE[i],
-        #         ytitle="FWHM [um]",
-        #         xtitle="Distance from lens [m]",
-        #         figsize=(15, 4),
-        #         show=1,
-        #         legend=["Numeric","Theory (source)", "Theory (slit)"],
-        #         ylog=1, title="aperture_factor = %g  w1:%g, w2:%g, size: %g" % (FACTOR[i],w1, w2, slit_size_in_um))
-
-        # plot(
-        #         DISTANCE[i], FWHM_RATIO_SOURCE[i],
-        #         DISTANCE[i], FWHM_RATIO_SLIT[i],
-        #         ytitle="RATIO",
-        #         xtitle="Distance from lens [m]",
-        #         figsize=(15, 4),
-        #         show=1,
-        #         yrange=[0,1],
-        #         legend=["Ratio (source)", "Ratio (slit)"],
-        #         ylog=0, title="aperture_factor = %g  w1:%g, w2:%g" % (FACTOR[i],w1, w2))
+        LEGEND.append(r'$n$=%5.3g; $N_F$=%4.3f' % (FACTOR[i], N2))
 
 show_fwhm =  True
 
 if show_fwhm:
     fig, ax = plot(
-            DISTANCE[0], FWHM[0],
-            DISTANCE[1], FWHM[1],
-            DISTANCE[2], FWHM[2],
-            DISTANCE[3], FWHM[3],
-            DISTANCE[4], FWHM[4],
-            DISTANCE[5], FWHM[5],
-            DISTANCE[6], FWHM[6],
-            DISTANCE[7], FWHM[7],
+            DISTANCE[0], savgol_filter(FWHM[0], 5, 1),
+            DISTANCE[1], savgol_filter(FWHM[1], 5, 1),
+            DISTANCE[2], savgol_filter(FWHM[2], 5, 1),
+            DISTANCE[3], savgol_filter(FWHM[3], 5, 1),
+            DISTANCE[4], savgol_filter(FWHM[4], 5, 1),
+            DISTANCE[5], savgol_filter(FWHM[5], 5, 1),
+            DISTANCE[6], savgol_filter(FWHM[6], 5, 1),
+            DISTANCE[7], savgol_filter(FWHM[7], 5, 1),
             xrange=[8,52],
-            ytitle="FWHM [um]",yrange=[0.9,400],
+            ytitle=r'FWHM [$\mu$m]',yrange=[1,400],
             xtitle="Distance from lens [m]",
-            figsize=(15, 4),
+            figsize=(15, 8),
             show=0,
             legend=LEGEND,
             ylog=1,)

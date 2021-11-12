@@ -2,6 +2,7 @@ import numpy
 from gol import plot, set_qt
 import matplotlib.pylab as plt
 import h5py
+from scipy.signal import savgol_filter
 
 set_qt()
 
@@ -76,15 +77,15 @@ show_fwhm =  True
 
 if show_fwhm:
     fig, ax = plot(
-            DISTANCE[0], FWHM[0],
-            DISTANCE[1], FWHM[1],
-            DISTANCE[2], FWHM[2],
-            DISTANCE[3], FWHM[3],
-            DISTANCE[4], FWHM[4],
-            DISTANCE[5], FWHM[5],
-            DISTANCE[6], FWHM[6],
-            DISTANCE[7], FWHM[7],
-            xrange=[8, 52],
+            DISTANCE[0], savgol_filter(FWHM[0], 5, 1),
+            DISTANCE[1], savgol_filter(FWHM[1], 5, 1),
+            DISTANCE[2], savgol_filter(FWHM[2], 5, 1),
+            DISTANCE[3], savgol_filter(FWHM[3], 5, 1),
+            DISTANCE[4], savgol_filter(FWHM[4], 5, 1),
+            DISTANCE[5], savgol_filter(FWHM[5], 5, 1),
+            DISTANCE[6], savgol_filter(FWHM[6], 5, 1),
+            DISTANCE[7], savgol_filter(FWHM[7], 5, 1),
+            xrange=[8, 62],
             ytitle="FWHM [$\mu$m]",
             xtitle="Distance from lens [m]",
             figsize=(15, 4),
@@ -106,12 +107,13 @@ else:
             figsize=(15, 4),
             show=0,
             legend=LEGEND,
+            xrange=[8, 62],
             ylog=1)
 
 # plt.grid()
 ax.xaxis.grid()
 ax.yaxis.grid()
-ax.set_title("Be Lens radius: %d um" % (lens_radius * 1e6))
+# ax.set_title("Be Lens radius: %d um" % (lens_radius * 1e6))
 
 # F (source): 14.3507, p1: 65, q1: 18.4168
 # F (slit): 14.3507, p1: 29, q1: 28.4089

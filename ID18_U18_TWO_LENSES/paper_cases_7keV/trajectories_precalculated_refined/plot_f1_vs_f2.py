@@ -43,7 +43,7 @@ def plot_f1f2(filename=None,direction='v'):
         TITLE = "horizontal"
         F1 = [46.1,25.1,46.1,25.1]
         F2 = [26.5,21.3,31.8,20.7]
-        COLOR = ['r', 'b', 'g', 'c', 'k', 'k', 'g']
+        COLOR = ['r', 'b', 'g', 'c', 'k', 'k', 'k']
     else:
         APERTURE = [25e-6, 227.0e-6, 506.7e-6, 1500e-6]
         LEGEND = ["a=25 um CF=99.86%",
@@ -56,7 +56,7 @@ def plot_f1f2(filename=None,direction='v'):
         TITLE = "vertical"
         F1 = [15.0,42.2,85.2,42.2]
         F2 = [22.2,55.6,27.8,55.7]
-        COLOR = ['m', 'r', 'b', 'g',  'k', 'k', 'g']
+        COLOR = ['m', 'r', 'b', 'g',  'k', 'k', 'k']
 
     a0 = numpy.loadtxt("f1_vs_f2_slit%g_%s.dat" % (1e6 * APERTURE[0], direction), skiprows=3)
     a1 = numpy.loadtxt("f1_vs_f2_slit%g_%s.dat" % (1e6 * APERTURE[1], direction), skiprows=3)
@@ -86,11 +86,11 @@ def plot_f1f2(filename=None,direction='v'):
                    F1,F2,
                    color=COLOR,
                    linestyle=[None, None, None, None, '--', ':',''],
-                   marker=[None, None, None, None, None, None, 'o'],
+                   marker=[None, None, None, None, None, None, 'x'],
                    legend=LEGEND,
                    yrange=[0, 60],
                    # title="trajectories",
-                   xtitle=r'$f_1$ [m]', ytitle=r'$f_2$ [m]', title=TITLE,
+                   xtitle="f1 [m]", ytitle="f2 [m]", title=TITLE,
                    show=0)
 
     ax.xaxis.grid()
