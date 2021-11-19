@@ -308,9 +308,9 @@ if __name__ == "__main__":
 
     a = numpy.loadtxt("tmp.dat")
 
-    plot(a[:, 0], a[:, 1], title="fwhm")
-    # plot(a[:, 0], a[:, 2], title="total_intensity ")
-    plot(a[:, 0], a[:, 3], title="on_axis_intensity")
-    plot(a[:, 0], a[:, 4], title="peak_intensity")
+    plot(a[:, 0], a[:, 1], xtitle="f2 [m]", title="fwhm")
+    # plot(a[:, 0], a[:, 2], xtitle="f2 [m]", title="total_intensity ")
+    plot(a[:, 0], a[:, 3], xtitle="f2 [m]", title="on_axis_intensity")
+    plot(a[:, 0], a[:, 4], xtitle="f2 [m]", title="peak_intensity")
 
 

@@ -60,7 +60,12 @@ def main1(distance=30.0, nmodes=10, directory="xxx", do_plot=True):
 #     main1(distance=distance, nmodes=10, directory="case4h", do_plot=0)
 
 
-from case2h_wofry import run_source, run_beamline
+# from case2h_wofry import run_source, run_beamline
+# distances = numpy.linspace(10.0, 50.0, 81)
+# for distance in distances:
+#     main1(distance=distance, nmodes=1, directory="case2h0", do_plot=0)
+
+from case4vRefined_wofry import run_source, run_beamline
 distances = numpy.linspace(10.0, 50.0, 81)
 for distance in distances:
-    main1(distance=distance, nmodes=1, directory="case2h0", do_plot=0)
+    main1(distance=distance, nmodes=10, directory="case4vRefined", do_plot=0)
