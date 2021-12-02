@@ -44,7 +44,7 @@ def plot_sizes_analytical(aperture_h=10e-6, aperture_v=10e-6, filename=None):
     sourcesize_v = 15.02e-6
 
 
-    F1 = numpy.linspace(5, 100, 200)
+    F1 = numpy.linspace(5, 100, 500)
 
     F2theory1 = []
     F2theory2 = []
@@ -67,6 +67,14 @@ def plot_sizes_analytical(aperture_h=10e-6, aperture_v=10e-6, filename=None):
                                  position_lens2=170.0,
                                  position_sample=200.0,
                                  verbose=False)
+
+        if ff_id < 0:
+            ff_id = numpy.nan
+            mm_source_at_id = numpy.nan
+
+        if ff_slit < 0:
+            ff_slit = numpy.nan
+            mm_source_at_slit = numpy.nan
 
         Msource_at_id.append(mm_source_at_id)
         Msource_at_slit.append(mm_source_at_slit)
