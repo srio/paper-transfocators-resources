@@ -31,7 +31,7 @@ def get_f2(f1=28.2,
         print("q2: %g" % q2)
         print("D: %g, Sum: %g" % (D, p1+q1+p2+q2))
 
-    M = (q1 / q1) * (q2 / p2)
+    M = (q1 / p1) * (q2 / p2)
     return f2, M
 
 def plot_one_case(direction='h',ii=0):
@@ -298,6 +298,14 @@ def plot_all_cases(direction='h',graphic_filename=None):
                                      position_sample=200.0,
                                      verbose=False)
 
+            if ff_source_at_id < 0:
+                ff_source_at_id = numpy.nan
+                mm_source_at_id = numpy.nan
+
+            if ff_source_at_slit < 0:
+                ff_source_at_slit = numpy.nan
+                mm_source_at_slit = numpy.nan
+
             Msource_at_id.append(mm_source_at_id)
             Msource_at_slit.append(mm_source_at_slit)
 
@@ -310,9 +318,8 @@ def plot_all_cases(direction='h',graphic_filename=None):
 
         F2theory1smooth = numpy.array(F2theory1)
         F2theory2smooth = numpy.array(F2theory2)
-        Msource_at_id = numpy.array(Msource_at_id)
-        Msource_at_slit = numpy.array(Msource_at_slit)
-
+        Msource_at_id = numpy.abs(numpy.array(Msource_at_id))
+        Msource_at_slit = numpy.abs(numpy.array(Msource_at_slit))
 
         # fig, ax = plot(
         #     numpy.array(F1_0), numpy.array(F2_0),

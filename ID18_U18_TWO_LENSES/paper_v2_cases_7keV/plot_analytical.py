@@ -32,7 +32,7 @@ def get_f2(f1=28.2,
         print("q2: %g" % q2)
         print("D: %g, Sum: %g" % (D, p1+q1+p2+q2))
 
-    M = (q1 / q1) * (q2 / p2)
+    M = (q1 / p1) * (q2 / p2)
     return f2, M
 
 def plot_sizes_analytical(aperture_h=10e-6, aperture_v=10e-6, filename=None):
