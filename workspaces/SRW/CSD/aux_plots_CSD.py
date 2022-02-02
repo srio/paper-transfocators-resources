@@ -138,12 +138,12 @@ if __name__ == '__main__':
     logging.info('Horizontal FWHM: %.2f [um]' % float(get_fwhm(MI, x, y, coords_x=':', coords_y=0)*1e6))
     logging.info('Vertical FWHM: %.2f [um]' % float(get_fwhm(MI, x, y, coords_x=0, coords_y=':')*1e6))
 
-    image = b4pt.Image2Plot(MI, x*1e3, y*1e3)
+    image = b4pt.Image2Plot(MI/amax(MI), x*1e3, y*1e3)
     image.legends = ['', '(mm)', '(mm)']
     image.LaTex = True
     image.AspectRatio = True
     image.ColorScheme = 2
-    # image.plt_limits = [-gradlim*3., gradlim*3.]
+    image.plt_limits = [-0.05, 1.05]
     image.ax_limits = [-1,1,-1,1]
     image.FontsSizeScale = 1.3
     image.sort_class()
@@ -151,7 +151,6 @@ if __name__ == '__main__':
 
     slc_Ih, axI_x = get_slice(MI, x, y, ':', 0)
     slc_Iv, axI_y = get_slice(MI, x, y, 0, ':')
-
     # ------------------------------------------------------------------------------------------------------------------
     # CSD_x
 
@@ -169,12 +168,12 @@ if __name__ == '__main__':
     x = linspace(mesh.xStart,mesh.xFin, mesh.nx)
     y = linspace(mesh.xStart,mesh.xFin, mesh.nx)
 
-    image = b4pt.Image2Plot(absolute(CSD), x*1e3, y*1e3)
+    image = b4pt.Image2Plot(absolute(CSD)/amax(absolute(CSD)), x*1e3, y*1e3)
     image.legends = ['', '$x_1$ (mm)', '$x_2$ (mm)']
     image.LaTex = True
     image.AspectRatio = True
     image.ColorScheme = 7
-    # image.plt_limits = [-gradlim*3., gradlim*3.]
+    image.plt_limits = [-0.05, 1.05]
     image.ax_limits = [-1,1,-1,1]
     image.FontsSizeScale = 1.3
     image.sort_class()
@@ -191,12 +190,12 @@ if __name__ == '__main__':
     # logging.info('Horizontal FWHM: %.2f [um]' % (get_fwhm(DoC, x, y, coords_x=':', coords_y=0)*1e6))
     logging.info('Coherence length: %.2f [um]' % (get_fwhm(DoC, x, y, coords_x=0, coords_y=':')*1e6))
 
-    image = b4pt.Image2Plot(absolute(DoC), x*1e3, y*1e3)
+    image = b4pt.Image2Plot(absolute(DoC)/amax(DoC), x*1e3, y*1e3)
     image.legends = ['', '$(x_1+x_2)/2$ (mm)', '$(x_1-x_2)/2$ (mm)']
     image.LaTex = True
     image.AspectRatio = True
     image.ColorScheme = 5
-    # image.plt_limits = [-gradlim*3., gradlim*3.]
+    image.plt_limits = [-0.05, 1.05]
     image.ax_limits = [-1,1,-1,1]
     image.FontsSizeScale = 1.3
     image.sort_class()
@@ -221,12 +220,12 @@ if __name__ == '__main__':
     x = linspace(mesh.yStart,mesh.yFin, mesh.ny)
     y = linspace(mesh.yStart,mesh.yFin, mesh.ny)
 
-    image = b4pt.Image2Plot(absolute(CSD), x*1e3, y*1e3)
+    image = b4pt.Image2Plot(absolute(CSD)/amax(absolute(CSD)), x*1e3, y*1e3)
     image.legends = ['', '$y_1$ (mm)', '$y_2$ (mm)']
     image.LaTex = True
     image.AspectRatio = True
     image.ColorScheme = 7
-    # image.plt_limits = [-gradlim*3., gradlim*3.]
+    image.plt_limits = [-0.05, 1.05]
     image.ax_limits = [-1,1,-1,1]
     image.FontsSizeScale = 1.3
     image.sort_class()
@@ -243,12 +242,12 @@ if __name__ == '__main__':
     # logging.info('Horizontal FWHM: %.2f [um]' % (get_fwhm(DoC, x, y, coords_x=':', coords_y=0)*1e6))
     logging.info('Coherence length: %.2f [um]' % (get_fwhm(DoC, x, y, coords_x=0, coords_y=':')*1e6))
 
-    image = b4pt.Image2Plot(absolute(DoC), x*1e3, y*1e3)
+    image = b4pt.Image2Plot(absolute(DoC)/amax(absolute(DoC)), x*1e3, y*1e3)
     image.legends = ['', '$(y_1+y_2)/2$ (mm)', '$(y_1-y_2)/2$ (mm)']
     image.LaTex = True
     image.AspectRatio = True
     image.ColorScheme = 5
-    # image.plt_limits = [-gradlim*3., gradlim*3.]
+    image.plt_limits = [-0.05, 1.05]
     image.ax_limits = [-1,1,-1,1]
     image.FontsSizeScale = 1.3
     image.sort_class()
@@ -268,7 +267,7 @@ if __name__ == '__main__':
     image.LineStyle = '-'
     image.label = 'intensity'
     image.LabelPos = 2
-    image.ax_limits = [-1, 1, None, None]
+    image.ax_limits = [-1, 1, -0.05, 1.05]
     image.sort_class()
     b4pt.plot_1D(image, Enable=False, Hold=False)
 
@@ -284,7 +283,7 @@ if __name__ == '__main__':
     image.FillBetween = True
     image.FillBetweenValue = 0
     image.alpha = 0.2
-    image.ax_limits = [-1, 1, None, None]
+    image.ax_limits = [-1, 1, -0.05, 1.05]
     image.sort_class()
     b4pt.plot_1D(image, 'Ih_vsDoCx_15kME_7keV.pdf', Enable=False, Hold=True)
 
@@ -297,7 +296,7 @@ if __name__ == '__main__':
     image.LineStyle = '-'
     image.label = 'intensity'
     image.LabelPos = 2
-    image.ax_limits = [-1, 1, None, None]
+    image.ax_limits = [-1, 1, -0.05, 1.05]
     image.sort_class()
     b4pt.plot_1D(image, Enable=False, Hold=False)
 
@@ -313,7 +312,7 @@ if __name__ == '__main__':
     image.FillBetween = True
     image.FillBetweenValue = 0
     image.alpha = 0.2
-    image.ax_limits = [-1, 1, None, None]
+    image.ax_limits = [-1, 1, -0.05, 1.05]
     image.sort_class()
     b4pt.plot_1D(image, 'Iv_vsDoCy_15kME_7keV.pdf', Enable=True, Hold=True)
 

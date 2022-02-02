@@ -1,0 +1,13 @@
+INFO: >>> intensity_bis7.0keV_intensity.dat
+INFO: Intensity length: 1612800; nx: 1440; ny: 1120;
+INFO: Horizontal FWHM: 73.08 [um]
+INFO: Vertical FWHM: 18.28 [um]
+INFO: >>> CSDx7.0keV_15k_ME_intensity.dat
+INFO: CSD: 4147200; nx: 1440; ny: 1;
+INFO: DoC: 2073600; nx: 1440; ny: 1440;
+INFO: Coherence length: 6.13 [um]
+INFO: >>> CSDy7.0keV_15k_ME_intensity.dat
+INFO: CSD: 2508800; nx: 1; ny: 1120;
+INFO: DoC: 1254400; nx: 1120; ny: 1120;
+INFO: Coherence length: 8.53 [um]
+WARNING: findfont: Font family ['serif'] not found. Falling back to DejaVu Sans.

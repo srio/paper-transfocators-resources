@@ -1,7 +1,7 @@
 #!/bin/bash -l
-#OAR -l nodes=1/core=28,walltime=8
+#OAR -l nodes=1/core=28,walltime=24
 
-CMD_LAT="python CSDx.py "$@
+CMD_LAT="python source_CSDx.py "$@
 
 cat $OAR_NODEFILE
 which mpirun
