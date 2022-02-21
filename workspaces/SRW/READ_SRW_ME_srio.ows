@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme description="" title="" version="2.0" working_directory="/users/srio/Oasys" workspace_units="1">
+	<nodes>
+		<node id="0" name="Intensity Plot" position="(300.0, 336.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="Intensity Plot 36m" version="" />
+		<node id="1" name="Degree of Coherence Plot" position="(302.0, 568.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_me_degcoh_plotter.OWSRWDegCohPlotter" title="Degree of Coherence Plot 36m" version="" />
+		<node id="2" name="Intensity Plot" position="(302.0, 219.0)" project_name="OASYS1-SRW" qualified_name="orangecontrib.srw.widgets.native.ow_srw_intensity_plotter.OWSRWIntensityPlotter" title="Intensity Plot Source" version="" />
+	</nodes>
+	<links />
+	<annotations />
+	<thumbnail />
+	<node_properties>
+		<properties format="pickle" node_id="0">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYcwAAAC9ub2JhY2t1cC9ndXJiMS9zcmlv
+L09BU1lTMS4yL3BhcGVyLXRyYW5zZm9jYXRvcnMtcmVzb3VyY2VzL3dvcmtzcGFjZXMvU1JXL0NT
+RC9pbnRlbnNpdHk3LjBrZVZfMTVrX01FX2ludGVuc2l0eS5kYXRxAlgQAAAAaXNfYXV0b21hdGlj
+X3J1bnEDiFgLAAAAcmFuZ2VfeF9tYXhxBEsyWAsAAAByYW5nZV94X21pbnEFSs7///9YCwAAAHJh
+bmdlX3lfbWF4cQZLMlgLAAAAcmFuZ2VfeV9taW5xB0rO////WBYAAAByZXNvbHV0aW9uX3JlZHVj
+dGlvbl94cQhHP/AAAAAAAABYFgAAAHJlc29sdXRpb25fcmVkdWN0aW9uX3lxCUc/8AAAAAAAAFgT
+AAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEKY3NpcApfdW5waWNrbGVfdHlwZQpxC1gMAAAAUHlRdDUu
+UXRDb3JlcQxYCgAAAFFCeXRlQXJyYXlxDUNCAdnQywADAAAAAAHMAAAAGwAABvMAAAL7AAABzAAA
+AEAAAAbzAAAC+wAAAAAAAAAAB4AAAAHMAAAAQAAABvMAAAL7cQ6FcQ+HcRBScRFYDAAAAHVud3Jh
+cF9waGFzZXESSwBYCQAAAHVzZV9yYW5nZXETSwBYDAAAAHdlaWdodF9waGFzZXEUSwB1Lg==
+</properties>
+		<properties format="pickle" node_id="1">gAN9cQAoWAsAAABjYWxjdWxhdGlvbnEBSwFYGAAAAGhvcml6b250YWxfY3V0X2ZpbGVfbmFtZXEC
+WGYAAAAvdXNlcnMvc3Jpby9PQVNZUzEuMi9wYXBlci10cmFuc2ZvY2F0b3JzLXJlc291cmNlcy93
+b3Jrc3BhY2VzL1NSVy9DU0QvRG9DNy4wa2VWXzE1a19NRV9pbnRlbnNpdHlfZGN4LjFxA1gQAAAA
+aXNfYXV0b21hdGljX3J1bnEEiFgEAAAAbW9kZXEFSwBYCwAAAHJhbmdlX3hfbWF4cQZHQI9AAAAA
+AABYCwAAAHJhbmdlX3hfbWlucQdHwI9AAAAAAABYCwAAAHJhbmdlX3lfbWF4cQhHQI9AAAAAAABY
+CwAAAHJhbmdlX3lfbWlucQlHwI9AAAAAAABYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCmNzaXAK
+X3VucGlja2xlX3R5cGUKcQtYDAAAAFB5UXQ1LlF0Q29yZXEMWAoAAABRQnl0ZUFycmF5cQ1DQgHZ
+0MsAAwAAAAAH1wAAAb8AAAz+AAAEnwAAB9cAAAHkAAAM/gAABJ8AAAABAAAAAAeAAAAH1wAAAeQA
+AAz+AAAEn3EOhXEPh3EQUnERWAwAAAB1bndyYXBfcGhhc2VxEksAWAkAAAB1c2VfcmFuZ2VxE0sB
+WBYAAAB2ZXJ0aWNhbF9jdXRfZmlsZV9uYW1lcRRYZgAAAC91c2Vycy9zcmlvL09BU1lTMS4yL3Bh
+cGVyLXRyYW5zZm9jYXRvcnMtcmVzb3VyY2VzL3dvcmtzcGFjZXMvU1JXL0NTRC9Eb0M3LjBrZVZf
+MTVrX01FX2ludGVuc2l0eV9kY3kuMnEVWAwAAAB3ZWlnaHRfcGhhc2VxFksAdS4=
+</properties>
+		<properties format="pickle" node_id="2">gAN9cQAoWBMAAABpbnRlbnNpdHlfZmlsZV9uYW1lcQFYgwAAAC9ub2JhY2t1cC9ndXJiMS9zcmlv
+L09BU1lTMS4yL3BhcGVyLXRyYW5zZm9jYXRvcnMtcmVzb3VyY2VzL3dvcmtzcGFjZXMvU1JXL3Nv
+dXJjZV9pbWFnaW5nL2ludGVuc2l0eV9iaXM3LjBrZVZfMTAwa19NRV9pbnRlbnNpdHkuZGF0cQJY
+EAAAAGlzX2F1dG9tYXRpY19ydW5xA4hYCwAAAHJhbmdlX3hfbWF4cQRLMlgLAAAAcmFuZ2VfeF9t
+aW5xBUrO////WAsAAAByYW5nZV95X21heHEGSzJYCwAAAHJhbmdlX3lfbWlucQdKzv///1gWAAAA
+cmVzb2x1dGlvbl9yZWR1Y3Rpb25feHEIRz/wAAAAAAAAWBYAAAByZXNvbHV0aW9uX3JlZHVjdGlv
+bl95cQlHP/AAAAAAAABYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCmNzaXAKX3VucGlja2xlX3R5
+cGUKcQtYDAAAAFB5UXQ1LlF0Q29yZXEMWAoAAABRQnl0ZUFycmF5cQ1DQgHZ0MsAAwAAAAABzAAA
+ABsAAAbzAAAC+wAAAcwAAABAAAAG8wAAAvsAAAAAAAAAAAeAAAABzAAAAEAAAAbzAAAC+3EOhXEP
+h3EQUnERWAwAAAB1bndyYXBfcGhhc2VxEksAWAkAAAB1c2VfcmFuZ2VxE0sAWAwAAAB3ZWlnaHRf
+cGhhc2VxFEsAdS4=
+</properties>
+	</node_properties>
+</scheme>
