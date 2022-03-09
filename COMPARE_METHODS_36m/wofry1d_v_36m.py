@@ -178,11 +178,11 @@ def plot1(tally, add_srw=0):
         plot(1e6 * abscissas, spectral_density / spectral_density.max(),
              srw[:,0],  srw[:,1] / srw[:,1].max(),
              1e6 * abscissas, y0 / y0.max(),
-             srwDoC[:, 0], srwDoC[:, 1] ,
+             numpy.sqrt(2) * srwDoC[:, 0], srwDoC[:, 1] ,
              legend=["Spectral Density (normalized) FWHM = %g um" % (fwhm),
                      "SRW Spectral Density (normalized) FWHM = %g um" % (fwhm_srw),
                      "Mode 0 (normalized) FWHM = %4.1f um" % (fwhm0),
-                     "SRW DoC FWHM = %g um" % (fwhm_srwDoC),],
+                     "SRW DoC FWHM [corrected with sqrt(2)] =  %4.1f um" % (numpy.sqrt(2) * fwhm_srwDoC),],
              xtitle="x [um]", ytitle="(a.u)", show=True, xrange=[-1000,1000])
     else:
         plot(1e6 * abscissas, spectral_density / spectral_density.max(),
@@ -212,12 +212,54 @@ def main(do_plot=1):
 
     return tally
 
+def save_CSD_in_SRW_format(tally,filename="tmp.dat",direction='h'):
+    abscissas = tally.get_abscissas()
+    csd_complex = tally.get_cross_pectral_density()
+    csd = numpy.abs( csd_complex )
 
+    sd = numpy.sqrt(tally.get_spectral_density())
+    norm = numpy.outer(sd,sd)
+    doc = csd / norm
+
+
+
+    plot_image_with_histograms(csd, abscissas * 1e6, abscissas * 1e6, title="Cross spectral density", xtitle="x1 [um]",
+               ytitle="x2 [um]",use_profiles_instead_histograms=True)
+
+
+    f = open(filename, 'w')
+
+    f.write("# Complex Mutual Intensity [ph/s/.1%bw/mm^2] (C-aligned, inner loop is vs Photon Energy, outer loop vs Vertical Position)\n")
+    f.write("# 7000.0 #Initial Photon Energy [eV]\n")
+    f.write("# 7000.0 #Final Photon Energy [eV]\n")
+    f.write("# 1 #Number of points vs Photon Energy\n")
+    if direction == 'h':
+        f.write("# %g #Initial Horizontal Position [m]\n" % abscissas[0])
+        f.write("# %g #Final Horizontal Position [m]\n" % abscissas[-1])
+        f.write("# %d #Number of points vs Horizontal Position\n" % (abscissas.size))
+        f.write("# 0 #Initial Vertical Position [m]\n")
+        f.write("# 0 #Final Vertical Position [m]\n")
+        f.write("# 1 #Number of points vs Vertical Position\n")
+    else:
+        f.write("# 0 #Initial Horizontal Position [m]\n")
+        f.write("# 0 #Final Horizontal Position [m]\n")
+        f.write("# 1 #Number of points vs Horizontal Position\n")
+        f.write("# %g #Initial Vertical Position [m]\n" % (abscissas[0]))
+        f.write("# %g #Final Vertical Position [m]\n" % (abscissas[-1]))
+        f.write("# %d #Number of points vs Vertical Position\n" % (abscissas.size))
+    f.write("# 1 #Number of components\n")
+
+    for j in range(abscissas.size):
+        for i in range(abscissas.size):
+            f.write(repr(csd_complex[i,j])+"\n")
+    f.close()
+    print("File written to disk: %s" % filename)
 #
 # MAIN========================
 #
 
 
 tally = main(do_plot=0)
+save_CSD_in_SRW_format(tally, filename="csd_v.dat", direction='v')
 plot1(tally, add_srw=1)
 plot2(tally)
