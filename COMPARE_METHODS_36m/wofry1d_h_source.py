@@ -96,7 +96,7 @@ from tools import plotCSD
 
 tally = main(do_plot=0)
 plotCSD(
-    tally, range_limits=[-100,100], compare_profiles=True, rotate_axes_flag=1, normalize_to_DoC=1,
+    tally, range_limits=[-100,100], compare_profiles=2, rotate_axes_flag=1, normalize_to_DoC=1,
     direction='x',
     srw_file='/users/srio/OASYS1.2/paper-transfocators-resources/workspaces/SRW/source_imaging/CSDx7.0keV_50k_ME_intensity.dat',
     # srw_file='/users/srio/OASYS1.2/paper-transfocators-resources/workspaces/SRW/source_imaging/CSDx7.0keV_15k_ME_intensity.dat',

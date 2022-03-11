@@ -70,7 +70,7 @@ def rotate_axes(csd, x1in, x2in, do_plot=0):
     return CSD.T.copy(), X1, X2
 
 
-def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_limits=None, compare_profiles=False, normalize_to_DoC=0):
+def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_limits=None, compare_profiles=0, normalize_to_DoC=0):
 
     abscissas = tally.get_abscissas()
     csd_complex = tally.get_cross_pectral_density()
@@ -131,14 +131,26 @@ def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_l
 
 
 
-    if compare_profiles:
-        plot(abscissas,csd[:,csd.shape[1]//2],
-             x1,csd_srw[:,csd_srw.shape[1]//2],title="H profile",legend=["WOFRY","SRW"],
-                xtitle=xtitle, ytitle="", show=0)
+    if srw_file is not None and compare_profiles > 0:
+        plot(abscissas, csd[:, csd.shape[1] // 2],
+             x1, csd_srw[:, csd_srw.shape[1] // 2], title="H profile", legend=["WOFRY", "SRW"],
+             xtitle=xtitle, ytitle="", show=0)
 
-        plot(abscissas,csd[csd.shape[0]//2,:],
-             x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=["WOFRY","SRW"],
-                xtitle=ytitle, ytitle="", show=0)
+        if compare_profiles == 2:
+            eigenvalues = tally.get_eigenvalues()
+            eigenvectors = tally.get_eigenvectors()
+            y0 = eigenvalues[0] * numpy.real(numpy.conjugate(eigenvectors[0, :]) * eigenvectors[0, :])
+
+            plot(abscissas, csd[csd.shape[0] // 2, :],
+                 x2, csd_srw[csd_srw.shape[0] // 2, :],
+                 abscissas, y0/y0.max(),
+                 title="V profile", legend=["WOFRY", "SRW", "Mode 0"],
+                 xtitle=ytitle, ytitle="", show=0)
+
+        elif compare_profiles == 1:
+            plot(abscissas,csd[csd.shape[0]//2,:],
+                 x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=["WOFRY","SRW"],
+                    xtitle=ytitle, ytitle="", show=0)
 
 
     plot_show()
