@@ -58,7 +58,8 @@ def rotate_axes(csd, x1in, x2in, do_plot=0):
     interpolator0 = RectBivariateSpline(x1, x2, csd, bbox=[None, None, None, None], kx=3, ky=3, s=0)
     # interpolator1 = RectBivariateSpline(x1, x2, doc, bbox=[None, None, None, None], kx=3, ky=3, s=0)
 
-    CSD = interpolator0( numpy.sqrt(2) * (XX1 + XX2) / 2, numpy.sqrt(2) * (XX2 - XX1) / 2, grid=False)
+    CSD = interpolator0(numpy.sqrt(2) * (XX1 + XX2) / 2, numpy.sqrt(2) * (XX2 - XX1) / 2, grid=False)
+    # CSD = interpolator0(numpy.sqrt(1) * (XX1 + XX2) / 2, numpy.sqrt(1) * (XX2 - XX1) / 2, grid=False)
     # DOC = numpy.abs(interpolator1( numpy.sqrt(2) * (XX1 + XX2) / 2, numpy.sqrt(2) * (XX2 - XX1) / 2, grid=False))
 
     if do_plot:
@@ -91,19 +92,35 @@ def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_l
         csd, abscissas, tmp = rotate_axes(csd, abscissas, abscissas)
 
     if direction == 'x':
-        xtitle = "x1 [um]"
-        ytitle = "x2 [um]"
+        if rotate_axes_flag:
+            xtitle = "$(\sqrt{2}/2) (x_1+x_2)$ [$\mu$m]"
+            ytitle = "$(\sqrt{2}/2) (x_2-x_1)$ [$\mu$m]"
+        else:
+            xtitle = "$x_1$ [$\mu$m]"
+            ytitle = "$x_2$ [$\mu$m]"
+
+        xtitleProfile = "$x_1$ [$\mu$m]"
+        ytitleProfile = "$x_2$ [$\mu$m]"
     else:
-        xtitle = "y1 [um]"
-        ytitle = "y2 [um]"
+        if rotate_axes_flag:
+            xtitle = "($\sqrt{2}/2) (y_1+y_2)$ [$\mu$m]"
+            ytitle = "($\sqrt{2}/2) (y_2-y_1)$ [$\mu$m]"
+        else:
+            xtitle = "$y_1$ [$\mu$m]"
+            ytitle = "$y_2$ [$\mu$m]"
+
+        xtitleProfile = "$y_1$ [$\mu$m]"
+        ytitleProfile = "$y_2$ [$\mu$m]"
 
     if normalize_to_DoC:
         title="|Degree of Coherence|"
     else:
         title="|Cross Spectral Density|"
-    plot_image_with_histograms(csd, abscissas * 1e6, abscissas * 1e6, title=title+" [WOFRY]",
-               xtitle=xtitle, ytitle=ytitle,use_profiles_instead_histograms=True, show=0, xrange=range_limits, yrange=range_limits)
 
+    # plot_image_with_histograms(csd, abscissas * 1e6, abscissas * 1e6, title=title+" [WOFRY]",
+    #            xtitle=xtitle, ytitle=ytitle,use_profiles_instead_histograms=True, show=0, xrange=range_limits, yrange=range_limits)
+    plot_image(csd, abscissas * 1e6, abscissas * 1e6, title=title+" [WOFRY]",
+               xtitle=xtitle, ytitle=ytitle, show=0, xrange=range_limits, yrange=range_limits)
 
     if srw_file is not None:
         csd_srw_complex, x1, x2 = load_SRW_CSD(srw_file,direction=direction)
@@ -123,34 +140,48 @@ def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_l
         if rotate_axes_flag:
             csd_srw, x1, x2 = rotate_axes(csd_srw, x1, x2)
 
-        plot_image_with_histograms(csd_srw, x1 * 1e6, x2 * 1e6,
+        # plot_image_with_histograms(csd_srw, x1 * 1e6, x2 * 1e6,
+        #                            title=title+" [SRW]", xtitle=xtitle,
+        #                            ytitle=ytitle, use_profiles_instead_histograms=True, show=0,
+        #                            xrange=range_limits, yrange=range_limits)
+
+        plot_image(csd_srw, x1 * 1e6, x2 * 1e6,
                                    title=title+" [SRW]", xtitle=xtitle,
-                                   ytitle=ytitle, use_profiles_instead_histograms=True, show=0,
+                                   ytitle=ytitle, show=0,
                                    xrange=range_limits, yrange=range_limits)
 
 
-
-
     if srw_file is not None and compare_profiles > 0:
-        plot(abscissas, csd[:, csd.shape[1] // 2],
-             x1, csd_srw[:, csd_srw.shape[1] // 2], title="H profile", legend=["WOFRY", "SRW"],
-             xtitle=xtitle, ytitle="", show=0)
+        plot(1e6*abscissas, csd[:, csd.shape[1] // 2],
+             1e6*x1, csd_srw[:, csd_srw.shape[1] // 2], title="H profile", legend=[
+                "WOFRY (fwhm: %d) " % (fwhm(1e6*abscissas, csd[:, csd.shape[1] // 2])),
+                "SRW (fwhm: %d) "   % (fwhm(1e6*x1, csd_srw[:, csd_srw.shape[1] // 2])),
+            ],
+             xtitle=xtitleProfile, ytitle="", yrange=[0,1.1], show=0)
 
         if compare_profiles == 2:
             eigenvalues = tally.get_eigenvalues()
             eigenvectors = tally.get_eigenvectors()
             y0 = eigenvalues[0] * numpy.real(numpy.conjugate(eigenvectors[0, :]) * eigenvectors[0, :])
 
-            plot(abscissas, csd[csd.shape[0] // 2, :],
-                 x2, csd_srw[csd_srw.shape[0] // 2, :],
-                 abscissas, y0/y0.max(),
-                 title="V profile", legend=["WOFRY", "SRW", "Mode 0"],
-                 xtitle=ytitle, ytitle="", show=0)
+            plot(
+                 1e6*abscissas, csd[csd.shape[0] // 2, :],
+                 1e6*x2, csd_srw[csd_srw.shape[0] // 2, :],
+                 1e6*abscissas, y0/y0.max(),
+                 title="V profile", legend=[
+                    "WOFRY (fwhm: %d) "  % (fwhm(1e6*abscissas, csd[csd.shape[0] // 2, :])),
+                    "SRW (fwhm: %d) "    % (fwhm(1e6*x2, csd_srw[csd_srw.shape[0] // 2, :])),
+                    "Mode 0 (fwhm: %d) " % (fwhm(1e6*abscissas, y0/y0.max())),
+                ],
+                 xtitle=ytitleProfile, ytitle="", yrange=[0,1.1], show=0)
 
         elif compare_profiles == 1:
-            plot(abscissas,csd[csd.shape[0]//2,:],
-                 x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=["WOFRY","SRW"],
-                    xtitle=ytitle, ytitle="", show=0)
+            plot(1e6*abscissas,csd[csd.shape[0]//2,:],
+                 1e6*x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=[
+                    "WOFRY (fwhm: %d)" % (fwhm(1e6*abscissas,csd[csd.shape[0]//2,:])),
+                    "SRW (fwhm: %d)"   % (fwhm(1e6*x2,csd_srw[csd_srw.shape[0]//2,:])),
+                ],
+                    xtitle=ytitleProfile, ytitle="", yrange=[0,1.1], show=0)
 
 
     plot_show()
@@ -200,6 +231,10 @@ def plotCSD(tally, rotate_axes_flag=False, srw_file=None, direction='x', range_l
 #
 # MAIN FUNCTION========================
 #
+
+def fwhm(x,y):
+    fwhm1, quote, coordinates = get_fwhm(y, x)
+    return fwhm1
 
 def plot1(tally, add_srw=0):
 
