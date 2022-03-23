@@ -23,7 +23,6 @@ import h5py
 # SOURCE========================
 #
 
-
 def run_source(my_mode_index=0):
     global coherent_mode_decomposition
     try:
@@ -47,7 +46,7 @@ def run_source(my_mode_index=0):
             K=1.85108,
             photon_energy=7000,
             abscissas_interval=0.00025,
-            number_of_points=1000,
+            number_of_points=2000,
             distance_to_screen=100,
             scan_direction='H',
             sigmaxx=2.97321e-05,
@@ -67,7 +66,7 @@ def run_source(my_mode_index=0):
 #
 
 
-def run_beamline(output_wavefront,aperture_outer=200e-6):
+def run_beamline(output_wavefront,aperture_outer=None):
     ##########  OPTICAL SYSTEM ##########
 
     ##########  OPTICAL ELEMENT NUMBER 1 ##########
@@ -103,27 +102,24 @@ def run_beamline(output_wavefront,aperture_outer=200e-6):
                                                  handler_name='INTEGRAL_1D')
 
     ##########  OPTICAL ELEMENT NUMBER 2 ##########
-
     input_wavefront = output_wavefront.duplicate()
     from syned.beamline.shape import Rectangle
-    boundary_shape = Rectangle(-aperture_outer/2, aperture_outer/2, aperture_outer/2, aperture_outer/2)
+    boundary_shape = Rectangle(-aperture_outer/2, aperture_outer/2, -aperture_outer/2, aperture_outer/2)
     from wofryimpl.beamline.optical_elements.absorbers.slit import WOSlit1D
     optical_element = WOSlit1D(boundary_shape=boundary_shape)
 
     # no drift in this element
     output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
     ##########  OPTICAL ELEMENT NUMBER 3 ##########
 
     input_wavefront = output_wavefront.duplicate()
     from syned.beamline.shape import Rectangle
-    boundary_shape = Rectangle(-(aperture_outer-10)/2, (aperture_outer-10)/2, -(aperture_outer-10)/2, (aperture_outer-10)/2)
+    boundary_shape = Rectangle(-(aperture_outer-5e-6)/2, (aperture_outer-5e-6)/2, -(aperture_outer-5e-6)/2, (aperture_outer-5e-6)/2)
     from wofryimpl.beamline.optical_elements.absorbers.beam_stopper import WOBeamStopper1D
     optical_element = WOBeamStopper1D(boundary_shape=boundary_shape)
 
     # no drift in this element
     output_wavefront = optical_element.applyOpticalElement(input_wavefront)
-
     ##########  OPTICAL ELEMENT NUMBER 4 ##########
 
     input_wavefront = output_wavefront.duplicate()
@@ -167,7 +163,7 @@ def main(aperture_outer):
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
 
     tally = TallyCoherentModes()
-    for my_mode_index in range(50):
+    for my_mode_index in range(10):
         output_wavefront = run_source(my_mode_index=my_mode_index)
         output_wavefront = run_beamline(output_wavefront,aperture_outer=aperture_outer)
         tally.append(output_wavefront)
@@ -177,12 +173,42 @@ def main(aperture_outer):
     # tally.plot_occupation(show=1, filename="")
     return tally
 
+from scipy.signal import savgol_filter
 
+def get_Iav(I,ntimes=10,window=105):
+    for i in range(ntimes):
+        if i == 0: Iav = I.copy()
+        Iav = savgol_filter(Iav, window, 3)
+    return Iav
+
+def get_fitted_DoC(I, do_plot=0):
+    npoints = I.size
+    Iav = get_Iav(I)
+    gfit = (I / Iav) - 1
+    gfinal = gfit[(npoints // 2 - npoints // 10):(npoints // 2 + npoints // 10)].max()
+    print("Gfitted = ", gfinal)
+
+    indices = numpy.arange(npoints)
+
+    if do_plot:
+        plot(
+             indices, I,
+             indices, Iav,
+             legend=["I", "Iav"])
+
+        plot(indices, gfit,
+             indices, I * 0 + gfinal)
+
+    print("Gfitted = ", gfinal)
+
+
+    return gfinal
 #
 # MAIN========================
 #
-APERTURES = numpy.linspace(200e-6, 20e-6, 300)
+APERTURES = numpy.linspace(20e-6, 120e-6, 50)
 CF = []
+FITTED_DoC = []
 
 
 for i,aperture_outer in enumerate(APERTURES):
@@ -193,6 +219,7 @@ for i,aperture_outer in enumerate(APERTURES):
     sd = tally.get_spectral_density()
     n, occ = tally.get_occupation()
     CF.append(occ[0])
+    FITTED_DoC.append(get_fitted_DoC(sd))
 
     # plot(x,sd, title="CF: %g aperture=%g" % (occ[0], aperture_outer*1e6) )
 
@@ -223,5 +250,5 @@ wr.add_image(SD, APERTURES, x, entry_name="images", image_name="Intensity",
 filename = "wofry1d_h_doubleslit.dat"
 f = open(filename,'w')
 for i, aperture_outer in enumerate(APERTURES):
-    f.write("%g  %g  \n" % (aperture_outer, CF[i]))
+    f.write("%g  %g  %g  \n" % (aperture_outer, CF[i], FITTED_DoC[i]))
 print("File written to disk: ", filename)

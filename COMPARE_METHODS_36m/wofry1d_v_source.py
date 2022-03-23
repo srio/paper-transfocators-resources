@@ -92,12 +92,15 @@ def main(do_plot=1):
 # MAIN========================
 #
 
-from tools import plotCSD
+if __name__ == "__main__":
 
-tally = main(do_plot=0)
-plotCSD(
-    tally, range_limits=[-100, 100], compare_profiles=2, rotate_axes_flag=1, normalize_to_DoC=1,
-    direction='y',
-    # srw_file='/users/srio/OASYS1.2/paper-transfocators-resources/workspaces/SRW/source_imaging/CSDy7.0keV_50k_ME_intensity.dat',
-    srw_file='/users/srio/OASYS1.2/paper-transfocators-resources/workspaces/SRW/source_imaging/CSDy7.0keV_15k_ME_intensity.dat',
-    )
+    from tools import plotCSD
+
+    tally = main(do_plot=0)
+    plotCSD(
+        tally, range_limits=[-100, 100], do_plot=1,
+        # compare_profiles=1, rotate_axes_flag=2, rotate_axes_normalization=3, normalize_to_DoC=1,
+        compare_profiles=1, rotate_axes_flag=0, rotate_axes_normalization=3, normalize_to_DoC=0,
+        direction='y',
+        srw_file='/users/srio/OASYS1.2/paper-transfocators-resources/workspaces/SRW/source_imaging/CSDy7.0keV_15k_ME_intensity.dat',
+        )

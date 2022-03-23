@@ -218,7 +218,7 @@ def main_v(slit=50e-6,gaussian_slit=False):
 if __name__ == "__main__":
 
     do_calculate = False
-    gaussian_slit = True
+    gaussian_slit = False
 
 
 
@@ -263,19 +263,44 @@ if __name__ == "__main__":
     b = numpy.loadtxt("coherent_fraction_vs_slit_aperture.dat")
 
     from srxraylib.plot.gol import plot, plot_show
-    g = plot(
-         1e6 * a[:,0], a[:,1],
-         1e6 * a[:,0], a[:,2],
-         1e6 * b[:, 0], b[:, 1],
-         1e6 * b[:, 0], b[:, 2],
-         legend=['Horizontal Gaussian', 'Vertical Gaussian', 'Horizontal Rectangular', 'Vertical Rectangular'],
-         xtitle="Slit aperture [um]", ytitle="Coherent Fraction",
-         color = ['green','blue', 'green', 'blue'],
-         linestyle=['--','--',None,None],
-         xlog=True, yrange=[0,1.01], show=False)
 
-    g[1].grid()
-    import matplotlib.pylab as plt
-    # locs, labels = plt.yticks()
-    plt.yticks(numpy.arange(0, 1.1, step=0.1))
-    plot_show()
+    if False:
+        g = plot(
+             1e6 * a[:,0], a[:,1],
+             1e6 * a[:,0], a[:,2],
+             1e6 * b[:, 0], b[:, 1],
+             1e6 * b[:, 0], b[:, 2],
+             legend=['Horizontal Gaussian', 'Vertical Gaussian', 'Horizontal Rectangular', 'Vertical Rectangular'],
+             xtitle="Slit aperture [um]", ytitle="Coherent Fraction",
+             color = ['green','blue', 'green', 'blue'],
+             linestyle=['--','--',None,None],
+             xlog=True, yrange=[0,1.01], show=False)
+
+        g[1].grid()
+        import matplotlib.pylab as plt
+        # locs, labels = plt.yticks()
+        plt.yticks(numpy.arange(0, 1.1, step=0.1))
+        plot_show()
+
+
+    #
+    # only square aperture
+    #
+
+    if True:
+        g = plot(
+             1e6 * b[:, 0], b[:, 1],
+             1e6 * b[:, 0], b[:, 2],
+             legend=['Horizontal', 'Vertical'],
+             xtitle="Slit aperture [$\mu$m]", ytitle="Coherent Fraction",
+             color = ['green','blue'],
+             linestyle=[None,None],
+             xlog=True, yrange=[0,1.01], show=False)
+
+        g[1].grid()
+        import matplotlib.pylab as plt
+        # locs, labels = plt.yticks()
+        plt.savefig("CFvsGap.pdf")
+        plt.yticks(numpy.arange(0, 1.1, step=0.1))
+        plot_show()
+        print("File written to disk: CFvsGap.pdf")

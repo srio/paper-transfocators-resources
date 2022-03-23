@@ -9,7 +9,7 @@
 		<node id="5" name="Screen 1D" position="(680.0, 289.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D@65m" version="" />
 		<node id="6" name="Screen 1D" position="(1195.0, 136.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
 		<node id="7" name="Screen 1D" position="(1190.0, 294.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @200m" version="" />
-		<node id="8" name="Undulator Light Source" position="(104.0, 197.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U18 New EBS parameters" version="" />
+		<node id="8" name="Undulator Light Source" position="(103.0, 197.0)" project_name="OASYS1-SYNED" qualified_name="orangecontrib.syned.widgets.light_sources.ow_undulator_light_source.OWUndulatorLightSource" title="Undulator Light Source U18 New EBS parameters" version="" />
 		<node id="9" name="Diagonalize Python Script" position="(1342.0, 135.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_diagonalize_python_script.DiagonalizePythonScript" title="Diagonalize Python Script" version="" />
 		<node id="10" name="Screen 1D" position="(401.0, 126.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @36m" version="" />
 		<node id="11" name="Screen 1D" position="(407.0, 286.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @36m" version="" />
@@ -86,6 +86,7 @@
 		<node id="82" name="Diagonalize Python Script" position="(489.0, 365.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_diagonalize_python_script.DiagonalizePythonScript" title="Diagonalize Python Script" version="" />
 		<node id="83" name="Screen 1D" position="(389.0, 52.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @36m" version="" />
 		<node id="84" name="Screen 1D" position="(407.0, 362.0)" project_name="OASYS1-WOFRY" qualified_name="orangecontrib.wofry.widgets.beamline_elements.ow_screen_1d.OWWOScreen1D" title="Screen 1D @36m" version="" />
+		<node id="85" name="Undulator Coherent Mode Decomposition 1D" position="(305.0, 355.0)" project_name="OASYS1-ESRF-Extensions" qualified_name="orangecontrib.esrf.wofry.widgets.extension.ow_undulator_coherent_mode_decomposition_1D.OWUndulatorCoherentModeDecomposition1D" title="Undulator Coherent Mode Decomposition 1D" version="" />
 	</nodes>
 	<links>
 		<link enabled="false" id="0" sink_channel="WofryData" sink_node_id="11" source_channel="WofryData" source_node_id="3" />
@@ -169,8 +170,8 @@
 		<link enabled="true" id="78" sink_channel="WofryData" sink_node_id="81" source_channel="WofryData" source_node_id="27" />
 		<link enabled="true" id="79" sink_channel="WofryData" sink_node_id="83" source_channel="WofryData" source_node_id="2" />
 		<link enabled="true" id="80" sink_channel="WofryData" sink_node_id="54" source_channel="WofryData" source_node_id="83" />
-		<link enabled="true" id="81" sink_channel="WofryData" sink_node_id="84" source_channel="WofryData" source_node_id="3" />
-		<link enabled="true" id="82" sink_channel="WofryData" sink_node_id="82" source_channel="WofryData" source_node_id="84" />
+		<link enabled="true" id="81" sink_channel="WofryData" sink_node_id="82" source_channel="WofryData" source_node_id="84" />
+		<link enabled="true" id="82" sink_channel="WofryData" sink_node_id="84" source_channel="WofryData" source_node_id="85" />
 	</links>
 	<annotations>
 		<text font-family="Helvetica" font-size="16" id="0" rect="(249.0, 56.0, 150.0, 35.0)">Horizontal</text>
@@ -215,7 +216,7 @@ dXJmYWNlX3NoYXBlcRhLAFgJAAAAdmlld190eXBlcRlLAXUu
 		<properties format="pickle" node_id="2">gAN9cQAoWAoAAABLX3ZlcnRpY2FscQFHP/2eAd4mkWRYEQAAAGNvcnJlY3Rpb25fZmFjdG9ycQJH
 P/AAAAAAAABYFgAAAGVsZWN0cm9uX2VuZXJneV9pbl9HZVZxA0dAGAAAAAAAAFgIAAAAZmxhZ19n
 c21xBEsAWA8AAABpbml0aWFsaXplX2Zyb21xBUsAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0aW9u
-cQaJWAoAAABtb2RlX2luZGV4cQdLMlgRAAAAbnVtYmVyX29mX3BlcmlvZHNxCEdAYUAAAAAAAFgQ
+cQaJWAoAAABtb2RlX2luZGV4cQdLAFgRAAAAbnVtYmVyX29mX3BlcmlvZHNxCEdAYUAAAAAAAFgQ
 AAAAbnVtYmVyX29mX3BvaW50c3EJTegDWA0AAABwZXJpb2RfbGVuZ3RocQpHP5Jul41P3ztYDQAA
 AHBob3Rvbl9lbmVyZ3lxC0dAu1f/fO2RaFgKAAAAcmFuZ2VfZnJvbXEMR78gYk3S8an8WAgAAABy
 YW5nZV90b3ENRz8gYk3S8an8WAwAAAByaW5nX2N1cnJlbnRxDkc/yZmZmZmZmlgTAAAAc2F2ZWRX
@@ -238,8 +239,8 @@ AAAAbnVtYmVyX29mX3BvaW50c3EJTSADWA0AAABwZXJpb2RfbGVuZ3RocQpHP5Jul41P3ztYDQAA
 AHBob3Rvbl9lbmVyZ3lxC0dAu1f/fO2RaFgKAAAAcmFuZ2VfZnJvbXEMR78gYk3S8an8WAgAAABy
 YW5nZV90b3ENRz8gYk3S8an8WAwAAAByaW5nX2N1cnJlbnRxDkc/yZmZmZmZmlgTAAAAc2F2ZWRX
 aWRnZXRHZW9tZXRyeXEPY3NpcApfdW5waWNrbGVfdHlwZQpxEFgMAAAAUHlRdDUuUXRDb3JlcRFY
-CgAAAFFCeXRlQXJyYXlxEkNCAdnQywADAAAAAAhsAAAAzQAADZMAAAOyAAAIbAAAAPIAAA2TAAAD
-sgAAAAEAAAAAB4AAAAhsAAAA8gAADZMAAAOycROFcRSHcRVScRZYEwAAAHNjYW5fZGlyZWN0aW9u
+CgAAAFFCeXRlQXJyYXlxEkNCAdnQywADAAAAAAiFAAAA4AAADawAAAPFAAAIhQAAAQUAAA2sAAAD
+xQAAAAEAAAAAB4AAAAiFAAABBQAADawAAAPFcROFcRSHcRVScRZYEwAAAHNjYW5fZGlyZWN0aW9u
 X2ZsYWdxF0sBWBIAAABzaWdtYV9kaXZlcmdlbmNlX2hxGGNudW1weS5jb3JlLm11bHRpYXJyYXkK
 c2NhbGFyCnEZY251bXB5CmR0eXBlCnEaWAIAAABmOHEbiYiHcRxScR0oSwNYAQAAADxxHk5OTkr/
 ////Sv////9LAHRxH2JDCFP8acjMVtI+cSCGcSFScSJYEgAAAHNpZ21hX2RpdmVyZ2VuY2VfdnEj
@@ -1399,11 +1400,11 @@ AAdgAAAEYnELhXEMh3ENUnEOWBAAAABzY3JpcHRfZmlsZV9mbGFncQ9LAVgQAAAAc2NyaXB0X2Zp
 bGVfbmFtZXEQWA8AAABjYXNlMnZfd29mcnkucHlxEVgPAAAAc2hvd19ncmFwaF9mbGFncRJLAXUu
 </properties>
 		<properties format="pickle" node_id="82">gAN9cQAoWA4AAABkYXRhX2ZpbGVfZmxhZ3EBSwFYDwAAAGdyYXBoX2ZpbGVfZmxhZ3ECSwBYEAAA
-AGlzX2F1dG9tYXRpY19ydW5xA4hYDgAAAG1vZGVfaW5kZXhfbWF4cQRLHlgOAAAAcm9vdF9maWxl
+AGlzX2F1dG9tYXRpY19ydW5xA4hYDgAAAG1vZGVfaW5kZXhfbWF4cQRLMlgOAAAAcm9vdF9maWxl
 X25hbWVxBVgMAAAAY2FzZTF2X3dvZnJ5cQZYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxB2NzaXAK
 X3VucGlja2xlX3R5cGUKcQhYDAAAAFB5UXQ1LlF0Q29yZXEJWAoAAABRQnl0ZUFycmF5cQpDQgHZ
-0MsAAwAAAAABLAAAAPoAAAZTAAAD2gAAASwAAAEfAAAGUwAAA9oAAAAAAAAAAAeAAAABLAAAAR8A
-AAZTAAAD2nELhXEMh3ENUnEOWBAAAABzY3JpcHRfZmlsZV9mbGFncQ9LAFgQAAAAc2NyaXB0X2Zp
+0MsAAwAAAAAH4AAAAXoAAA0HAAAEWgAAB+AAAAGfAAANBwAABFoAAAABAAAAAAeAAAAH4AAAAZ8A
+AA0HAAAEWnELhXEMh3ENUnEOWBAAAABzY3JpcHRfZmlsZV9mbGFncQ9LAFgQAAAAc2NyaXB0X2Zp
 bGVfbmFtZXEQWA8AAABjYXNlMWhfd29mcnkucHlxEVgPAAAAc2hvd19ncmFwaF9mbGFncRJLAXUu
 </properties>
 		<properties format="pickle" node_id="83">gAN9cQAoWA8AAABhbmdsZV9hemltdXRoYWxxAUcAAAAAAAAAAFgMAAAAYW5nbGVfcmFkaWFscQJH
@@ -1411,7 +1412,7 @@ AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
 TnEERz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxBUdAJAAAAAAAAFgHAAAAb2VfbmFtZXEG
 WAkAAABTY3JlZW5AMzZxB1gBAAAAcHEIR0BCAAAAAAAAWAoAAABwcm9wYWdhdG9ycQlLA1gBAAAA
 cXEKRwAAAAAAAAAAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQtjc2lwCl91bnBpY2tsZV90eXBl
-CnEMWAwAAABQeVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAPIAAAHv
+CnEMWAwAAABQeVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAPIAAAHK
 AAAGGQAABK8AAADyAAAB7wAABhkAAASvAAAAAAAAAAAHgAAAAPIAAAHvAAAGGQAABK9xD4VxEIdx
 EVJxElgIAAAAc2NhbGVkX05xE0tkWAgAAABzY2FsZWRfUnEUR0CPQAAAAAAAWAsAAABzY2FsZWRf
 Um1heHEVR0BZAAAAAAAAWA4AAABzY2FsZWRfZ3Vlc3NfUnEWiFgFAAAAc2hhcGVxF0sAWA0AAABz
@@ -1422,11 +1423,29 @@ AAAAAAAAAABYFgAAAGlzX2F1dG9tYXRpY19leGVjdXRpb25xA4hYDwAAAG1hZ25pZmljYXRpb25f
 TnEERz/wAAAAAAAAWA8AAABtYWduaWZpY2F0aW9uX3hxBUdAOQAAAAAAAFgHAAAAb2VfbmFtZXEG
 WAkAAABTY3JlZW5AMzZxB1gBAAAAcHEIR0BCAAAAAAAAWAoAAABwcm9wYWdhdG9ycQlLBFgBAAAA
 cXEKRwAAAAAAAAAAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQtjc2lwCl91bnBpY2tsZV90eXBl
-CnEMWAwAAABQeVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAVIAAAFV
-AAAGeQAABDoAAAFSAAABegAABnkAAAQ6AAAAAAAAAAAHgAAAAVIAAAF6AAAGeQAABDpxD4VxEIdx
+CnEMWAwAAABQeVF0NS5RdENvcmVxDVgKAAAAUUJ5dGVBcnJheXEOQ0IB2dDLAAMAAAAAAKgAAACE
+AAAFzwAAA2kAAACoAAAAqQAABc8AAANpAAAAAAAAAAAHgAAAAKgAAACpAAAFzwAAA2lxD4VxEIdx
 EVJxElgIAAAAc2NhbGVkX05xE0tkWAgAAABzY2FsZWRfUnEUR0CPQAAAAAAAWAsAAABzY2FsZWRf
 Um1heHEVR0BZAAAAAAAAWA4AAABzY2FsZWRfZ3Vlc3NfUnEWiFgFAAAAc2hhcGVxF0sAWA0AAABz
 dXJmYWNlX3NoYXBlcRhLAFgJAAAAdmlld190eXBlcRlLAXUu
+</properties>
+		<properties format="pickle" node_id="85">gAN9cQAoWAoAAABLX3ZlcnRpY2FscQFHP/2eAd4mkWRYEQAAAGNvcnJlY3Rpb25fZmFjdG9ycQJH
+P/AAAAAAAABYFgAAAGVsZWN0cm9uX2VuZXJneV9pbl9HZVZxA0dAGAAAAAAAAFgIAAAAZmxhZ19n
+c21xBEsAWA8AAABpbml0aWFsaXplX2Zyb21xBUsAWBYAAABpc19hdXRvbWF0aWNfZXhlY3V0aW9u
+cQaJWAoAAABtb2RlX2luZGV4cQdLMlgRAAAAbnVtYmVyX29mX3BlcmlvZHNxCEdAYUAAAAAAAFgQ
+AAAAbnVtYmVyX29mX3BvaW50c3EJTbAEWA0AAABwZXJpb2RfbGVuZ3RocQpHP5Jul41P3ztYDQAA
+AHBob3Rvbl9lbmVyZ3lxC0dAu1f/fO2RaFgKAAAAcmFuZ2VfZnJvbXEMR78jqSowVTJhWAgAAABy
+YW5nZV90b3ENRz8jqSowVTJhWAwAAAByaW5nX2N1cnJlbnRxDkc/yZmZmZmZmlgTAAAAc2F2ZWRX
+aWRnZXRHZW9tZXRyeXEPY3NpcApfdW5waWNrbGVfdHlwZQpxEFgMAAAAUHlRdDUuUXRDb3JlcRFY
+CgAAAFFCeXRlQXJyYXlxEkNCAdnQywADAAAAAAGlAAABpgAABswAAASLAAABpQAAAcsAAAbMAAAE
+iwAAAAAAAAAAB4AAAAGlAAABywAABswAAASLcROFcRSHcRVScRZYEwAAAHNjYW5fZGlyZWN0aW9u
+X2ZsYWdxF0sBWBIAAABzaWdtYV9kaXZlcmdlbmNlX2hxGGNudW1weS5jb3JlLm11bHRpYXJyYXkK
+c2NhbGFyCnEZY251bXB5CmR0eXBlCnEaWAIAAABmOHEbiYiHcRxScR0oSwNYAQAAADxxHk5OTkr/
+////Sv////9LAHRxH2JDCFP8acjMVtI+cSCGcSFScSJYEgAAAHNpZ21hX2RpdmVyZ2VuY2VfdnEj
+aBloHUMIlEowqrm0vz5xJIZxJVJxJlgHAAAAc2lnbWFfaHEnaBloHUMIjcZN7igt/z5xKIZxKVJx
+KlgHAAAAc2lnbWFfdnEraBloHUMIAQFVKrUx1j5xLIZxLVJxLlgaAAAAc3BlY3RyYWxfZGVuc2l0
+eV90aHJlc2hvbGRxL0c/764UeuFHrlgLAAAAc3RlcHNfc3RhcnRxMEe/Cjbi6xxDLVgKAAAAc3Rl
+cHNfc3RlcHExRz561/KavK9IWAkAAAB2aWV3X3R5cGVxMksBdS4=
 </properties>
 	</node_properties>
 </scheme>
