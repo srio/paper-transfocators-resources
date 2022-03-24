@@ -22,11 +22,26 @@ import h5py
 #
 # SOURCE========================
 #
+def run_sourceGSM(my_mode_index=0):
+    ##########  SOURCE ##########
+
+    #
+    # create output_wavefront
+    #
+    #
+    output_wavefront = GenericWavefront1D.initialize_wavefront_from_range(x_min=-0.000125, x_max=0.000125,
+                                                                          number_of_points=1000)
+    output_wavefront.set_photon_energy(7000)
+    output_wavefront.set_gaussian_hermite_mode(sigma_x=3.00818e-05, amplitude=1, mode_x=my_mode_index, shift=0,
+                                               beta=0.129748)
+    return output_wavefront
+
+
 
 def run_source(my_mode_index=0):
     global coherent_mode_decomposition
     try:
-        if my_mode_index == 0: raise Exception()
+        # if my_mode_index == 0: raise Exception()
         tmp = coherent_mode_decomposition
     except:
 
@@ -46,7 +61,7 @@ def run_source(my_mode_index=0):
             K=1.85108,
             photon_energy=7000,
             abscissas_interval=0.00025,
-            number_of_points=2000,
+            number_of_points=2*2000,
             distance_to_screen=100,
             scan_direction='H',
             sigmaxx=2.97321e-05,
@@ -90,7 +105,7 @@ def run_beamline(output_wavefront,aperture_outer=None):
     propagation_parameters = PropagationParameters(wavefront=input_wavefront, propagation_elements=propagation_elements)
     # self.set_additional_parameters(propagation_parameters)
     #
-    propagation_parameters.set_additional_parameters('magnification_x', 5.0)
+    propagation_parameters.set_additional_parameters('magnification_x', 10.0)
     propagation_parameters.set_additional_parameters('magnification_N', 1.0)
     #
     propagator = PropagationManager.Instance()
@@ -163,7 +178,7 @@ def main(aperture_outer):
     from orangecontrib.esrf.wofry.util.tally import TallyCoherentModes
 
     tally = TallyCoherentModes()
-    for my_mode_index in range(10):
+    for my_mode_index in range(50):
         output_wavefront = run_source(my_mode_index=my_mode_index)
         output_wavefront = run_beamline(output_wavefront,aperture_outer=aperture_outer)
         tally.append(output_wavefront)
@@ -206,13 +221,14 @@ def get_fitted_DoC(I, do_plot=0):
 #
 # MAIN========================
 #
-APERTURES = numpy.linspace(20e-6, 120e-6, 50)
+APERTURES = numpy.linspace(20e-6, 150e-6, 100)
 CF = []
 FITTED_DoC = []
 
 
 for i,aperture_outer in enumerate(APERTURES):
 
+    print(">>>>> Simulating aperture: %g  (%d of %d)" % (aperture_outer,i,len(APERTURES)))
     tally = main(aperture_outer=aperture_outer)
 
     x = tally.get_abscissas()
@@ -232,9 +248,11 @@ for i,aperture_outer in enumerate(APERTURES):
 
 
 plot(APERTURES*1e6,CF, xtitle="aperture(outer) [um]", ytitle="CF")
+plot(APERTURES*1e6,FITTED_DoC, xtitle="aperture(outer) [um]", ytitle="FITTED DoC")
 plot_image(SD, APERTURES*1e6, x*1e6, xtitle="aperture(outer) [um]",ytitle="abscissas [um]", aspect='auto')
 
-wr = H5SimpleWriter.initialize_file(filename="wofry1d_h_doubleslit.h5", creator="srio", overwrite=1)
+fileroot = "wofry1d_h_doubleslit"
+wr = H5SimpleWriter.initialize_file(filename="%s.h5" % fileroot, creator="srio", overwrite=1)
 wr.create_entry("images", nx_default="Intensity")
 wr.add_image(SD, APERTURES, x, entry_name="images", image_name="Intensity",
              title_x="distance [m]", title_y=r'X [$\mu$m]')
@@ -247,8 +265,14 @@ wr.add_image(SD, APERTURES, x, entry_name="images", image_name="Intensity",
 
 
 
-filename = "wofry1d_h_doubleslit.dat"
+filename = "%s.dat" % fileroot
 f = open(filename,'w')
 for i, aperture_outer in enumerate(APERTURES):
     f.write("%g  %g  %g  \n" % (aperture_outer, CF[i], FITTED_DoC[i]))
 print("File written to disk: ", filename)
+
+
+import datetime
+now = datetime.datetime.now()
+print ("Current date and time : ")
+print (now.strftime("%Y-%m-%d %H:%M:%S"))

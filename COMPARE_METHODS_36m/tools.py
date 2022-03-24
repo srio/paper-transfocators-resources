@@ -151,12 +151,13 @@ def plotCSD(tally,
             srw_file=None,
             direction='x',
             range_limits=None,
-            compare_profiles=0, # 0=No, 1=Yes, 2=Yes plus first mode
+            compare_profiles=0, # 0=No, 1=Yes, 2=Yes plus first mode, 3=Yes plus double slit results
             normalize_to_DoC=0,
             do_plot=0):
 
     abscissas = tally.get_abscissas()
     csd_complex = tally.get_cross_pectral_density()
+
     if normalize_to_DoC:
         DoC = numpy.zeros_like(csd_complex, dtype=complex)
         for i in range(abscissas.size):
@@ -278,7 +279,16 @@ def plotCSD(tally,
                 ],
                  xtitle=xtitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
 
-        if compare_profiles == 2:
+
+        if compare_profiles == 1:
+            if do_plot:
+                plot(1e6*abscissas2,csd[csd.shape[0]//2,:],
+                     1e6*x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=[
+                        "WOFRY (fwhm: %g)" % (fwhm(1e6*abscissas2,csd[csd.shape[0]//2,:], xrange=range_limits)),
+                        "SRW (fwhm: %g)"   % (fwhm(1e6*x2,csd_srw[csd_srw.shape[0]//2,:], xrange=range_limits)),
+                    ],
+                        xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
+        elif compare_profiles == 2:
             eigenvalues = tally.get_eigenvalues()
             eigenvectors = tally.get_eigenvectors()
             y0 = eigenvalues[0] * numpy.real(numpy.conjugate(eigenvectors[0, :]) * eigenvectors[0, :])
@@ -294,16 +304,31 @@ def plotCSD(tally,
                         "Mode 0 (fwhm: %g) " % (fwhm(1e6*abscissas, y0/y0.max())),
                     ],
                      xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
+        elif compare_profiles == 3:
+            filename = "wofry1d_h_doubleslit.dat"
+            cf = numpy.loadtxt(filename)
+            APERTURES = cf[:, 0]
+            CF = cf[:, 1]
+            DoC = cf[:, 2]
+            # plot(APERTURES * 1e6, CF, xtitle="aperture(outer) [um]", ytitle="CF")
+            # plot(APERTURES * 1e6, DoC, xtitle="aperture(outer) [um]", ytitle="DoC fitted")
 
-        elif compare_profiles == 1:
-            if do_plot:
-                plot(1e6*abscissas2,csd[csd.shape[0]//2,:],
-                     1e6*x2,csd_srw[csd_srw.shape[0]//2,:],title="V profile",legend=[
-                        "WOFRY (fwhm: %g)" % (fwhm(1e6*abscissas2,csd[csd.shape[0]//2,:], xrange=range_limits)),
-                        "SRW (fwhm: %g)"   % (fwhm(1e6*x2,csd_srw[csd_srw.shape[0]//2,:], xrange=range_limits)),
+            # eigenvalues = tally.get_eigenvalues()
+            # eigenvectors = tally.get_eigenvectors()
+            # y0 = eigenvalues[0] * numpy.real(numpy.conjugate(eigenvectors[0, :]) * eigenvectors[0, :])
+
+            if do_plot > 0:
+                plot(
+                     1e6*abscissas2, csd[csd.shape[0] // 2, :],
+                     1e6*x2, csd_srw[csd_srw.shape[0] // 2, :],
+                     1e6*APERTURES - 2.50, DoC,
+                     title="V profile", legend=[
+                        "WOFRY (fwhm: %g) "  % (fwhm(1e6*abscissas2, csd[csd.shape[0] // 2, :], xrange=range_limits)),
+                        "SRW (fwhm: %g) "    % (fwhm(1e6*x2, csd_srw[csd_srw.shape[0] // 2, :], xrange=range_limits)),
+                        "DoC from Young experiment ",
                     ],
-                        xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
-
+                     marker=[None,None,'x'],
+                     xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
 
     if do_plot:
         plot_show()
