@@ -211,7 +211,32 @@ def main_v(slit=50e-6,gaussian_slit=False):
     # tally.plot_spectral_density()
     # tally.plot_occupation()
 
+# see https://stackoverflow.com/questions/33159134/matplotlib-y-axis-label-with-multiple-colors
+def multicolor_ylabel(ax,list_of_strings,list_of_colors,axis='x',anchorpad=0,**kw):
+    """this function creates axes labels with multiple colors
+    ax specifies the axes object where the labels should be drawn
+    list_of_strings is a list of all of the text items
+    list_if_colors is a corresponding list of colors for the strings
+    axis='x', 'y', or 'both' and specifies which label(s) should be drawn"""
+    from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, HPacker, VPacker
 
+    # x-axis label
+    if axis=='x' or axis=='both':
+        boxes = [TextArea(text, textprops=dict(color=color, ha='left',va='bottom',**kw))
+                    for text,color in zip(list_of_strings,list_of_colors) ]
+        xbox = HPacker(children=boxes,align="center",pad=0, sep=5)
+        anchored_xbox = AnchoredOffsetbox(loc=3, child=xbox, pad=anchorpad,frameon=False,bbox_to_anchor=(0.35, -0.13) , #(0.2, -0.09),
+                                          bbox_transform=ax.transAxes, borderpad=0.)
+        ax.add_artist(anchored_xbox)
+
+    # y-axis label
+    if axis=='y' or axis=='both':
+        boxes = [TextArea(text, textprops=dict(color=color, ha='left',va='bottom',rotation=90,**kw))
+                     for text,color in zip(list_of_strings[::-1],list_of_colors) ]
+        ybox = VPacker(children=boxes,align="center", pad=0, sep=5)
+        anchored_ybox = AnchoredOffsetbox(loc=3, child=ybox, pad=anchorpad, frameon=False, bbox_to_anchor=(-0.12, 0.2), #(-0.10, 0.2),
+                                          bbox_transform=ax.transAxes, borderpad=0.)
+        ax.add_artist(anchored_ybox)
 #
 # MAIN========================
 #
@@ -236,7 +261,9 @@ if __name__ == "__main__":
             outfile = "coherent_fraction_vs_slit_aperture.dat"
 
 
-        slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21)))
+        # slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21)))
+        # slits = numpy.linspace(0.0015, 0.0025, 5)
+        slits = numpy.concatenate((numpy.linspace(10e-6,310e-6, 101), numpy.linspace(320e-6, 0.0015, 21), numpy.linspace(0.0015, 0.0025, 5)))
 
 
         f = open(outfile, "w")
@@ -250,8 +277,13 @@ if __name__ == "__main__":
             modes_v, occ_v = tally_v.get_occupation()
             modes_h, occ_h = tally_h.get_occupation()
 
-            print("slit, CF H, V: ", 1e6*slit, occ_h[0], occ_v[0])
-            f.write("%g %g %g\n" % (slit, occ_h[0], occ_v[0]))
+            print(">>>>", tally_v.get_cross_pectral_density().shape, tally_v.get_abscissas().shape)
+            sd_h = numpy.trapz( tally_v.get_spectral_density(), tally_v.get_abscissas())
+            sd_v = numpy.trapz( tally_h.get_spectral_density(), tally_h.get_abscissas())
+
+            print("slit, CF H, V: ", 1e6*slit, occ_h[0], occ_v[0], sd_h, sd_v)
+            print("slit, INT H, V: ", 1e6*slit, sd_h, sd_v)
+            f.write("%g %g %g %g %g\n" % (slit, occ_h[0], occ_v[0], sd_h, sd_v))
         f.close()
         print("File written to disk: %s" % outfile)
 
@@ -288,17 +320,35 @@ if __name__ == "__main__":
     #
 
     if True:
+        import matplotlib.pylab as plt
+        import matplotlib
+        matplotlib.rc('xtick', labelsize=14)
+        matplotlib.rc('ytick', labelsize=12)
         g = plot(
              1e6 * b[:, 0], b[:, 1],
              1e6 * b[:, 0], b[:, 2],
-             legend=['Horizontal', 'Vertical'],
-             xtitle="Slit aperture [$\mu$m]", ytitle="Coherent Fraction",
-             color = ['green','blue'],
-             linestyle=[None,None],
-             xlog=True, yrange=[0,1.01], show=False)
+            1e6 * b[:, 0], b[:, 3] / b[:, 3].max(),
+            1e6 * b[:, 0], b[:, 4] / b[:, 4].max(),
+             legend=['CF$_x$', 'CF$_y$','Integrated $\mathcal{I}_x$', 'Integrated $\mathcal{I}_y$'],
+             xtitle="", # "Slit aperture [$\mu$m]",
+             # ytitle="Coherent Fraction or Normalized Integrated Intensity",
+             ytitle="",
+             color = ['blue','blue','green','green',],
+             linestyle=[None,":",None,":"],
+             xlog=True, xrange=[0.9e1, 1.1e3], yrange=[0,1.01], show=False)
 
+        # plt.ylabel("Coherent Fraction or Normalized Integrated Intensity")
+        # multicolor_ylabel(g[1], ('Line1', 'and', 'Line2', 'with', 'extra', 'colors!'),
+        #                   ('r', 'k', 'b', 'k', 'm', 'g'),
+        #                   axis='y', size=15, weight='bold')
+        multicolor_ylabel(g[1], ('CF', 'and', 'Integrated Intensity'),
+                          ('g', 'k', 'b'),
+                          axis='y', size=None, weight='bold')
+        multicolor_ylabel(g[1], ("Slit aperture [$\mu$m]", ""),
+                          ('k','b'),
+                          axis='x', size=None, weight='bold')
         g[1].grid()
-        import matplotlib.pylab as plt
+
         # locs, labels = plt.yticks()
         plt.savefig("CFvsGap.pdf")
         plt.yticks(numpy.arange(0, 1.1, step=0.1))

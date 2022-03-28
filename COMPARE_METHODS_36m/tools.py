@@ -288,6 +288,7 @@ def plotCSD(tally,
                         "SRW (fwhm: %g)"   % (fwhm(1e6*x2,csd_srw[csd_srw.shape[0]//2,:], xrange=range_limits)),
                     ],
                         xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
+
         elif compare_profiles == 2:
             eigenvalues = tally.get_eigenvalues()
             eigenvectors = tally.get_eigenvectors()
@@ -310,6 +311,9 @@ def plotCSD(tally,
             APERTURES = cf[:, 0]
             CF = cf[:, 1]
             DoC = cf[:, 2]
+
+
+
             # plot(APERTURES * 1e6, CF, xtitle="aperture(outer) [um]", ytitle="CF")
             # plot(APERTURES * 1e6, DoC, xtitle="aperture(outer) [um]", ytitle="DoC fitted")
 
@@ -329,6 +333,22 @@ def plotCSD(tally,
                     ],
                      marker=[None,None,'x'],
                      xtitle=ytitleProfile, ytitle="", xrange=range_limits, yrange=[0,1.1], show=0)
+
+                # To create paper figure...
+                f = open("DoCprofile_srwme.dat",'w')
+                xx, yy = 1e6 * x2, csd_srw[csd_srw.shape[0] // 2, :]
+                for i in range(x2.size):
+                    f.write("%g %g \n" % (xx[i], yy[i]))
+                f.close()
+                print("File written to disk: DoCprofile_srwme.dat")
+
+                f = open("DoCprofile_wofry1.dat",'w')
+                xx, yy = 1e6*abscissas2,csd[csd.shape[0]//2,:]
+                for i in range(abscissas2.size):
+                    f.write("%g %g \n" % (xx[i], yy[i]))
+                f.close()
+                print("File written to disk: DoCprofile_wofry1.dat")
+
 
     if do_plot:
         plot_show()
