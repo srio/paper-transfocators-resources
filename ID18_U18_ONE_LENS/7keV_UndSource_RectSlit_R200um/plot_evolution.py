@@ -15,16 +15,15 @@ lens_radius = 200e-6 # for plot title
 plt.rcParams.update(plt.rcParamsDefault)
 plt.rcParams.update({'figure.autolayout': True})
 
-params = {'legend.fontsize': 23,
+params = {'legend.fontsize': 15,
           'legend.frameon': False,
           'legend.handlelength': 2,
           # 'axes.titlesize' : 24,
-          'axes.labelsize' :   40,
+          'axes.labelsize' :   24,
           'lines.linewidth' :  3,
           'lines.markersize' : 10,
-          'xtick.labelsize' :  40,
-          'ytick.labelsize' :  40,
-          'legend.loc': 'lower right', # 'best'
+          'xtick.labelsize' :  25,
+          'ytick.labelsize' :  25,
           # 'grid.color':       'r',
           # 'grid.linestyle':   '-',
           # 'grid.linewidth':     2,
@@ -112,7 +111,7 @@ if show_fwhm:
             xrange=[8,52],
             ytitle=r'FWHM [$\mu$m]',yrange=[1,400],
             xtitle="Distance from lens [m]",
-            figsize=(15, 8),
+            figsize=(15, 4),
             show=0,
             legend=LEGEND,
             ylog=1,)

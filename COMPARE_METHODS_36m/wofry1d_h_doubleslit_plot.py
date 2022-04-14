@@ -40,7 +40,9 @@ def multicolor_ylabel(ax,list_of_strings,list_of_colors,axis='x',anchorpad=0,bbo
 
 
 if __name__ == "__main__":
-    filename = "wofry1d_h_doubleslit.dat"
+    directory = "./"
+    # directory = "/scisoft/users/srio/COMSYL-SLURM/doubleslit"
+    filename = "%s/wofry1d_h_doubleslit.dat" % directory
     cf = numpy.loadtxt(filename)
     APERTURES = cf[:,0]
     CF = cf[:,1]
@@ -52,7 +54,7 @@ if __name__ == "__main__":
 
 
 
-    f = h5py.File("wofry1d_h_doubleslit.h5", 'r')
+    f = h5py.File("%s/wofry1d_h_doubleslit.h5" % directory, 'r')
     SD = f["images/Intensity/image_data"][()].T
     APERTURES = f["images/Intensity/axis_x"][()]
     x = f["images/Intensity/axis_y"][()]
@@ -79,7 +81,7 @@ if __name__ == "__main__":
                    cmap=ESRF_colors_2D(8))
 
 
-    multicolor_ylabel(g[1], ("$s$ [$\mu$m]", ""),
+    multicolor_ylabel(g[1], ("$s_A$ [$\mu$m]", ""),
                       ('k', 'b'),
                       axis='y', size=None, weight=None)
 
@@ -101,9 +103,9 @@ if __name__ == "__main__":
     ######################################################################################################################
     plt.rcParams.update({'font.size': 20})
     g = plot(x*1e3, SD[ii, :] / SD.max(), xtitle="", ytitle="",
-         xrange=[-1.500,1.500], title = "$s$ = %3.1f $\mu$m" % (APERTURES[ii]*1e6 - 2.5), show=0, figsize=(10, 8) )
+         xrange=[-1.500,1.500], title = "$s_A$ = %3.1f $\mu$m" % (APERTURES[ii]*1e6 - 2.5), show=0, figsize=(10, 8) )
 
-    multicolor_ylabel(g[1], ("$x$ [$\mu$m]", "($z$=46 m)"),
+    multicolor_ylabel(g[1], ("$x$ [mm]", "($z$=46 m)"),
                       ('k', 'k'),
                       axis='x', size=None, weight=None)
 
@@ -142,13 +144,13 @@ if __name__ == "__main__":
         title="", legend=[
             "WOFRY (CL: %3.1f $\mu$m) " %   (fwhm(DoC_srwme[:,0], DoC_srwme[:,1])),
             "SRW (CL: %3.1f $\mu$m) "   %   (fwhm(DoC_wofry1[:,0], DoC_wofry1[:,1])),
-            "$\mathcal{V}(s)$",
+            "$\mathcal{V}(s_A)$",
             ],
         marker=[None, None, '.'], linestyle=[None,None,""],
         xtitle="", ytitle="", xrange=[0,150], yrange=[0, 1.1], show=0, figsize=(10,8))
 
 
-    multicolor_ylabel(g[1], ("$x_2-x_1$", "or", "$s$ [$\mu$m]"),
+    multicolor_ylabel(g[1], ("$x_2-x_1$", "or", "$s_A$ [$\mu$m]"),
                       ('b', 'k', 'g'),
                       axis='x', size=None, weight=None)
 

@@ -31,14 +31,35 @@ def get_data_from_h5(filename, aperture):
 
 if __name__ == "__main__":
 
-    direction = 'v'
+    import matplotlib.pyplot as plt
+
+    plt.rcParams.update(plt.rcParamsDefault)
+    plt.rcParams.update({'figure.autolayout': True})
+
+    params = {'legend.fontsize': 15,
+              'legend.frameon': False,
+              'legend.handlelength': 2,
+              'axes.titlesize' : 24,
+              'axes.labelsize': 24,
+              'lines.linewidth': 3,
+              'lines.markersize': 10,
+              'xtick.labelsize': 25,
+              'ytick.labelsize': 25,
+              # 'grid.color':       'r',
+              # 'grid.linestyle':   '-',
+              # 'grid.linewidth':     2,
+              }
+    plt.rcParams.update(params)
+
+
+    direction = 'h'
 
 
     if direction == 'v':
 
         APERTURE = [25e-6, 227.0e-6, 506.7e-6, 1500e-6]   # vertical
 
-        for aperture in APERTURE:
+        for i,aperture in enumerate(APERTURE):
 
             d0 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_v.h5", aperture)
             d1 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_firstbranch_v.h5", aperture)
@@ -46,44 +67,63 @@ if __name__ == "__main__":
 
 
             plot_image(d0["F1F2_I0"], d0["F1"], d0["F2"],
-                       title="%s  I0 aperture=%g" % (direction, aperture),
+                       title="$a_v$=%g $\mu$m" % (1e6*aperture),
+                       xtitle="$f_1$ [m]", ytitle="$f_2$ [m]",
+                       add_colorbar=0, figsize=(8,8),
                        aspect='auto', show=0)
 
-            plot(d0["F1"], d0["F2"][d0["ibest"]],
-                 d1["F1"], d1["F2"][d1["ibest"]],
-                 d2["F1"], d2["F2"][d2["ibest"]],
-                 xtitle="f1", ytitle="f2", show=0)
 
-            plot(d0["F1"], d0["fwhm_best"],
-                 d1["F1"], d1["fwhm_best"],
-                 d2["F1"], d2["fwhm_best"],
-                 xtitle="f1", ytitle="fwhm", ylog=0) #, yrange=[1e0,1e3])
+            filename = "V_%d.png" % i
+            plt.savefig(filename)
+            print("File written to disk: %s" % filename)
 
+            # plot(d0["F1"], d0["F2"][d0["ibest"]],
+            #      d1["F1"], d1["F2"][d1["ibest"]],
+            #      d2["F1"], d2["F2"][d2["ibest"]],
+            #      xtitle="f1", ytitle="f2", show=0)
+            #
+            # plot(d0["F1"], d0["fwhm_best"],
+            #      d1["F1"], d1["fwhm_best"],
+            #      d2["F1"], d2["fwhm_best"],
+            #      xtitle="f1", ytitle="fwhm", ylog=0, show=0) #, yrange=[1e0,1e3])
+
+            plt.show()
 
     else:
         APERTURE = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]  # horizontal
 
-        for aperture in APERTURE:
+        for i,aperture in enumerate(APERTURE):
             d0 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_h.h5",
                                   aperture)
             d1 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_h_old.h5",
                                   aperture)
 
 
-            plot_image(d0["F1F2_I0"], d0["F1"], d0["F2"],
-                       title="%s  I0 aperture=%g" % (direction, aperture),
+            fig , ax = plot_image(d0["F1F2_I0"], d0["F1"], d0["F2"],
+                       title="$a_h$=%g $\mu$m" % (1e6*aperture),
+                       xtitle="$f_1$ [m]", ytitle="$f_2$ [m]",
+                       add_colorbar=0, figsize=(8, 8),
                        aspect='auto', show=0)
 
-            plot_image(d1["F1F2_I0"], d1["F1"], d1["F2"],
-                       title="OLD!!!!!!!! %s  I0 aperture=%g" % (direction, aperture),
-                       aspect='auto', show=0)
+            x = numpy.linspace(0,100,100)
+            ax.plot(x,x, color='red', linestyle=":")
 
-            plot(d0["F1"], d0["F2"][d0["ibest"]],
-                 d1["F1"], d1["F2"][d1["ibest"]],
-                 # d2["F1"], d2["F2"][d2["ibest"]],
-                 xtitle="f1", ytitle="f2", show=0)
+            filename = "H_%d.png" % i
+            plt.savefig(filename)
+            print("File written to disk: %s" % filename)
 
-            plot(d0["F1"], d0["fwhm_best"],
-                 d1["F1"], d1["fwhm_best"],
-                 # d2["F1"], d2["fwhm_best"],
-                 xtitle="f1", ytitle="fwhm", ylog=0)  # , yrange=[1e0,1e3])
+            # plot_image(d1["F1F2_I0"], d1["F1"], d1["F2"],
+            #            title="OLD!!!!!!!! %s  I0 aperture=%g" % (direction, aperture),
+            #            aspect='auto', show=0)
+            #
+            # plot(d0["F1"], d0["F2"][d0["ibest"]],
+            #      d1["F1"], d1["F2"][d1["ibest"]],
+            #      # d2["F1"], d2["F2"][d2["ibest"]],
+            #      xtitle="f1", ytitle="f2", show=0)
+            #
+            # plot(d0["F1"], d0["fwhm_best"],
+            #      d1["F1"], d1["fwhm_best"],
+            #      # d2["F1"], d2["fwhm_best"],
+            #      xtitle="f1", ytitle="fwhm", ylog=0)  # , yrange=[1e0,1e3])
+
+            plt.show()

@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
 
     from case2h_wofry import run_source, run_beamline
-    APERTURE = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]  # horizontal
+    :quit()l
     F2MIN = [15, 15, 10, 5]
     F2MAX = [35, 35, 50, 55]
     direction='h'
