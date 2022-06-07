@@ -2,44 +2,29 @@
 paper-transfocators-resources
 =============================
 
-Calculations for f2 at 177m
-Slit size in the following calculations: 40 microns (H) x 206.8 microns (V).
+Calculations for:
+source at 0
+slit at 36 m
+focusing element f1 at 65 m
+focusing element f2 at 170 .
+image plane at 200 m
 
-Select slit opening
-===================
-
-Select the aperture to match the desired coherent fraction:
-
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/cs_vs_aperture.png
-
-
-(f1,f2) trajectories with F2 at 170
-===================================
-
-For a given f1, calculate f2 in order to have the focus at the sample. The trajectories are here (first plot H, second V).
-
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_traj_2hb.png
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_traj_2vb.png
-
-Sizes with F2 at 170
-====================
-Sizes as a function of f1 (f2 is set from the trajectory). First plot H, second V.
-
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_size_2hb.png
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_size_2vb.png
+Data and figures for https://arxiv.org/abs/2110.05957
+======================================================
+- Fig 3:
+- Fig 4:
+- Fig 5:
+- Fig 6:
+- Fig 7:
+- Fig 8:
 
 
-(f1,f2) trajectories with F2 at 192
-===================================
 
-For a given f1, calculate f2 in order to have the focus at the sample. The trajectories are here (first plot H, second V).
+Data and figures for https://arxiv.org/abs/xxxxxxxxxx
+======================================================
 
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_traj_8h.png
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_traj_8v.png
-
-Sizes with F2 at 192
-====================
-Sizes as a function of f1 (f2 is set from the trajectory). First plot H, second V.
-
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_size_8h.png
-.. image:: https://github.com/srio/paper-transfocators-resources/blob/main/Figures/Figure_size_8v.png
+- Fig 1a: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_ONE_LENS/7keV_UndSource_RectSlit_R200um_Letter/plot_evolution_zeroemittance.py
+- Fig 1b,c: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_ONE_LENS/7keV_UndSource_RectSlit_R200um_MultiMode/plot_evolution.py
+- Fig 1 (new): https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_ONE_LENS/plot_evolution_piled_plots.py
+- Fig 2: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_TWO_LENSES/letter_cases_7keV/plot_maps.py
+- Fig 3: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_TWO_LENSES/letter_cases_7keV/plot_sizes.py
