@@ -4,8 +4,10 @@ import matplotlib.pylab as plt
 from scipy.signal import savgol_filter
 
 set_qt()
-# subdirectory = "./zeroemittance/" # "Data7keV_200um"
-subdirectory = "/scisoft/users/srio/COMSYL-SLURM/id18_onelens/zeroemittance" # "Data7keV_200um"
+
+# subdirectory = "/scisoft/users/srio/COMSYL-SLURM/id18_onelens/zeroemittance" # "Data7keV_200um"
+subdirectory = "./zeroemittance/" # "Data7keV_200um"
+
 beam_dimension_at_slit_in_um = 565  # needed for calculating Fresnel number
 beam_dimension_at_source = 9.13 # needed for magnification and theoretical sizes
 lens_radius = 200e-6 # for plot title
@@ -118,9 +120,12 @@ for i in range(len(FACTOR)):
         #                                                                 numpy.round(INTENSITY[i] / INTENSITY[-1], 2),
         #                                                                 FACTOR[i],
         #                                                                 N2[i]))
-        LEGEND.append(r'$a$=%5.3g $T$=%5.3g; $N_F$=%4.3f' % (1e6*APERTURE[i],
-                                                                        numpy.round(INTENSITY[i] / INTENSITY[-1], 2),
-                                                                        N2[i]))
+
+        # LEGEND.append(r'$a$=%5.3g $T$=%5.3g; $N_F$=%4.3f' % (1e6*APERTURE[i],
+        #                                                                 numpy.round(INTENSITY[i] / INTENSITY[-1], 2),
+        #                                                                 N2[i]))
+
+        LEGEND.append(r'$a$=%5.3g $\mu$m; $T$=%5.3g' % (1e6*APERTURE[i], numpy.round(INTENSITY[i] / INTENSITY[-1], 2),))
 
 show_fwhm =  True
 
@@ -134,7 +139,7 @@ if show_fwhm:
             DISTANCE[5], FWHM_SMOOTH[5], # savgol_filter(savgol_filter(FWHM[5], 7, 1), 7, 1),
             DISTANCE[6], FWHM_SMOOTH[6], # savgol_filter(savgol_filter(FWHM[6], 7, 1), 7, 1),
             DISTANCE[7], FWHM_SMOOTH[7], # savgol_filter(savgol_filter(FWHM[7], 7, 1), 7, 1),
-            xrange=[8,52],
+            xrange=[8,62],
             ytitle=r'FWHM [$\mu$m]',yrange=[1,400],
             xtitle="Distance from lens [m]",
             figsize=(15, 4),
@@ -195,23 +200,23 @@ plt.show()
 print(">>>", BEST_FOCUS_I[0] )
 print(">>>", DISTANCE[0][BEST_FOCUS_I[0]])
 print(">>>", FWHM_THEORY_SLIT[0][BEST_FOCUS_I[0]] )
-xx = DISTANCE[0][BEST_FOCUS_I[0]]
-yy = FWHM_THEORY_SLIT[0][BEST_FOCUS_I[0]]
-plot(BEST_FOCUS_POSITION, BEST_FOCUS_FWHM,
-        DISTANCE[0][BEST_FOCUS_I[0]], FWHM_THEORY_SLIT[0][BEST_FOCUS_I[0]],
-        DISTANCE[1][BEST_FOCUS_I[1]], FWHM_THEORY_SLIT[1][BEST_FOCUS_I[1]],
-        DISTANCE[2][BEST_FOCUS_I[2]], FWHM_THEORY_SLIT[2][BEST_FOCUS_I[2]],
-        DISTANCE[3][BEST_FOCUS_I[3]], FWHM_THEORY_SLIT[3][BEST_FOCUS_I[3]],
-        DISTANCE[4][BEST_FOCUS_I[4]], FWHM_THEORY_SLIT[4][BEST_FOCUS_I[4]],
-        DISTANCE[5][BEST_FOCUS_I[5]], FWHM_THEORY_SLIT[5][BEST_FOCUS_I[5]],
-        DISTANCE[6][BEST_FOCUS_I[6]], FWHM_THEORY_SLIT[6][BEST_FOCUS_I[6]],
-        DISTANCE[0][BEST_FOCUS_I[0]], FWHM_THEORY_SOURCE[0][BEST_FOCUS_I[0]],
-        DISTANCE[1][BEST_FOCUS_I[1]], FWHM_THEORY_SOURCE[1][BEST_FOCUS_I[1]],
-        DISTANCE[2][BEST_FOCUS_I[2]], FWHM_THEORY_SOURCE[2][BEST_FOCUS_I[2]],
-        DISTANCE[3][BEST_FOCUS_I[3]], FWHM_THEORY_SOURCE[3][BEST_FOCUS_I[3]],
-        DISTANCE[4][BEST_FOCUS_I[4]], FWHM_THEORY_SOURCE[4][BEST_FOCUS_I[4]],
-        DISTANCE[5][BEST_FOCUS_I[5]], FWHM_THEORY_SOURCE[5][BEST_FOCUS_I[5]],
-        DISTANCE[6][BEST_FOCUS_I[6]], FWHM_THEORY_SOURCE[6][BEST_FOCUS_I[6]],
-        marker=[None, 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        xrange=[15,30], )
+# xx = DISTANCE[0][BEST_FOCUS_I[0]]
+# yy = FWHM_THEORY_SLIT[0][BEST_FOCUS_I[0]]
+# plot(BEST_FOCUS_POSITION, BEST_FOCUS_FWHM,
+#         DISTANCE[0][BEST_FOCUS_I[0]], FWHM_THEORY_SLIT[0][BEST_FOCUS_I[0]],
+#         DISTANCE[1][BEST_FOCUS_I[1]], FWHM_THEORY_SLIT[1][BEST_FOCUS_I[1]],
+#         DISTANCE[2][BEST_FOCUS_I[2]], FWHM_THEORY_SLIT[2][BEST_FOCUS_I[2]],
+#         DISTANCE[3][BEST_FOCUS_I[3]], FWHM_THEORY_SLIT[3][BEST_FOCUS_I[3]],
+#         DISTANCE[4][BEST_FOCUS_I[4]], FWHM_THEORY_SLIT[4][BEST_FOCUS_I[4]],
+#         DISTANCE[5][BEST_FOCUS_I[5]], FWHM_THEORY_SLIT[5][BEST_FOCUS_I[5]],
+#         DISTANCE[6][BEST_FOCUS_I[6]], FWHM_THEORY_SLIT[6][BEST_FOCUS_I[6]],
+#         DISTANCE[0][BEST_FOCUS_I[0]], FWHM_THEORY_SOURCE[0][BEST_FOCUS_I[0]],
+#         DISTANCE[1][BEST_FOCUS_I[1]], FWHM_THEORY_SOURCE[1][BEST_FOCUS_I[1]],
+#         DISTANCE[2][BEST_FOCUS_I[2]], FWHM_THEORY_SOURCE[2][BEST_FOCUS_I[2]],
+#         DISTANCE[3][BEST_FOCUS_I[3]], FWHM_THEORY_SOURCE[3][BEST_FOCUS_I[3]],
+#         DISTANCE[4][BEST_FOCUS_I[4]], FWHM_THEORY_SOURCE[4][BEST_FOCUS_I[4]],
+#         DISTANCE[5][BEST_FOCUS_I[5]], FWHM_THEORY_SOURCE[5][BEST_FOCUS_I[5]],
+#         DISTANCE[6][BEST_FOCUS_I[6]], FWHM_THEORY_SOURCE[6][BEST_FOCUS_I[6]],
+#         marker=[None, 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
+#         xrange=[15,30], )
 

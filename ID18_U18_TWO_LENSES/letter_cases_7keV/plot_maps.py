@@ -4,31 +4,54 @@ from silx.io.specfile import SpecFile
 from oasys.util.oasys_util import get_fwhm
 from srxraylib.util.h5_simple_writer import H5SimpleWriter
 import h5py
-from plot_analytical import get_f2
+from plot_sizes import get_f2
 
 def get_data_from_h5(filename, aperture):
     f = h5py.File(filename, 'r')
     entry = "f1f2map_a=%4.2f" % (1e6 * aperture)
     F1F2_FWHM = f["%s/FWHM/image_data" % entry][()].T
+    try:
+        F1F2_SIGMA = f["%s/SIGMA/image_data" % entry][()].T
+    except:
+        F1F2_SIGMA = numpy.zeros_like(F1F2_FWHM)
     F1F2_I0 = f["%s/I0/image_data" % entry][()].T
     F1F2_PEAK = f["%s/PEAK/image_data" % entry][()].T
     F1 = f["%s/FWHM/axis_x" % entry][()]
     F2 = f["%s/FWHM/axis_y" % entry][()]
-    f.close()
+
 
     ibest = numpy.argmax(F1F2_I0, axis=1)
     fwhm_best = numpy.zeros_like(F1)
+    sigma_best = numpy.zeros_like(F1)
     for i in range(F1.size):
         fwhm_best[i] = F1F2_FWHM[i, ibest[i]]
+        try:
+            sigma_best[i] = F1F2_SIGMA[i, ibest[i]]
+        except:
+            pass
+        # f1f2map_a=40.30/scans/f1=5.00_f2=23.09/x
+        # /tmp_14_days/srio/f1f2map_h.h5::/f1f2map_a=40.30/scans/f1=5.00_f2=23.09/x
 
+        # f1 = F1[i]
+        # f2 = F2[ibest[i]]
+        #
+        # x = f["%s/scans/f1=%4.2f_f2=%4.2f/x" % (entry, f1, f2)][()]
+        # y = f["%s/scans/f1=%4.2f_f2=%4.2f/y" % (entry, f1, f2)][()]
+        # xy = x * y / y.sum()
+        # fwhm, quote, coordinates = get_fwhm(y,x) #xy.std()
+        # sigma_best[i]  = fwhm
+        # print(">>>>>", "%s/scans/f1=%4.2f_f2=%4.2f/x" % (entry, f1, f2), fwhm_best[i], sigma_best[i])
 
+    f.close()
     return {"F1":F1,
             "F2":F2,
             "F1F2_FWHM":F1F2_FWHM,
+            "F1F2_SIGMA": F1F2_SIGMA,
             "F1F2_I0":F1F2_I0,
             "F1F2_PEAK":F1F2_PEAK,
             "ibest":ibest,
-            "fwhm_best":fwhm_best}
+            "fwhm_best":fwhm_best,
+            "sigma_best":sigma_best}
 
 if __name__ == "__main__":
 
@@ -38,7 +61,7 @@ if __name__ == "__main__":
     flag_create_dat_file = False # use False for creating images, True for creating dat file
 
 
-    direction = 'H'
+    direction = 'V'
 
     #
     #  theoretical
@@ -117,10 +140,11 @@ if __name__ == "__main__":
             if flag_create_dat_file:
                 filedat = "plot_combined_results_%s_%d.dat" % (direction, i)
                 ff = open(filedat, 'w')
-                ff.write("# aperture           f1       f2_source   f2_slit   f2_numeric   fwhm\n")
+                ff.write("# aperture           f1       f2_source   f2_slit   f2_numeric     fwhm    sigma\n")
 
+            # d0 = get_data_from_h5("/tmp_14_days/srio/f1f2map_v.h5", aperture)
             d0 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_v.h5", aperture)
-            # d1 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_firstbranch_v.h5", aperture)
+            # d0 = get_data_from_h5("/scisoft/users/srio/COMSYL-SLURM/trajectories_precalculated_mapping/f1f2map_v.h5", aperture)
             # d2 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_secondbranch_v.h5", aperture)
 
             fig, ax = plot_image(d0["F1F2_I0"], d0["F1"], d0["F2"],
@@ -144,22 +168,18 @@ if __name__ == "__main__":
             plt.savefig(filename)
             print("File written to disk: %s" % filename)
 
-            # plot(d0["F1"], d0["F2"][d0["ibest"]],
-            #      # d1["F1"], d1["F2"][d1["ibest"]],
-            #      # d2["F1"], d2["F2"][d2["ibest"]],
-            #      title="trajectories", xtitle="f1", ytitle="f2", show=0)
-            #
-            # plot(d0["F1"], d0["fwhm_best"],
-            #      # d1["F1"], d1["fwhm_best"],
-            #      # d2["F1"], d2["fwhm_best"],
-            #      title="beam size", xtitle="f1", ytitle="fwhm", ylog=1, show=0) #, yrange=[1e0,1e3])
-
             plt.show()
 
             if flag_create_dat_file:
+                # "# aperture           f1       f2_source   f2_slit   f2_numeric   fwhm   2.355*sigma\n"
                 for iii in range(F1.size):
-                    ff.write("%11g  %11g  %11g %11g  %11g  %11g\n" % (1e6*APERTURE[i], F1[iii], F2_Source[iii], F2_Slit[iii],
-                                                                d0["F2"][IBEST][iii], d0["F1F2_FWHM"][iii,IBEST[iii]] ))
+                    ff.write("%11g  %11g  %11g %11g  %11g  %11g  %11g\n" % (1e6*APERTURE[i], F1[iii], F2_Source[iii], F2_Slit[iii],
+                                                                d0["F2"][IBEST][iii],
+                                                                d0["F1F2_FWHM"][iii,IBEST[iii]],
+                                                                # d0["fwhm_best"][iii],
+                                                                d0["F1F2_SIGMA"][iii,IBEST[iii]],
+                                                                # d0["sigma_best"][iii],
+                                                                                        ))
                 ff.close()
                 print("File written to disk: ", filedat)
 
@@ -172,11 +192,11 @@ if __name__ == "__main__":
             if flag_create_dat_file:
                 filedat = "plot_combined_results_%s_%d.dat" % (direction, i)
                 ff = open(filedat, 'w')
-                ff.write("# aperture           f1       f2_source   f2_slit   f2_numeric   fwhm\n")
+                ff.write("# aperture           f1       f2_source   f2_slit   f2_numeric   fwhm    sigma\n")
 
-
-            d0 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_h.h5", aperture)
-            # d0 = get_data_from_h5("/scisoft/users/srio/COMSYL-SLURM/trajectories_precalculated_mapping/f1f2map_h.h5", aperture)
+            # d0 = get_data_from_h5("/tmp_14_days/srio/f1f2map_h.h5", aperture)
+            # d0 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_h.h5", aperture)
+            d0 = get_data_from_h5("/scisoft/users/srio/COMSYL-SLURM/trajectories_precalculated_mapping/f1f2map_h.h5", aperture)
             # d1 = get_data_from_h5("/scisoft/users/srio/data_id18/trajectories_precalculated_mapping/f1f2map_h_old.h5", aperture)
 
             print(">>>>>>>>>>>>>>>>>>>>>>",numpy.nanmin(d0["F1F2_I0"]))
@@ -206,26 +226,17 @@ if __name__ == "__main__":
             plt.savefig(filename)
             print("File written to disk: %s" % filename)
 
-            # plot_image(d1["F1F2_I0"], d1["F1"], d1["F2"],
-            #            title="OLD!!!!!!!! %s  I0 aperture=%g" % (direction, aperture),
-            #            aspect='auto', show=0)
-            #
-            # plot(d0["F1"], d0["F2"][d0["ibest"]],
-            #      d1["F1"], d1["F2"][d1["ibest"]],
-            #      # d2["F1"], d2["F2"][d2["ibest"]],
-            #      xtitle="f1", ytitle="f2", show=0)
-            #
-            # plot(d0["F1"], d0["fwhm_best"],
-            #      d1["F1"], d1["fwhm_best"],
-            #      # d2["F1"], d2["fwhm_best"],
-            #      xtitle="f1", ytitle="fwhm", ylog=0)  # , yrange=[1e0,1e3])
-
             plt.show()
 
             if flag_create_dat_file:
                 for iii in range(F1.size):
-                    ff.write("%11g  %11g  %11g %11g  %11g  %11g\n" % (1e6*APERTURE[i], F1[iii], F2_Source[iii], F2_Slit[iii],
-                                                                d0["F2"][IBEST][iii], d0["F1F2_FWHM"][iii,IBEST[iii]] ))
+                    ff.write("%11g  %11g  %11g %11g  %11g  %11g  %11g\n" % (1e6*APERTURE[i], F1[iii], F2_Source[iii], F2_Slit[iii],
+                                                                d0["F2"][IBEST][iii],
+                                                                d0["F1F2_FWHM"][iii,IBEST[iii]],
+                                                                # d0["fwhm_best"][iii],
+                                                                d0["F1F2_SIGMA"][iii,IBEST[iii]],
+                                                                # d0["sigma_best"][iii],
+                                                                                        ))
                 ff.close()
                 print("File written to disk: ", filedat)
 

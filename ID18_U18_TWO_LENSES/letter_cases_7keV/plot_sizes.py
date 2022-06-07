@@ -183,7 +183,7 @@ def plot_sizes_analytical(aperture_h=10e-6, aperture_v=10e-6, filename=None):
 #
 #
 #
-def plot_sizes_analytical_and_numerical(filename=None):
+def plot_sizes_analytical_and_numerical(filename_root=None):
 
 
     sourcesize_h = 70.57e-6
@@ -313,13 +313,29 @@ def plot_sizes_analytical_and_numerical(filename=None):
         ax2.xaxis.grid()
         ax2.yaxis.grid()
 
-        if filename is not None:
-            plt.savefig('sizes'+filename)
-            print("File written to disk: sizes%s" % filename)
 
         plt.show()
 
     if True:
+
+        aperture_h = 40.3e-6 / ( numpy.sqrt(2*numpy.pi) / 2.355)  # corrected for rectangle with same area as Gaussian
+        aperture_v = 25e-6   / ( numpy.sqrt(2*numpy.pi) / 2.355)  # corrected for rectangle with same area as Gaussian
+
+        # aperture_h = 40.3e-6 * 0.7  # corrected a huevo
+        # aperture_v = 25e-6   * 0.7  # corrected a huevo
+
+
+        Hsrc = Msource_at_id * sourcesize_h * 1e6
+        Hslt = Msource_at_slit * aperture_h * 1e6
+        Vsrc = Msource_at_id * sourcesize_v * 1e6
+        Vslt = Msource_at_slit * aperture_v * 1e6
+
+        if False:
+            Hsrc = savgol_filter(savgol_filter(Hsrc, 7, 1), 7, 1)
+            Hslt = savgol_filter(savgol_filter(Hslt, 7, 1), 7, 1)
+            Vsrc = savgol_filter(savgol_filter(Vsrc, 7, 1), 7, 1)
+            Vslt = savgol_filter(savgol_filter(Vslt, 7, 1), 7, 1)
+
 
 
         APERTURE_H = [40.3e-6, 85.1e-6, 145.5e-6, 1000e-6]
@@ -368,51 +384,59 @@ def plot_sizes_analytical_and_numerical(filename=None):
 
         # h
         fig2, ax2 = plot(
-            HH0[:, 1], HH0[:, -1],
-            HH1[:, 1], HH1[:, -1],
-            HH2[:, 1], HH2[:, -1],
-            HH3[:, 1], HH3[:, -1],
-            color=['b','r','cyan','pink',],
-             marker=['.','.','.','.',],
-             linestyle=['','','',''],
+            HH0[:, 1][::5], HH0[:, 5][::5],
+            HH1[:, 1][::5], HH1[:, 5][::5],
+            HH2[:, 1][::5], HH2[:, 5][::5],
+            HH3[:, 1][::5], HH3[:, 5][::5],
+            numpy.array(F1), Hsrc,
+            numpy.array(F1), Hslt,
+            color=['b','cyan','pink','r','r','b'],
+             marker=['.','.','.','.',None,None],
+             linestyle=['','','','','--','--'],
              # yrange=[1,1e3], ylog=1,
              yrange=[0,50], ylog=0,
-             legend=["a=%g" % (1e6*APERTURE_H[0]),"a=%g" % (1e6*APERTURE_H[1]),"a=%g" % (1e6*APERTURE_H[2]),"a=%g" % (1e6*APERTURE_H[3])],
+             legend=["a=%g" % (1e6*APERTURE_H[0]),"a=%g" % (1e6*APERTURE_H[1]),"a=%g" % (1e6*APERTURE_H[2]),"a=%g" % (1e6*APERTURE_H[3]),
+                     "Analytical source at Und", "Analytical source at Slit"],
              xtitle="F1 [m]", ytitle="FWHM [$\mu$m]", title="Sizes H",
              show=0)
 
-        ax2.fill_between(HH0[:, 1], HH0[:, -1], HH3[:, -1])
+        # ax2.fill_between(HH0[:, 1], HH0[:, -1], HH3[:, -1])
         ax2.xaxis.grid()
         ax2.yaxis.grid()
 
-        if filename is not None:
-            plt.savefig('sizes'+filename)
-            print("File written to disk: sizes%s" % filename)
+        if filename_root is not None:
+            filename = "%s_h.eps" % (filename_root, )
+            plt.savefig(filename)
+            print("File written to disk: %s" % filename)
 
         plt.show()
 
         # v
         fig2, ax2 = plot(
-            VV0[:, 1], VV0[:, -1],
-            VV1[:, 1], VV1[:, -1],
-            VV2[:, 1], VV2[:, -1],
-            VV3[:, 1], VV3[:, -1],
-            color=['b','r','cyan','pink'],
-             marker=['.','.','.','.'],
-             linestyle=['','','','',],
+            VV0[:, 1][::3], VV0[:, 5][::3],
+            VV1[:, 1][::3], VV1[:, 5][::3],
+            VV2[:, 1][::3], VV2[:, 5][::3],
+            VV3[:, 1][::3], VV3[:, 5][::3],
+            numpy.array(F1)[::15], Vsrc[::15],
+            numpy.array(F1)[::15], Vslt[::15],
+            color=['b','cyan','pink','r','r','b'],
+             marker=['.','.','.','.',None,None],
+             linestyle=['','','','','--','--'],
              # yrange=[1,1e3], ylog=1,
              yrange=[0,50], ylog=0,
-             legend=["a=%g" % (1e6*APERTURE_V[0]),"a=%g" % (1e6*APERTURE_V[1]),"a=%g" % (1e6*APERTURE_V[2]),"a=%g" % (1e6*APERTURE_V[3])],
+             legend=["a=%g" % (1e6*APERTURE_V[0]),"a=%g" % (1e6*APERTURE_V[1]),"a=%g" % (1e6*APERTURE_V[2]),"a=%g" % (1e6*APERTURE_V[3]),
+                     "Analytical source at Und", "Analytical source at Slit"],
              xtitle="F1 [m]", ytitle="FWHM [$\mu$m]", title="Sizes V",
              show=0)
 
-        ax2.fill_between(VV0[:, 1], VV0[:, -1], VV3[:, -1])
+        # ax2.fill_between(VV0[:, 1], VV0[:, -1], VV3[:, -1])
         ax2.xaxis.grid()
         ax2.yaxis.grid()
 
-        if filename is not None:
-            plt.savefig('sizes'+filename)
-            print("File written to disk: sizes%s" % filename)
+        if filename_root is not None:
+            filename = "%s_v.eps" % (filename_root)
+            plt.savefig(filename)
+            print("File written to disk: %s" % filename)
 
         plt.show()
 if __name__ == "__main__":
@@ -427,5 +451,5 @@ if __name__ == "__main__":
     # plot_sizes_analytical(aperture_h=1000e-6, aperture_v=1500e-6, filename='_analytical.eps')
 
 
-    plot_sizes_analytical_and_numerical()
+    plot_sizes_analytical_and_numerical(filename_root="sizes")
 
