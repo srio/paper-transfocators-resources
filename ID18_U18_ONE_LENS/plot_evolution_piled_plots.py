@@ -40,6 +40,7 @@ def get_zero_emittance():
         BEST_FOCUS_I = numpy.zeros(len(FACTOR), dtype=int)
         N2 = []
         INTENSITY = []
+        T = []
 
         for i in range(len(FACTOR)):
                 filein = "%s/aperture_factor_%g.dat" % (subdirectory, FACTOR[i])
@@ -105,7 +106,10 @@ def get_zero_emittance():
 
                 # LEGEND.append(r'$a$=%5.3g $\mu$m; $T$=%5.3g' % (1e6 * APERTURE[i], numpy.round(INTENSITY[i] / INTENSITY[-1], 2),))
                 LEGEND.append(r'$a$=%5.3g ($T$=%5.3g)' % (1e6 * APERTURE[i], numpy.round(INTENSITY[i] / INTENSITY[-1], 2),))
+                T.append(numpy.round(INTENSITY[i] / INTENSITY[-1], 3))
 
+        print("FRESNEL NUMBERS: ", N2)
+        print("T: ", T)
         return DISTANCE, FWHM_SMOOTH, LEGEND, BEST_FOCUS_POSITION, BEST_FOCUS_FWHM
 
 
@@ -137,7 +141,7 @@ def get_emittances(direction='h'):
                 filein = FILES[i]
                 print(">>>>> ", filein)
                 a1 = numpy.loadtxt(filein)
-                print(a1.shape)
+                # print(a1.shape)
                 distance1 = a1[:, 0];
                 fwhm1 = a1[:, 1];
                 icenter1 = a1[:, 3]
@@ -160,15 +164,17 @@ def get_emittances(direction='h'):
 if __name__ == "__main__":
 
         title_fontsize = 34
-        legend_fontsize = 18
-        legend_position = (0.78, 1.)
+        legend_fontsize = 22
+        # legend_position = (0.78, 1.)
+        legend_position = (0.50, 0.7)
 
 
         plt.rcParams.update(plt.rcParamsDefault)
-        plt.rcParams.update({'figure.autolayout': True})
+        plt.rcParams.update({'figure.autolayout': False})
         plt.rcParams.update({'axes.linewidth' : 5})
 
-        params = {'legend.fontsize': 18,
+
+        params = {'legend.fontsize': legend_fontsize,
                   'legend.frameon': False,
                   'legend.handlelength': 2,
                   # 'axes.titlesize' : 24,
@@ -214,8 +220,11 @@ if __name__ == "__main__":
         #         legend=LEGEND,
         #         ylog=1, )
 
+        linestyle = [None, '--', '--', '--', '--', '--',  '--', None]
+
         for i in range(len(DISTANCE)):
-                axs[0].plot(DISTANCE[i], FWHM_SMOOTH[i], label=LEGEND[i])
+                axs[0].plot(DISTANCE[i], FWHM_SMOOTH[i], label=LEGEND[i], linestyle=linestyle[i])
+
 
         # axs[0].plot(DISTANCE[1], FWHM_SMOOTH[1], )
         # axs[0].plot(DISTANCE[2], FWHM_SMOOTH[2], )
@@ -227,8 +236,10 @@ if __name__ == "__main__":
 
         axs[0].set_yscale("log")
         plt.xlim([8, 62])
-        plt.ylim([1, 400])
+        plt.ylim([0.5, 400])
 
+        from matplotlib.ticker import FormatStrFormatter
+        axs[0].yaxis.set_major_formatter(FormatStrFormatter('%d'))
 
         #
         # vertical lines
@@ -249,16 +260,17 @@ if __name__ == "__main__":
         print("R_Be [mm]= ", 1e3*R)
 
 
-        axs[0].plot(BEST_FOCUS_POSITION, BEST_FOCUS_FWHM, color='black', linestyle='dashed')
+        axs[0].plot(BEST_FOCUS_POSITION, BEST_FOCUS_FWHM, color='black', linestyle='dashed') # linestyle='dashed')
+
         for i in range(3):
                 axs[i].plot([qsrc,qsrc], [1e-9,10000], color='blue')
                 axs[i].plot([qslt,qslt], [1e-9,10000], color='orange')
 
 
 
-        axs[0].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize)
+        axs[0].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize, ncol=2)
 
-        plt.text(10, 300000, r"$a) \epsilon$=0", fontsize=36)
+        plt.text(10, 700000, r"a) $\epsilon$=0", fontsize=36)
 
         ##########################################################################################################
         # H emittance
@@ -266,11 +278,14 @@ if __name__ == "__main__":
 
         DISTANCE, FWHM, LEGEND = get_emittances(direction='h')
 
-        for i in range(len(DISTANCE)):
-                print(FWHM[i])
-                axs[1].plot(DISTANCE[i], 1e6 * FWHM[i], label=LEGEND[i])
+        color = ['r', 'b', 'g', 'k', 'r', 'b', 'g', 'k']
+        linestyle = [None, None, None, None, '--', '--', '--', '--']
 
-        axs[1].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize)
+        for i in range(len(DISTANCE)):
+                # print(FWHM[i])
+                axs[1].plot(DISTANCE[i], 1e6 * FWHM[i], label=LEGEND[i], color=color[i], linestyle=linestyle[i])
+
+        axs[1].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize, ncol=2)
 
 
         plt.text(10, 1000, r"b) $\epsilon$=130 pm.rad", fontsize=36)
@@ -281,11 +296,14 @@ if __name__ == "__main__":
 
         DISTANCE, FWHM, LEGEND = get_emittances(direction='v')
 
-        for i in range(len(DISTANCE)):
-                print(FWHM[i])
-                axs[2].plot(DISTANCE[i], 1e6 * FWHM[i], label=LEGEND[i])
+        color = ['r', 'b', 'g', 'k', 'r', 'b', 'g', 'k']
+        linestyle = [None, None, None, None, '--', '--', '--', '--']
 
-        axs[2].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize)
+        for i in range(len(DISTANCE)):
+                # print(FWHM[i])
+                axs[2].plot(DISTANCE[i], 1e6 * FWHM[i], label=LEGEND[i], color=color[i], linestyle=linestyle[i])
+
+        axs[2].legend(bbox_to_anchor=legend_position, fontsize=legend_fontsize, ncol=2)
 
         ytitle=r'                                                 FWHM [$\mu$m]'
         xtitle="Distance from lens [m]"
@@ -302,7 +320,7 @@ if __name__ == "__main__":
                 axs[i].yaxis.grid()
 
         # plt.text(10, 13000, r"$\epsilon$=130 pm.rad", fontsize=36)
-        plt.text(10, 2, r"c) $\epsilon$=10 pm.rad", fontsize=36)
+        plt.text(10, 1.1, r"c) $\epsilon$=10 pm.rad", fontsize=36)
 
 
 
