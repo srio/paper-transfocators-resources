@@ -25,4 +25,4 @@ Data and figures for https://arxiv.org/abs/xxxxxxxxxx
 
 - Fig 1: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_ONE_LENS/plot_evolution_piled_plots.py
 - Fig 2: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_TWO_LENSES/letter_cases_7keV/plot_maps.py
-- Fig 3: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_TWO_LENSES/letter_cases_7keV/plot_sizes.py
+- Fig 3: https://github.com/srio/paper-transfocators-resources/blob/main/ID18_U18_TWO_LENSES/letter_cases_7keV/REFINED/plot_new_sizes.py
