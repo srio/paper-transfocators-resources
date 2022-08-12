@@ -136,13 +136,13 @@ if __name__ == "__main__":
     APERTURES2 = numpy.array(APERTURES2)
     DoC2 = numpy.array(DoC2)
 
-    plt.rcParams.update({'font.size': 28})
+    plt.rcParams.update({'font.size': 24})
     g = plot(
         DoC_wofry1[:, 0], DoC_wofry1[:, 1],
         DoC_srwme[:,0], DoC_srwme[:,1],
         1e6 * APERTURES2 - 2.50, DoC2,
         title="", legend=[
-            "WOFRY (CL: %3.1f $\mu$m) " %   (fwhm(DoC_srwme[:,0], DoC_srwme[:,1])),
+            "WOFRY1D (CL: %3.1f $\mu$m) " %   (fwhm(DoC_srwme[:,0], DoC_srwme[:,1])),
             "SRW (CL: %3.1f $\mu$m) "   %   (fwhm(DoC_wofry1[:,0], DoC_wofry1[:,1])),
             "$\mathcal{V}(s_A)$",
             ],
